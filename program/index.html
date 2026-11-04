@@ -72,6 +72,20 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 .donbtns .btn.ghost{border:1.5px solid currentColor;color:var(--ink)}
 .impact{display:grid;grid-template-columns:5.5em 1fr;gap:4px 10px;margin:10px 0 0}
 .impact b{color:var(--leaf)}
+
+.hwrap{margin-top:22px}.hhead{font-size:17px;margin:0 0 10px}
+.hgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.hgrid{grid-template-columns:1fr}}
+.hcard{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;min-width:0}
+.hcard.wide{grid-column:1/-1}
+.hcard figcaption{font-size:14px;color:var(--muted);margin-bottom:6px}.hcard figcaption b{color:var(--ink);font-size:15px;margin-right:4px}
+.hsvg{width:100%;height:auto;display:block}.hsvg .hg{stroke:var(--line)}.hsvg .ha{fill:var(--muted);font-size:12px}
+.hsvg .hp{fill:none;stroke:var(--ink);stroke-width:2;opacity:.75}.hsvg .hp.est{stroke-dasharray:6 5}
+.hsvg .hd{stroke:var(--ink);stroke-width:1.2}.hsvg .hr{stroke:var(--ink);stroke-width:2;opacity:.45}
+.hsvg .hl{fill:var(--ink);font-size:14px;font-weight:700}
+.hnote{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.hcard.wide .hsvg.n{display:none}@media (max-width:640px){.hcard.wide .hsvg.w{display:none}.hcard.wide .hsvg.n{display:block}}
+.hdata{font-size:13px;margin-top:6px}.hdata table{width:auto;font-size:13px}.hdata td,.hdata th{padding:2px 10px}
 </style>
 
 </head><body>
