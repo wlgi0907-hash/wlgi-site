@@ -12,9 +12,9 @@
 <link rel="icon" href="/img/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#e3dfdc;--surface:#f6f4f2;--ink:#1f1f20;--muted:#535355;--line:#cdc7c4;--slate:#3f3f41;--leaf:#0b7a74;--crest:#1db9b0;--crest-soft:#d4eeec;--on-crest:#111;--on-dark:#f3f1ee;--hi:#fcf4b6;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b1c;--surface:#252526;--ink:#ece9e5;--muted:#b1a6a3;--line:#3a3a3c;--slate:#111;--leaf:#4fd0c8;--crest-soft:#173936;--on-dark:#ece9e5;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1b1b1c;--surface:#252526;--ink:#ece9e5;--muted:#b1a6a3;--line:#3a3a3c;--slate:#111;--leaf:#4fd0c8;--crest-soft:#173936;--on-dark:#ece9e5;color-scheme:dark}
+:root{--bg:#e3dfdc;--surface:#f6f4f2;--ink:#1f1f20;--muted:#535355;--line:#cdc7c4;--slate:#224a3f;--leaf:#0b7a74;--crest:#1db9b0;--crest-soft:#d4eeec;--on-crest:#111;--on-dark:#f3f1ee;--hi:#fcf4b6;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b1c;--surface:#252526;--ink:#ece9e5;--muted:#b1a6a3;--line:#3a3a3c;--slate:#15302a;--leaf:#4fd0c8;--crest-soft:#173936;--on-dark:#ece9e5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1b1b1c;--surface:#252526;--ink:#ece9e5;--muted:#b1a6a3;--line:#3a3a3c;--slate:#15302a;--leaf:#4fd0c8;--crest-soft:#173936;--on-dark:#ece9e5;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;word-break:keep-all;overflow-wrap:anywhere}
 img{max-width:100%;height:auto;display:block}
@@ -31,9 +31,10 @@ header.top .wrap{display:flex;align-items:center;justify-content:space-between;g
 nav.main{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:14px}
 nav.main a{color:var(--on-dark);text-decoration:none;opacity:.9}
 nav.main a:hover{opacity:1;text-decoration:underline}
+nav.main a.navprog{color:#D70040;opacity:1;font-weight:700}
 .btn{display:inline-block;background:var(--crest);color:var(--on-crest);font-weight:700;text-decoration:none;padding:10px 18px;border-radius:999px}
 .btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
-.hero{position:relative;background:#222}
+.hero{position:relative;background:#224a3f}
 .hero img{width:100%;max-height:520px;object-fit:cover;opacity:.85}
 .hero .cap{position:absolute;inset:auto 0 0 0;padding-block:28px;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#f3f1ee}
 .hero h1{font-size:clamp(24px,3.4vw,38px);font-weight:800;margin-bottom:8px}
@@ -49,6 +50,8 @@ section{padding-block:44px;border-bottom:1px solid var(--line)}
 .maps{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
 .maps figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .maps figcaption{padding:12px 16px;font-size:14px}
+.nowbadge{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--crest);color:var(--on-crest);margin-right:6px}
+.nowbadge[hidden]{display:none}
 .tbl{overflow-x:auto}
 table{border-collapse:collapse;width:100%;font-size:14px;background:var(--surface)}
 th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
@@ -72,12 +75,26 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 .donbtns .btn.ghost{border:1.5px solid currentColor;color:var(--ink)}
 .impact{display:grid;grid-template-columns:5.5em 1fr;gap:4px 10px;margin:10px 0 0}
 .impact b{color:var(--leaf)}
+
+.hwrap{margin-top:22px}.hhead{font-size:17px;margin:0 0 10px}
+.hgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.hgrid{grid-template-columns:1fr}}
+.hcard{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;min-width:0}
+.hcard.wide{grid-column:1/-1}
+.hcard figcaption{font-size:14px;color:var(--muted);margin-bottom:6px}.hcard figcaption b{color:var(--ink);font-size:15px;margin-right:4px}
+.hsvg{width:100%;height:auto;display:block}.hsvg .hg{stroke:var(--line)}.hsvg .ha{fill:var(--muted);font-size:12px}
+.hsvg .hp{fill:none;stroke:var(--ink);stroke-width:2;opacity:.75}.hsvg .hp.est{stroke-dasharray:6 5}
+.hsvg .hd{stroke:var(--ink);stroke-width:1.2}.hsvg .hr{stroke:var(--ink);stroke-width:2;opacity:.45}
+.hsvg .hl{fill:var(--ink);font-size:14px;font-weight:700}
+.hnote{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.hcard.wide .hsvg.n{display:none}@media (max-width:640px){.hcard.wide .hsvg.w{display:none}.hcard.wide .hsvg.n{display:block}}
+.hdata{font-size:13px;margin-top:6px}.hdata table{width:auto;font-size:13px}.hdata td,.hdata th{padding:2px 10px}
 </style>
 
 </head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
-<nav class="main" aria-label="주요 메뉴"><a href="/program/">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
 </div></header>
 <section><div class="wrap"><p class="crumb"><a href="/">대문</a> › <a href="/archive/">기록 보관소</a> › 고니류</p><h1 style="font-size:28px">고니류</h1><p class="lead">강화도습지연대 카페 「고니류」 게시판 글 20건 · 최신순</p><details class="post" id="p20"><summary><span class="d">2013.11.29</span>큰고니</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 5장 · <a href="https://cafe.daum.net/gipb/LycB/20" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p19"><summary><span class="d">2013.03.12</span>고니</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 2장 · <a href="https://cafe.daum.net/gipb/LycB/19" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p18"><summary><span class="d">2012.11.26</span>큰고니</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 4장 · <a href="https://cafe.daum.net/gipb/LycB/18" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p17"><summary><span class="d">2012.03.07</span>2012.3.4</summary><div class="body">강화도를 찾은 큰고니 한쌍입니다.</div><p class="small">글쓴이 김정원 · 사진 1장 · <a href="https://cafe.daum.net/gipb/LycB/17" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p16"><summary><span class="d">2012.01.01</span>큰고니</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 8장 · <a href="https://cafe.daum.net/gipb/LycB/16" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p15"><summary><span class="d">2011.12.18</span>시화호큰고니</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 19장 · <a href="https://cafe.daum.net/gipb/LycB/15" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p10"><summary><span class="d">2011.03.31</span>큰고니들</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 2장 · <a href="https://cafe.daum.net/gipb/LycB/10" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p9"><summary><span class="d">2011.03.07</span>11/03/05 고니 - 강릉</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 5장 · <a href="https://cafe.daum.net/gipb/LycB/9" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p8"><summary><span class="d">2011.03.02</span>지산리 도래미마을의 큰고니</summary><div class="body">영옥님께서 고니가 있다고 해서 한달음에 달렸습니다.
 
