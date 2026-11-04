@@ -65,12 +65,19 @@ details.post .d{color:var(--muted);font-size:13px;margin-right:8px}
 @media (max-width:720px){.hero img{max-height:300px}.hero .cap{position:static;background:#222;padding-block:20px}}
 th.m{text-align:center;white-space:nowrap;font-size:12px;padding:6px 2px}
 details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
+.acct{font-size:clamp(18px,2.4vw,22px);font-weight:700;background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin:0 0 12px;user-select:all}
+.acct small{display:block;font-size:14px;font-weight:400;color:var(--muted)}
+.donbtns{display:flex;flex-wrap:wrap;gap:8px}
+.donbtns .btn{border:0;font:inherit;font-weight:700;cursor:pointer}
+.donbtns .btn.ghost{border:1.5px solid currentColor;color:var(--ink)}
+.impact{display:grid;grid-template-columns:5.5em 1fr;gap:4px 10px;margin:10px 0 0}
+.impact b{color:var(--leaf)}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "NGO", "name": "강화도습지연대", "alternateName": ["WLGI", "강화도습지연대 WLGI"], "url": "https://wlgi.co.kr/", "logo": "https://wlgi.co.kr/img/logo.png", "description": "강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.", "address": {"@type": "PostalAddress", "addressRegion": "인천광역시", "addressLocality": "강화군", "addressCountry": "KR"}, "telephone": "010-4705-7623", "email": "brentkim7@gmail.com", "sameAs": ["https://cafe.daum.net/gipb", "https://www.instagram.com/wlgikorea/"]}</script>
 </head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
-<nav class="main" aria-label="주요 메뉴"><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#contact">문의</a></nav>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
 </div></header>
 
 <div class="hero"><img src="/img/hero.jpg" alt="얕은 물에 모여 쉬는 저어새 무리. 한 마리가 날개를 펴고 내려앉고 있다." width="1800" height="1012" fetchpriority="high">
@@ -81,7 +88,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <section class="live"><div class="wrap">
 <h2>지금 강화 갯벌 소식은 실시간 페이지에서</h2>
 <p class="lead">오늘의 물때와 날씨, 회원 모니터링 소식, 시민 사진 갤러리, 사진 올리기와 회원 철새 모니터링 기록장은 실시간 페이지에서 볼 수 있습니다. 로그인 없이 열립니다.</p>
-<a class="btn" href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">실시간 페이지 열기</a></div></section>
+<a class="btn" href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">실시간 페이지 열기</a> <a class="btn ghost" href="/program/" style="color:var(--ink)">탐조 프로그램 신청</a></div></section>
 
 <section id="census"><div class="wrap">
 <h2>세계 개체수 현황판</h2><p class="lead">강화를 찾는 멸종위기 철새의 전 세계 개체수입니다. 저어새는 매년 1월 국제 동시센서스 결과, 두루미류는 국제두루미재단(ICF)의 최신 추정치입니다. 새 집계가 나오면 관리자가 숫자를 더합니다.</p>
@@ -134,6 +141,40 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <div class="grid"><div class="card"><h3>관찰 기록 제공</h3><p>강화에서 본 새를 회원 기록장에 남겨 주세요. 검토를 거쳐 모임 자료가 됩니다.</p></div><div class="card"><h3>정기 조사 참여</h3><p>매달 한 번, 만조 전후 정해진 지점에서 새를 세고 기록합니다.</p></div><div class="card"><h3>갯벌 정화 자원봉사</h3><p>분기마다 해양쓰레기와 폐어구를 함께 치웁니다.</p></div></div>
 <p style="margin-top:18px"><a class="btn" href="https://claude.ai/artifact/Sna6v7TpPjSFRyo1GK2GAy" rel="noopener">회원 철새 모니터링 기록장</a></p>
 </div></section>
+
+
+<section id="donate"><div class="wrap">
+<h2>강화 갯벌을 함께 지켜 주세요</h2><p class="lead">후원금은 정기 조사 장비, 시민 탐조 교육, 갯벌 정화와 번식지 보호 활동에 쓰입니다. 쓴 내역은 분기마다 소식으로 공개합니다.</p>
+<div class="grid">
+<div class="card"><span class="tag">후원 계좌</span>
+<p class="acct">농협 317-0012-2171-11<small>예금주 강화도습지연대</small></p>
+<div class="donbtns">
+<button type="button" class="btn" id="copyAcct">계좌번호 복사</button>
+<a class="btn ghost" id="tossBtn" href="supertoss://send?bank=%EB%86%8D%ED%98%91&amp;accountNo=3170012217111">토스로 보내기</a>
+<button type="button" class="btn ghost" id="shareBtn">카톡으로 알리기</button>
+</div>
+<p class="small" id="donMsg" role="status" style="margin-top:10px">계좌번호를 복사한 뒤 카카오페이·토스·은행 앱의 계좌송금에 붙여 넣으세요. "토스로 보내기"는 토스 앱이 있는 휴대폰에서 열립니다.</p>
+</div>
+<div class="card"><span class="tag">후원금은 이렇게 쓰입니다</span>
+<div class="impact"><b>1만 원</b><span>(예시) 갯벌 정화 활동 장갑과 마대</span><b>5만 원</b><span>(예시) 어린이 탐조 교실 한 반의 교재</span><b>10만 원</b><span>(예시) 정기 조사용 필드스코프 지원</span></div>
+<p class="small" style="margin-top:12px">쓴 내역은 분기마다 공지로 공개합니다. 후원 관련 문의: 010-4705-7623 · brentkim7@gmail.com</p>
+</div>
+</div>
+<p style="margin-top:16px"><a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu#donate" rel="noopener">모금 현황은 실시간 페이지에서 보기 →</a></p>
+</div></section>
+<script>
+(function(){
+var ACCT="농협 317-0012-2171-11 강화도습지연대", msg=document.getElementById('donMsg');
+function copy(t,ok){ function fb(){ var a=document.createElement('textarea'); a.value=t; a.style.position='fixed'; a.style.opacity='0'; document.body.appendChild(a); a.select(); var r=false; try{r=document.execCommand('copy')}catch(x){} a.remove(); msg.textContent = r ? ok : ('복사가 안 되면 직접 선택해 주세요: '+t); }
+  try{ navigator.clipboard.writeText(t).then(function(){msg.textContent=ok}, fb) }catch(x){ fb() } }
+document.getElementById('copyAcct').onclick=function(){ copy(ACCT,'계좌번호를 복사했습니다. 송금 앱에서 붙여 넣으세요.') };
+var mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent); if(!mobile) document.getElementById('tossBtn').hidden=true;
+document.getElementById('shareBtn').onclick=function(){
+  var d={title:'강화도습지연대 후원 안내', text:'강화 갯벌과 철새를 함께 지켜 주세요. '+ACCT, url:'https://wlgi.co.kr/#donate'};
+  if(navigator.share){ navigator.share(d).catch(function(){}) } else { copy(d.text+' '+d.url,'후원 안내 링크를 복사했습니다. 카카오톡 대화창에 붙여 넣으세요.') }
+};
+})();
+</script>
 
 <section id="archive-link"><div class="wrap">
 <h2>카페 기록 보관소</h2>
