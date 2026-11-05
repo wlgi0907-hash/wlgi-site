@@ -197,7 +197,7 @@ uniform float t,M,C,asp,ps,F,TH;uniform mat4 mvp;varying vec3 vc;varying float v
 vec3 flow(vec3 p,float t){return vec3(sin(p.y*3.1+t)+sin(p.z*4.3-t*.7)*.6,sin(p.z*3.7+t*.8)+sin(p.x*1.9+t*1.1)*.7,sin(p.x*2.2-t*.9)+sin(p.y*2.7+t*.6));}
 void main(){float r=za.z,m=clamp((M-r*.35)/.65,0.,1.);m=m*m*(3.-2.*m);
  float j=smoothstep(r-.015,r+.015,F);float c=max(clamp(C*(1.15-r*.3),0.,1.),1.-j);
- vec3 p=vec3(home.x*asp,home.y,mix(za.x,za.y,m)*(.14+.86*c));
+ vec3 p=vec3(home.x*asp,home.y,mix(za.x,za.y,m)*(.55+.45*c));
  vec3 f=flow(p*1.3+vec3(0.,0.,r*3.),t*.6)+.5*flow(p*3.1+vec3(r*5.),t*1.1);
  float ang=c*(1.6+r*2.)*(.6+length(p.xy)*.4);float cs=cos(ang),sn=sin(ang);
  vec3 q=p;q.xz=mat2(cs,-sn,sn,cs)*q.xz;
@@ -205,8 +205,8 @@ void main(){float r=za.z,m=clamp((M-r*.35)/.65,0.,1.);m=m*m*(3.-2.*m);
  float wv=sin(home.x*5.+t*1.3)*.5+sin(home.x*11.-t*.9)*.25;q.y+=wv*.018*(.3+TH)*(1.-c);q.z+=wv*.012*(.3+TH);
  gl_Position=mvp*vec4(q,1.);
  vc=mix(ca,cb,m);float g=c*.4;vc=mix(vc,vc*1.15+vec3(.05,.08,.14),g);vc=mix(vc,mix(vec3(.55,.42,.28),vec3(.22,.5,.72),TH),.16*(1.-c));va=mix(1.,.32,c)*mix(.45,1.,j);
- vk=c;gl_PointSize=min(ps*(1.-c*.6)/gl_Position.w,ps*.75);}`;
-const FS=`precision mediump float;varying vec3 vc;varying float va,vk;void main(){vec2 d=gl_PointCoord-.5;float e=dot(d,d);if(vk>.15&&e>.25)discard;gl_FragColor=vec4(vc,va*mix(1.,1.-e*1.6,clamp(vk*3.,0.,1.)));}`;
+ vk=c;gl_PointSize=min(ps*(1.45-c*1.05)/gl_Position.w,ps*.95);}`;
+const FS=`precision mediump float;varying vec3 vc;varying float va,vk;void main(){vec2 d=gl_PointCoord-.5;float e=dot(d,d);float k=clamp(vk*3.,0.,1.);if(e>mix(.36,.25,k))discard;gl_FragColor=vec4(vc,va*mix(1.-e*.8,1.-e*1.6,k));}`;
 
 function persp(f,a,n,fa){const t=1/Math.tan(f/2);return[t/a,0,0,0,0,t,0,0,0,0,(fa+n)/(n-fa),-1,0,0,2*fa*n/(n-fa),0]}
 function mul(a,b){const o=new Array(16);for(let i=0;i<4;i++)for(let j=0;j<4;j++){let s=0;for(let k=0;k<4;k++)s+=a[k*4+j]*b[i*4+k];o[i*4+j]=s}return o}
@@ -243,7 +243,7 @@ window.WLGIart=function(box,srcA,srcB){
  const U=n=>gl.getUniformLocation(pr,n);let W=0,H=0,dpr=1,N=0,GW=300,GH=141,imgs=null,on=false,t0=0,raf=0,built=false;
  function size(){dpr=Math.min(2,window.devicePixelRatio||1);W=box.clientWidth;H=box.clientHeight;cv.width=W*dpr;cv.height=H*dpr;gl.viewport(0,0,cv.width,cv.height);}
  function sample(img,gw,gh){const c=document.createElement('canvas');c.width=gw;c.height=gh;const g=c.getContext('2d');const s=Math.max(gw/img.width,gh/img.height);g.drawImage(img,(gw-img.width*s)/2,(gh-img.height*s)/2,img.width*s,img.height*s);return g.getImageData(0,0,gw,gh).data}
- function build(){const A=imgs[0],B=imgs[1],gw=W<600?270:480,gh=Math.round(gw*.47);GW=gw;GH=gh;const a=sample(A,gw,gh),b=sample(B,gw,gh);N=gw*gh;
+ function build(){const A=imgs[0],B=imgs[1],gw=W<600?230:390,gh=Math.round(gw*.47);GW=gw;GH=gh;const a=sample(A,gw,gh),b=sample(B,gw,gh);N=gw*gh;
   const home=new Float32Array(N*2),za=new Float32Array(N*4),ca=new Float32Array(N*3),cb=new Float32Array(N*3);
   for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){const i=y*gw+x,k=i*4;home[i*2]=(x/(gw-1)-.5)*2;home[i*2+1]=(.5-y/(gh-1))*2*(gh/gw);
    const la=(a[k]*.3+a[k+1]*.59+a[k+2]*.11)/255,lb=(b[k]*.3+b[k+1]*.59+b[k+2]*.11)/255;za[i*4]=(la-.45)*.42;za[i*4+1]=(lb-.45)*.42;za[i*4+2]=Math.random();
@@ -260,7 +260,7 @@ window.WLGIart=function(box,srcA,srcB){
   const v=mul(trans(0,0,-(d+C*.45)),mul(rotX(-.1+Math.sin(T*.17)*.05),rotY(Math.sin(T*.22)*.28)));
   gl.uniformMatrix4fv(U('mvp'),false,new Float32Array(mul(pa,v)));gl.uniform1f(U('t'),T);gl.uniform1f(U('M'),M);gl.uniform1f(U('C'),C);gl.uniform1f(U('asp'),1);gl.uniform1f(U('F'),F*1.04);gl.uniform1f(U('TH'),TH);
   gl.uniform1f(U('ps'),(H*dpr/GW)/tf*1.55*(asp<1?1/asp*.62:1));
-  gl.clearColor(.012,.015,.022,1);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);if(C>.08)gl.blendFunc(gl.SRC_ALPHA,gl.ONE);
+  gl.clearColor(.012,.015,.022,1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);if(C>.08){gl.blendFunc(gl.SRC_ALPHA,gl.ONE);gl.disable(gl.DEPTH_TEST)}else{gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL)}
   gl.drawArrays(gl.POINTS,0,N);}
  function loop(now){if(!on)return;if(!document.hidden)draw((now-t0)/1000);raf=requestAnimationFrame(loop)}
  const ready=Promise.all([srcA,srcB].map(s=>new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=s}))).then(L=>{imgs=L});
