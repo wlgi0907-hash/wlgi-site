@@ -34,9 +34,15 @@ nav.main a:hover{opacity:1;text-decoration:underline}
 nav.main a.navprog{color:#FF0038;opacity:1;font-weight:700}
 .btn{display:inline-block;background:var(--crest);color:var(--on-crest);font-weight:700;text-decoration:none;padding:10px 18px;border-radius:999px}
 .btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
-.hero{position:relative;background:#224a3f}
-.hero img{width:100%;max-height:520px;object-fit:cover;opacity:.85}
-.hero .cap{position:absolute;inset:auto 0 0 0;padding-block:28px;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#f3f1ee}
+.hero{position:relative;background:#2e2e30}
+.hslides{position:relative;aspect-ratio:16/9;max-height:600px;width:100%;overflow:hidden;background:#2e2e30}
+.hslides img.hs{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;opacity:0;transition:opacity 1s ease}
+.hslides img.hs.on{opacity:1}
+.hslides img.hs.contain{object-fit:contain;background:#2e2e30}
+.hcredit{position:absolute;top:8px;right:max(12px,env(safe-area-inset-right,0px));font-size:12px;color:#f3f1ee;opacity:.8;text-shadow:0 1px 2px #000;max-width:70%;text-align:right}
+@media (prefers-reduced-motion:reduce){.hslides img.hs{transition:none}}
+
+.hero .cap{position:static;padding-block:24px;background:#222;color:#f3f1ee}
 .hero h1{font-size:clamp(24px,3.4vw,38px);font-weight:800;margin-bottom:8px}
 .hero p{margin:0 0 14px;max-width:60ch}
 section{padding-block:44px;border-bottom:1px solid var(--line)}
@@ -65,8 +71,9 @@ footer{padding-block:30px;font-size:14px;color:var(--muted)}
 details.post{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:0 0 8px;padding:10px 14px}
 details.post summary{cursor:pointer}
 details.post .d{color:var(--muted);font-size:13px;margin-right:8px}
-@media (max-width:720px){.hero img{max-height:300px}.hero .cap{position:static;background:#222;padding-block:20px}}
+@media (max-width:720px){.hero .cap{position:static;background:#222;padding-block:20px}}
 th.m{text-align:center;white-space:nowrap;font-size:12px;padding:6px 2px}
+.visits b{color:var(--ink)}
 details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 .acct{font-size:clamp(18px,2.4vw,22px);font-weight:700;background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin:0 0 12px;user-select:all}
 .acct small{display:block;font-size:14px;font-weight:400;color:var(--muted)}
@@ -97,10 +104,21 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
 </div></header>
 
-<div class="hero"><img src="/img/hero.jpg" alt="얕은 물에 모여 쉬는 저어새 무리. 한 마리가 날개를 펴고 내려앉고 있다." width="1800" height="1012" fetchpriority="high">
+<div class="hero"><div class="hslides" id="hslides"><img class="hs on" src="/img/hero.jpg" data-src="/img/hero.jpg" data-still="/img/hero.jpg" data-dur="8000" data-credit="저어새 Platalea minor" data-best="" data-sp="" alt="얕은 물에 모여 쉬는 저어새 무리. 한 마리가 날개를 펴고 내려앉고 있다." fetchpriority="high"><img class="hs contain" src="" data-src="/img/map-flats.svg" data-still="/img/map-flats-still.svg" data-dur="14000" data-credit="세계 5대 갯벌과 강화 남단 갯벌 (개략도)" data-best="" data-sp="" alt="세계 5대 갯벌로 꼽히는 캐나다 동부, 미국 동부, 북해 와덴해, 아마존강 하구, 한국 서해안을 차례로 보여 주고 강화 남단 갯벌을 강조하는 지도" loading="lazy"><img class="hs contain" src="" data-src="/img/map-red-crowned-crane.svg" data-still="/img/map-red-crowned-crane-still.svg" data-dur="14000" data-credit="두루미 이동경로 · 번식지와 월동지 (개략도) · 강화 탐조 적기 겨울 11~2월" data-best="11,12,1,2" data-sp="1" alt="흰 몸·검은 목·붉은 정수리의 두루미가 아무르·우수리 번식지와 철원·연천, 강화 남단 갯벌, 중국 장쑤 월동지를 오가는 지도. 강화에서는 갯벌에서만 겨울을 난다." loading="lazy"><img class="hs contain" src="" data-src="/img/map-white-naped-crane.svg" data-still="/img/map-white-naped-crane-still.svg" data-dur="14000" data-credit="재두루미 이동경로 · 번식지와 월동지 (개략도) · 강화 탐조 적기 겨울 11~2월" data-best="11,12,1,2" data-sp="1" alt="재두루미가 다우리아·아무르 번식지와 철원·한강하구, 일본 이즈미, 중국 포양호 월동지를 오가는 지도." loading="lazy"><img class="hs contain" src="" data-src="/img/map-hooded-crane.svg" data-still="/img/map-hooded-crane-still.svg" data-dur="14000" data-credit="흑두루미 이동경로 · 번식지와 월동지 (개략도) · 강화 탐조 적기 가을 이동기 10월~11월 중순 (중간 기착)" data-best="10,11" data-sp="1" alt="짙은 회흑색 몸에 흰 목·붉은 정수리의 흑두루미가 야쿠티아·아무르 번식지에서 10월~11월 중순에 강화와 천수만을 중간 기착지로 거쳐 순천만·일본 이즈미·양쯔강 월동지로 오가는 지도." loading="lazy"><img class="hs contain" src="" data-src="/img/map-shorebirds.svg" data-still="/img/map-shorebirds-still.svg" data-dur="14000" data-credit="도요·물떼새 이동경로 · 번식지와 월동지 (개략도) · 강화 탐조 적기 봄 4~5월 · 가을 8~9월" data-best="4,5,8,9" data-sp="1" alt="갈색 몸에 길게 굽은 부리의 알락꼬리마도요 등 도요·물떼새가 시베리아·캄차카·알래스카 번식지에서 강화 남단 갯벌 등 황해 갯벌을 거쳐 오스트레일리아·뉴질랜드 월동지로 오가는 지도." loading="lazy"><img class="hs contain" src="" data-src="/img/map-spoonbill.svg" data-still="/img/map-spoonbill-still.svg" data-dur="14000" data-credit="저어새 이동경로 · 번식지와 월동지 (개략도) · 강화 탐조 적기 번식기 4~8월" data-best="4,5,6,7,8" data-sp="1" alt="흰 몸·검은 부리·노란 댕기의 저어새가 강화도·서해 무인도서 번식지와 대만·홍콩·베트남·일본 규슈·제주 월동지를 오가는 지도." loading="lazy"><img class="hs contain" src="" data-src="/img/map-flyway.svg" data-still="/img/map-flyway-still.svg" data-dur="16000" data-credit="동아시아-대양주 철새이동경로 · 계절별 이동 (개략도)" data-best="" data-sp="" alt="동아시아-대양주 철새이동경로 지도. 봄에는 새들이 강화 갯벌을 거쳐 북쪽 번식지로, 가을에는 남쪽 월동지로 이동합니다." loading="lazy"></div><span class="hcredit" id="hcredit">저어새 Platalea minor</span>
 <div class="cap"><div class="wrap"><h1>강화 철새를 기록하고 나눕니다</h1>
 <p>한강·임진강·예성강이 만나는 강화도 갯벌은 동아시아-대양주 철새이동경로의 중간 기착지입니다. 강화도습지연대(WLGI)는 저어새·두루미 같은 희귀 조류의 생태 관찰과 교육, 탐조 관광을 위해 활동하는 시민 모임입니다.</p>
-<a class="btn" href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">실시간 탐조 정보 보기</a></div></div></div>
+<a class="btn" href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">실시간 탐조 정보 보기</a><p class="small" id="heroVisits" hidden style="margin:12px 0 0;color:#cfcac6">오늘 방문 <b id="hvToday">-</b> · 전체 방문 <b id="hvTotal">-</b></p></div></div></div>
+<script>(function(){var box=document.getElementById('hslides'),cr=document.getElementById('hcredit');if(!box)return;
+var all=[].slice.call(box.children),m=new Date(Date.now()+9*3600e3).getUTCMonth()+1;
+var sp=all.filter(function(x){return x.dataset.sp}),wait=function(x){var b=(x.dataset.best||'').split(',').filter(Boolean).map(Number),k=0;if(!b.length)return 99;while(k<12&&b.indexOf(((m-1+k)%12)+1)<0)k++;return k;};
+sp.map(function(x,i){return{x:x,i:i,w:wait(x)}}).sort(function(a,b){return a.w-b.w||a.i-b.i}).forEach(function(o){if(o.w===0)o.x.dataset.credit='지금 탐조 적기 · '+o.x.dataset.credit;box.insertBefore(o.x,all[all.length-1].dataset.sp?null:all[all.length-1]);});
+var L=[].slice.call(box.children),i=0,rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+L.forEach(function(x){if(rm)x.dataset.src=x.dataset.still;});
+function show(n){var x=L[n];if(!x.getAttribute('src')||x.dataset.loaded!=='1'){x.src=x.dataset.src;x.dataset.loaded='1';}else if(x.dataset.src.slice(-4)==='.svg'){x.src=x.dataset.src+'?r='+Date.now();}
+L.forEach(function(y,k){y.classList.toggle('on',k===n)});cr.textContent=x.dataset.credit;var nx=L[(n+1)%L.length];if(!nx.getAttribute('src')){nx.src=nx.dataset.src;nx.dataset.loaded='1';}}
+L[0].dataset.loaded='1';cr.textContent=L[0].dataset.credit;
+function tick(){setTimeout(function(){if(!document.hidden){i=(i+1)%L.length;show(i);}tick();},+L[i].dataset.dur||8000);}
+if(L.length>1)tick();})();</script>
 
 <section class="live"><div class="wrap">
 <h2>지금 강화 갯벌 소식은 실시간 페이지에서</h2>
@@ -209,6 +227,12 @@ document.getElementById('shareBtn').onclick=function(){
 <footer><div class="wrap">
 <p>강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.</p>
 <p>© 강화도습지연대 WLGI · 인천광역시 강화군 · 문의 010-4705-7623 · brentkim7@gmail.com</p>
+<p class="visits" id="visits" hidden>오늘 방문 <b id="vToday">-</b> · 전체 방문 <b id="vTotal">-</b></p>
 <p><a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">실시간 소식·사진 갤러리·회원 기록장</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
 </div></footer>
+<script>(function(){var A="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec",k='wlgi_v_'+new Date(Date.now()+9*3600e3).toISOString().slice(0,10),c=false;
+try{c=localStorage.getItem(k)==='1'}catch(e){}
+fetch(A+'?v='+(c?0:1)).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)return;try{localStorage.setItem(k,'1')}catch(e){}
+var f=function(n){return Number(n).toLocaleString('ko-KR')};document.getElementById('vToday').textContent=f(j.today);document.getElementById('vTotal').textContent=f(j.total);
+['visits','heroVisits'].forEach(function(id){var el=document.getElementById(id);if(el)el.hidden=false});var h=document.getElementById('hvToday');if(h){h.textContent=f(j.today);document.getElementById('hvTotal').textContent=f(j.total);}}).catch(function(){});})();</script>
 </body></html>
