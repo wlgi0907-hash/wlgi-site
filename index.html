@@ -243,7 +243,7 @@ window.WLGIart=function(box,srcA,srcB){
  const U=n=>gl.getUniformLocation(pr,n);let W=0,H=0,dpr=1,N=0,GW=300,GH=141,imgs=null,on=false,t0=0,raf=0,built=false;
  function size(){dpr=Math.min(2,window.devicePixelRatio||1);W=box.clientWidth;H=box.clientHeight;cv.width=W*dpr;cv.height=H*dpr;gl.viewport(0,0,cv.width,cv.height);}
  function sample(img,gw,gh){const c=document.createElement('canvas');c.width=gw;c.height=gh;const g=c.getContext('2d');const s=Math.max(gw/img.width,gh/img.height);g.drawImage(img,(gw-img.width*s)/2,(gh-img.height*s)/2,img.width*s,img.height*s);return g.getImageData(0,0,gw,gh).data}
- function build(){const A=imgs[0],B=imgs[1],gw=W<600?230:390,gh=Math.round(gw*.47);GW=gw;GH=gh;const a=sample(A,gw,gh),b=sample(B,gw,gh);N=gw*gh;
+ function build(){const A=imgs[0],B=imgs[1],gw=W<600?200:326,gh=Math.round(gw*.47);GW=gw;GH=gh;const a=sample(A,gw,gh),b=sample(B,gw,gh);N=gw*gh;
   const home=new Float32Array(N*2),za=new Float32Array(N*4),ca=new Float32Array(N*3),cb=new Float32Array(N*3);
   for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){const i=y*gw+x,k=i*4;home[i*2]=(x/(gw-1)-.5)*2;home[i*2+1]=(.5-y/(gh-1))*2*(gh/gw);
    const la=(a[k]*.3+a[k+1]*.59+a[k+2]*.11)/255,lb=(b[k]*.3+b[k+1]*.59+b[k+2]*.11)/255;za[i*4]=(la-.45)*.42;za[i*4+1]=(lb-.45)*.42;za[i*4+2]=Math.random();
