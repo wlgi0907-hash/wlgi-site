@@ -64,7 +64,7 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 td.m{text-align:center;width:2.2em;padding:6px 2px}
 td.m.l1{background:var(--crest-soft)} td.m.l2{background:#8fd6d1;color:#111} td.m.l3{background:var(--crest);color:#111}
 ul.plain{padding-left:1.1em}
-.live{background:var(--crest-soft)}
+.live{background:linear-gradient(180deg,#141e46 0%,#2a1b4f 50%,#3d2b63 100%);color:#f3f1ee;border-bottom:0}.live h2{color:#f3f1ee}.live .lead{color:#d9d1e8}.live .btns{display:flex;flex-wrap:wrap;gap:10px}.live .btn.vir{background:#23977c;border-color:#23977c;color:#f4fffa;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}.live .btn.car{background:#ff0038;border-color:#ff0038;color:#fff6f8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 footer{padding-block:30px;font-size:14px;color:var(--muted)}
 .crumb{font-size:14px;margin:0 0 10px}
 .boards{columns:2 220px;padding-left:1.1em}
@@ -262,8 +262,8 @@ var t=document.getElementById('mtab'),b=document.getElementById('mbox');if(t&&b)
 
 <section class="live"><div class="wrap">
 <h2>물때 맞춰 강화 탐조</h2>
-<p class="lead">물때에 맞춘 탐조 프로그램을 신청하고, 날짜별 물때를 확인할 수 있습니다. 회원 철새 모니터링 기록과 사진 올리기는 회원 전용 페이지(Claude 로그인)에서 합니다.</p>
-<a class="btn" href="/program/">탐조 프로그램 신청</a> <a class="btn ghost" href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener" style="color:var(--ink)">회원 전용 페이지 (Claude 로그인)</a></div></section>
+<p class="lead">물때에 맞춘 탐조 프로그램을 신청하고, 날짜별 물때를 확인할 수 있습니다. 회원으로 가입하면 이름·번호를 적지 않고 바로 신청하고, 회원 전용 일정도 신청할 수 있습니다. 가입비는 없습니다.</p>
+<div class="btns"><a class="btn vir" href="/member/">회원 로그인 · 가입</a><a class="btn car" href="/program/">탐조 프로그램 신청</a></div></div></section>
 
 <section id="census"><div class="wrap">
 <h2>세계 개체수 현황판</h2><p class="lead">강화를 찾는 멸종위기 철새의 전 세계 개체수입니다. 저어새는 매년 1월 국제 동시센서스 결과, 두루미류는 국제두루미재단(ICF)의 최신 추정치입니다. 새 집계가 나오면 관리자가 숫자를 더합니다.</p>
@@ -368,7 +368,7 @@ document.getElementById('shareBtn').onclick=function(){
 <p>강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.</p>
 <p>© 강화도습지연대 WLGI · 인천광역시 강화군 · 문의 010-4705-7623 · brentkim7@gmail.com</p>
 <p class="visits" id="visits" hidden>오늘 방문 <b id="vToday">-</b> · 전체 방문 <b id="vTotal">-</b></p>
-<p><a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">회원 전용 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
+<p><a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
 </div></footer>
 <script>(function(){var A="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec",k='wlgi_v_'+new Date(Date.now()+9*3600e3).toISOString().slice(0,10),c=false;
 try{c=localStorage.getItem(k)==='1'}catch(e){}

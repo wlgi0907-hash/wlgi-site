@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>회원 가입 · 로그인 · 강화도습지연대 WLGI</title>
+<meta name="description" content="강화도습지연대 회원 가입과 로그인. 회원은 이름·번호를 다시 적지 않고 물때 탐조 프로그램을 바로 신청하고, 회원 전용 일정도 신청할 수 있습니다. 가입비 없음.">
+<link rel="canonical" href="https://wlgi.co.kr/member/">
+<meta property="og:type" content="website"><meta property="og:site_name" content="강화도습지연대 WLGI">
+<meta property="og:title" content="회원 가입 · 로그인 · 강화도습지연대 WLGI"><meta property="og:description" content="강화도습지연대 회원 가입과 로그인. 회원은 이름·번호를 다시 적지 않고 물때 탐조 프로그램을 바로 신청하고, 회원 전용 일정도 신청할 수 있습니다. 가입비 없음.">
+<meta property="og:url" content="https://wlgi.co.kr/member/"><meta property="og:image" content="https://wlgi.co.kr/img/hero.jpg"><meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<!--SITE-VERIFY-->
+<link rel="icon" href="/img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#e3dfdc;--surface:#f6f4f2;--ink:#1f1f20;--muted:#535355;--line:#cdc7c4;--slate:#224a3f;--leaf:#0b7a74;--crest:#1db9b0;--crest-soft:#d4eeec;--on-crest:#111;--on-dark:#f3f1ee;--hi:#fcf4b6;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b1c;--surface:#252526;--ink:#ece9e5;--muted:#b1a6a3;--line:#3a3a3c;--slate:#15302a;--leaf:#4fd0c8;--crest-soft:#173936;--on-dark:#ece9e5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1b1b1c;--surface:#252526;--ink:#ece9e5;--muted:#b1a6a3;--line:#3a3a3c;--slate:#15302a;--leaf:#4fd0c8;--crest-soft:#173936;--on-dark:#ece9e5;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;word-break:keep-all;overflow-wrap:anywhere}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--leaf)}
+h1,h2,h3{font-family:"Gothic A1","Noto Sans KR",sans-serif;line-height:1.3;text-wrap:balance;margin:0}
+h2{font-size:clamp(22px,2.6vw,28px);font-weight:800}
+h3{font-size:18px;font-weight:700}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{background:#222;color:var(--on-dark)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;font-family:"Gothic A1",sans-serif;font-weight:800;font-size:20px}
+.brand img{width:38px;height:38px}
+.brand small{font-weight:700;font-size:13px;opacity:.75;letter-spacing:.06em}
+nav.main{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:14px}
+nav.main a{color:var(--on-dark);text-decoration:none;opacity:.9}
+nav.main a:hover{opacity:1;text-decoration:underline}
+nav.main a.navprog{color:#FF0038;opacity:1;font-weight:700}
+.btn{display:inline-block;background:var(--crest);color:var(--on-crest);font-weight:700;text-decoration:none;padding:10px 18px;border-radius:999px}
+.btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
+.hero{position:relative;background:#2e2e30}
+.hslides{position:relative;aspect-ratio:16/9;max-height:600px;width:100%;overflow:hidden;background:#2e2e30}
+.hslides img.hs{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;opacity:0;transition:opacity 1s ease}
+.hslides img.hs.on{opacity:1}
+.hslides img.hs.contain{object-fit:contain;background:#2e2e30}
+.hcredit{position:absolute;top:8px;right:max(12px,env(safe-area-inset-right,0px));font-size:12px;color:#f3f1ee;opacity:.8;text-shadow:0 1px 2px #000;max-width:70%;text-align:right}
+@media (prefers-reduced-motion:reduce){.hslides img.hs{transition:none}}
+
+.hero .cap{position:static;padding-block:24px;background:#222;color:#f3f1ee}
+.hero h1{font-size:clamp(24px,3.4vw,38px);font-weight:800;margin-bottom:8px}
+.hero p{margin:0 0 14px;max-width:60ch}
+section{padding-block:44px;border-bottom:1px solid var(--line)}
+.lead{color:var(--muted);max-width:65ch;margin:8px 0 22px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
+.card .tag{font-size:12px;letter-spacing:.06em;color:var(--leaf);font-weight:700}
+.card p{margin:6px 0 0}
+.num{font-family:"Gothic A1",sans-serif;font-weight:800;font-size:30px;line-height:1.2;margin:6px 0}
+.small{font-size:13px;color:var(--muted)}
+.maps{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.maps figure{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.maps figcaption{padding:12px 16px;font-size:14px}
+.nowbadge{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--crest);color:var(--on-crest);margin-right:6px}
+.nowbadge[hidden]{display:none}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;background:var(--surface)}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+td.m{text-align:center;width:2.2em;padding:6px 2px}
+td.m.l1{background:var(--crest-soft)} td.m.l2{background:#8fd6d1;color:#111} td.m.l3{background:var(--crest);color:#111}
+ul.plain{padding-left:1.1em}
+.live{background:var(--crest-soft)}
+footer{padding-block:30px;font-size:14px;color:var(--muted)}
+.crumb{font-size:14px;margin:0 0 10px}
+.boards{columns:2 220px;padding-left:1.1em}
+details.post{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin:0 0 8px;padding:10px 14px}
+details.post summary{cursor:pointer}
+details.post .d{color:var(--muted);font-size:13px;margin-right:8px}
+@media (max-width:720px){.hero .cap{position:static;background:#222;padding-block:20px}}
+th.m{text-align:center;white-space:nowrap;font-size:12px;padding:6px 2px}
+.visits b{color:var(--ink)}
+details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
+.acct{font-size:clamp(18px,2.4vw,22px);font-weight:700;background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:14px 16px;margin:0 0 12px;user-select:all}
+.acct small{display:block;font-size:14px;font-weight:400;color:var(--muted)}
+.donbtns{display:flex;flex-wrap:wrap;gap:8px}
+.donbtns .btn{border:0;font:inherit;font-weight:700;cursor:pointer}
+.donbtns .btn.ghost{border:1.5px solid currentColor;color:var(--ink)}
+.impact{display:grid;grid-template-columns:5.5em 1fr;gap:4px 10px;margin:10px 0 0}
+.impact b{color:var(--leaf)}
+
+.hwrap{margin-top:22px}.hhead{font-size:17px;margin:0 0 10px}
+.hgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.hgrid{grid-template-columns:1fr}}
+.hcard{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 14px 10px;min-width:0}
+.hcard.wide{grid-column:1/-1}
+.hcard figcaption{font-size:14px;color:var(--muted);margin-bottom:6px}.hcard figcaption b{color:var(--ink);font-size:15px;margin-right:4px}
+.hsvg{width:100%;height:auto;display:block}.hsvg .hg{stroke:var(--line)}.hsvg .ha{fill:var(--muted);font-size:12px}
+.hsvg .hp{fill:none;stroke:var(--ink);stroke-width:2;opacity:.75}.hsvg .hp.est{stroke-dasharray:6 5}
+.hsvg .hd{stroke:var(--ink);stroke-width:1.2}.hsvg .hr{stroke:var(--ink);stroke-width:2;opacity:.45}
+.hsvg .hl{fill:var(--ink);font-size:14px;font-weight:700}
+.hnote{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.hcard.wide .hsvg.n{display:none}@media (max-width:640px){.hcard.wide .hsvg.w{display:none}.hcard.wide .hsvg.n{display:block}}
+.hdata{font-size:13px;margin-top:6px}.hdata table{width:auto;font-size:13px}.hdata td,.hdata th{padding:2px 10px}
+
+/* 강화 데이터 조각 */
+.arthud{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:14px;z-index:0;display:flex;flex-direction:column;text-shadow:0 1px 6px #000;pointer-events:none;color:#fff}
+.arthud b{font-size:12.5px;font-weight:600;color:#cfd6dd;letter-spacing:.04em}
+.arthud span{font-size:clamp(26px,4.4vw,48px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.arthud em{font-style:normal;font-size:clamp(14px,2vw,20px);font-variant-numeric:tabular-nums;color:#9fe3dd}
+.arthud small{font-size:10.5px;color:#9aa1a8;margin-top:3px}
+.arttide{position:absolute;right:max(14px,env(safe-area-inset-right,0px));top:12px;z-index:0;text-align:right;font-size:12px;color:#cfd6dd;line-height:1.5;text-shadow:0 1px 6px #000;font-variant-numeric:tabular-nums;pointer-events:none}
+.arttide b{display:block;font-size:19px;color:#fff}
+
+.capgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:20px 40px;align-items:start}
+@media (max-width:860px){.capgrid{grid-template-columns:minmax(0,1fr)}}
+.sbox{display:flex;flex-direction:column;gap:8px;min-width:0}
+.stabs{display:flex;gap:4px;align-items:center}
+.stabs [data-st]{font:inherit;font-size:13.5px;font-weight:600;padding:6px 14px;border:none;background:rgba(243,241,234,.18);color:#f3f1ee;cursor:pointer}
+.stabs [data-st][aria-pressed="true"]{background:#f3f1ee;color:#24261f}
+.stabs .mtab{margin-left:auto;font-size:13.5px;padding:3px 12px 3px 8px}
+#heroSearch{display:flex;background:#fff}
+#heroSearch input{flex:1;min-width:0;font:inherit;font-size:16px;padding:12px 14px;border:none;color:#1b2328;background:#fff}
+#heroSearch button{font:inherit;font-weight:700;padding:0 20px;border:none;background:#1db9b0;color:#111;cursor:pointer}
+.sres{background:#2b2b2b;padding:10px 14px;font-size:14px}
+.sres .scount{margin:0;font-size:12.5px;color:#cfcac6}.sres a{color:#7fe0d9}
+.sres ul{list-style:none;margin:6px 0 0;padding:0}
+.sres li{display:grid;grid-template-columns:auto 1fr auto;gap:0 10px;padding:6px 0;border-top:1px solid rgba(243,241,234,.12);align-items:baseline}
+.sres li span{color:#cfcac6;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sres li i{grid-column:1/3;color:#a9a39d;font-size:12.5px}
+.sres li em{grid-row:1/3;grid-column:3;align-self:center;font-style:normal;font-size:11px;font-weight:700;padding:2px 6px;background:#5d6b72;color:#fff}
+.sres .rl-CR{background:#8f1d1d}.sres .rl-EN{background:#c2471c}.sres .rl-VU{background:#b07d12}.sres .rl-NT{background:#6b7a30}
+
+.hrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.mtab{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:14px;font-weight:600;padding:6px 14px 6px 10px;background:none;border:1px solid rgba(243,241,234,.45);color:#f3f1ee;cursor:pointer}
+.mtab:hover{border-color:#1db9b0}
+.mtab[aria-expanded="true"]{border-color:#1db9b0;background:rgba(29,185,176,.15)}
+.mico{width:28px;height:28px;fill:currentColor;flex:none;margin:-4px 0}
+.mbox{margin-top:8px;background:#2b2b2b;color:#f3f1ee;border-left:3px solid #1db9b0;padding:12px 14px;font-size:14px;line-height:1.6}
+.mbox b{color:#fff}
+.mbox .mlinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.mbox .mlinks a{background:#1db9b0;color:#111;text-decoration:none;font-weight:600;padding:6px 12px;font-size:13px}
+.mbox .mlinks a.ghost{background:none;color:#f3f1ee;border:1px solid rgba(243,241,234,.4)}
+.mbox small{display:block;margin-top:8px;opacity:.75;font-size:12px}
+</style>
+
+</head><body>
+<header class="top"><div class="wrap">
+<a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
+</div></header>
+<style>
+[hidden]{display:none!important}
+.mnote{background:var(--hi);color:#1f1f20;font-size:13.5px;padding:9px 14px;border-radius:10px;margin:0 0 18px}
+.mtabs{display:flex;gap:4px;margin:6px 0 0}
+.mtabs button{font:inherit;font-weight:700;font-size:15px;padding:10px 18px;border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;background:var(--bg);color:var(--muted);cursor:pointer}
+.mtabs button[aria-selected=true]{background:var(--surface);color:var(--ink)}
+.mpanel{background:var(--surface);border:1px solid var(--line);border-radius:0 14px 14px 14px;padding:20px;display:grid;gap:14px;max-width:720px}
+.mpanel h2{margin:0;font-size:20px}
+.mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.mgrid{grid-template-columns:1fr}}
+.mpanel label.f{display:grid;gap:4px;align-content:start;font-size:14px;font-weight:600}
+.mpanel label.f small{font-weight:400;color:var(--muted)}
+.mpanel input[type=text],.mpanel input[type=tel],.mpanel input[type=email],.mpanel input[type=password],.mpanel select{font:inherit;font-size:16px;padding:10px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);min-width:0;width:100%;box-sizing:border-box}
+.mpanel fieldset{border:1px solid var(--line);border-radius:10px;padding:10px 14px 12px;margin:0;display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14.5px}
+.mpanel fieldset legend{font-weight:600;font-size:14px;padding:0 4px}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px}
+.chk input{margin-top:4px;flex:none}
+.agreebox{background:var(--bg);border-radius:10px;padding:12px 14px;display:grid;gap:8px;font-size:13.5px}
+.agreebox details{font-size:13px;color:var(--muted)}
+.mmsg{font-size:14px;font-weight:700;min-height:1.2em;margin:0}
+.mmsg.err{color:#b3261e}.mmsg.ok{color:var(--leaf)}
+.card{background:linear-gradient(135deg,#222 0%,#2f372f 100%);color:#f3f1ee;border-radius:16px;padding:20px 22px;display:grid;gap:6px;max-width:420px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.card .no{font-family:Pretendard,"Noto Sans KR",sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.06em;font-size:15px;color:#fcf4b6}
+.card .nm{font-family:"Gothic A1",sans-serif;font-weight:800;font-size:24px}
+.card .lv{font-size:13px;opacity:.8}
+.card .ctop{display:flex;gap:12px;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.08em;opacity:.85}
+.plist{display:grid;gap:12px}
+.pitem{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center}
+@media (max-width:560px){.pitem{grid-template-columns:1fr}}
+.pitem b{font-size:16px}.pitem .meta{font-size:13.5px;color:var(--muted)}
+.pitem .act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pitem select{font:inherit;font-size:15px;padding:7px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--crest-soft);color:var(--ink);margin-right:6px;vertical-align:2px}
+.tag.mem{background:#fcf4b6;color:#1f1f20}
+.mine{font-size:14px;display:grid;gap:6px}
+.mine li{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px dashed var(--line);padding:6px 0}
+.linkbtn{font:inherit;font-size:13px;background:none;border:1px solid var(--line);border-radius:8px;padding:4px 10px;color:var(--ink);cursor:pointer}
+.benefit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.benefit{grid-template-columns:1fr}}
+.benefit div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:14px}
+.benefit b{display:block;font-size:15.5px;margin-bottom:4px}
+.progbanner{background:var(--crest-soft);border-radius:12px;padding:12px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:14.5px}
+
+.mform{display:grid;gap:10px;background:var(--bg);border-radius:10px;padding:14px}
+.mgrid3{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.mgrid3{grid-template-columns:1fr}}
+.mine .st{font-size:12px;font-weight:700;color:var(--muted);margin-left:6px}
+.pitem .desc{font-size:13.5px;color:var(--muted);margin-top:2px}
+.textbtn{font:inherit;font-size:13.5px;background:none;border:none;color:var(--leaf);text-decoration:underline;cursor:pointer;padding:0;justify-self:start}
+.danger{color:#b3261e;border-color:#b3261e}
+</style>
+
+
+<section><div class="wrap">
+<p class="crumb"><a href="/">대문</a> › 회원</p>
+<h1 style="font-size:clamp(24px,3vw,32px)">강화도습지연대 회원</h1>
+<p class="lead">회원으로 가입하시면 이름·전화번호를 다시 적지 않고 탐조 프로그램을 바로 신청하고, 신청 내역을 확인하거나 취소할 수 있습니다. 가입비는 없습니다.</p>
+
+<div class="benefit" style="margin:18px 0 22px">
+<div><b>한 번에 신청</b>로그인하면 인원만 고르고 신청 끝. 문자 안내도 가입한 번호로 갑니다.</div>
+<div><b>회원 먼저 신청</b>새 탐조 일정은 회원에게 1주일 먼저 열립니다. 회원 전용 일정도 있습니다.</div>
+<div><b>내 신청 관리</b>신청한 일정을 한곳에서 보고, 못 가게 되면 직접 취소할 수 있습니다.</div>
+</div>
+
+<div id="guest">
+<div class="mtabs" role="tablist">
+ <button role="tab" id="tJoin" aria-selected="true" aria-controls="pJoin">회원 가입</button>
+ <button role="tab" id="tLogin" aria-selected="false" aria-controls="pLogin">로그인</button>
+</div>
+
+<form class="mpanel" id="pJoin" novalidate>
+ <h2>회원 가입</h2>
+ <div class="mgrid">
+  <label class="f">이름<input type="text" name="name" autocomplete="name" maxlength="30" required></label>
+  <label class="f">휴대폰 번호 <small>로그인 아이디로 씁니다</small><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
+  <label class="f">비밀번호 <small>8자 이상</small><input type="password" name="pw" autocomplete="new-password" minlength="8" required></label>
+  <label class="f">비밀번호 확인<input type="password" name="pw2" autocomplete="new-password" required></label>
+  <label class="f">이메일 <small>선택 · 비밀번호 찾기와 소식지</small><input type="email" name="email" autocomplete="email"></label>
+  <label class="f">사는 곳<select name="area"><option>강화군</option><option>인천 (강화 외)</option><option>서울</option><option>경기</option><option>그 밖의 지역</option></select></label>
+ </div>
+ <fieldset><legend>탐조 경험</legend>
+  <label class="chk"><input type="radio" name="exp" value="처음" checked> 처음이에요</label>
+  <label class="chk"><input type="radio" name="exp" value="가끔"> 가끔 다녀요</label>
+  <label class="chk"><input type="radio" name="exp" value="자주"> 자주 다녀요 · 쌍안경 있어요</label>
+ </fieldset>
+ <fieldset><legend>관심 있는 활동 <small style="font-weight:400">(여러 개 고를 수 있어요)</small></legend>
+  <label class="chk"><input type="checkbox" name="int" value="탐조 프로그램" checked> 탐조 프로그램</label>
+  <label class="chk"><input type="checkbox" name="int" value="철새 모니터링"> 철새 모니터링 조사</label>
+  <label class="chk"><input type="checkbox" name="int" value="탐조 가이드 교육"> 탐조 가이드 교육</label>
+  <label class="chk"><input type="checkbox" name="int" value="갯벌 정화·자원봉사"> 갯벌 정화·자원봉사</label>
+ </fieldset>
+ <div class="agreebox">
+  <label class="chk"><input type="checkbox" name="all" id="agAll"> <b>아래 내용에 모두 동의합니다</b></label>
+  <label class="chk"><input type="checkbox" name="ag1" class="ag"> [필수] 회원 이용 약관 동의</label>
+  <label class="chk"><input type="checkbox" name="ag2" class="ag"> [필수] 개인정보 수집·이용 동의 — 이름, 휴대폰 번호, 이메일(선택), 사는 곳, 탐조 경험, 관심 활동 · 목적: 회원 관리와 탐조 프로그램 안내 · 보유: 탈퇴할 때까지 (탈퇴하면 바로 파기)</label>
+  <label class="chk"><input type="checkbox" name="ag3" class="ag"> [선택] 새 탐조 일정·철새 소식을 문자·메일로 받겠습니다</label>
+  <details><summary>약관 요약 보기</summary>
+   <p>강화도습지연대는 비영리 시민 모임입니다. 회원 정보는 모임 관리자만 보며 외부에 제공하지 않습니다. 탐조 중에는 가이드 안내와 탐조 수칙을 따릅니다. 신청 후 연락 없이 두 번 이상 불참하면 회원 우선 신청이 제한될 수 있습니다. 탈퇴는 회원 페이지나 문의 전화로 언제든 할 수 있습니다. 만 14세 미만은 보호자와 함께 가입해 주세요.</p>
+  </details>
+ </div>
+ <label class="hp" aria-hidden="true">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label>
+ <button class="btn" type="submit">가입하기</button>
+ <p class="mmsg" role="status" id="jMsg"></p>
+</form>
+
+<form class="mpanel" id="pLogin" hidden novalidate>
+ <h2>로그인</h2>
+ <div class="mgrid">
+  <label class="f">휴대폰 번호<input type="tel" name="phone" inputmode="tel" autocomplete="username" placeholder="010-0000-0000"></label>
+  <label class="f">비밀번호<input type="password" name="pw" autocomplete="current-password"></label>
+ </div>
+ <label class="chk"><input type="checkbox" name="keep" checked> 이 기기에서 로그인 유지 (30일)</label>
+ <button class="btn" type="submit">로그인</button>
+ <p class="mmsg" role="status" id="lMsg"></p>
+ <button type="button" class="textbtn" id="bForgot">비밀번호를 잊으셨나요?</button>
+</form>
+<form class="mform" id="fForgot" hidden novalidate style="margin-top:12px;max-width:720px"><b>비밀번호 찾기</b><p class="small" style="margin:0">가입할 때 적은 이메일로 임시 비밀번호를 보내 드립니다. 이메일을 적지 않으셨으면 전화(010-4705-7623)로 알려 주세요.</p><div class="mgrid3"><label class="f">휴대폰 번호<input type="tel" name="phone" inputmode="tel" autocomplete="tel"></label><label class="f">이메일<input type="email" name="email" autocomplete="email"></label></div><button class="btn" type="submit">임시 비밀번호 받기</button><p class="mmsg" role="status" id="fMsg"></p></form>
+</div>
+
+<div id="member" hidden>
+ <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start;justify-content:space-between">
+  <div class="card" aria-label="회원증">
+   <div class="ctop"><span>WETLAND LINK GANGHWA-ISLAND</span><span>회원증</span></div>
+   <div class="nm" id="cName"></div>
+   <div class="no" id="cNo"></div>
+   <div class="lv" id="cSince"></div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="linkbtn" type="button" id="bEdit">내 정보 고치기</button><button class="linkbtn" type="button" id="bOut">로그아웃</button></div>
+ </div>
+<form class="mform" id="edit" hidden novalidate style="margin-top:14px">
+ <b>내 정보 고치기</b>
+ <div class="mgrid3">
+  <label class="f">이메일 <small>비밀번호 찾기에 씁니다</small><input type="email" name="email" autocomplete="email"></label>
+  <label class="f">사는 곳<select name="area"><option>강화군</option><option>인천 (강화 외)</option><option>서울</option><option>경기</option><option>그 밖의 지역</option></select></label>
+ </div>
+ <fieldset><legend>관심 있는 활동</legend>
+  <label class="chk"><input type="checkbox" name="int" value="탐조 프로그램"> 탐조 프로그램</label>
+  <label class="chk"><input type="checkbox" name="int" value="철새 모니터링"> 철새 모니터링 조사</label>
+  <label class="chk"><input type="checkbox" name="int" value="탐조 가이드 교육"> 탐조 가이드 교육</label>
+  <label class="chk"><input type="checkbox" name="int" value="갯벌 정화·자원봉사"> 갯벌 정화·자원봉사</label>
+ </fieldset>
+ <label class="chk"><input type="checkbox" name="news"> 새 탐조 일정·철새 소식을 문자·메일로 받겠습니다</label>
+ <div class="mgrid3">
+  <label class="f">지금 비밀번호 <small>비밀번호 변경·탈퇴할 때만</small><input type="password" name="pw" autocomplete="current-password"></label>
+  <label class="f">새 비밀번호 <small>바꿀 때만, 8자 이상</small><input type="password" name="newPw" autocomplete="new-password"></label>
+ </div>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" type="submit">저장</button><button class="linkbtn danger" type="button" id="bLeave">회원 탈퇴</button></div>
+ <p class="mmsg" role="status" id="eMsg"></p>
+</form>
+ <p class="mmsg" role="status" id="mMsg" style="margin-top:14px"></p>
+
+ <h2 style="margin-top:28px">탐조 프로그램 신청</h2>
+ <p class="lead" style="margin-top:0">인원만 고르고 신청하세요. 이름과 번호는 회원 정보로 들어갑니다. 물때와 일정 안내는 <a href="/program/">물때 탐조</a> 페이지에 있습니다.</p>
+ <div class="plist" id="plist"></div>
+
+ <h2 style="margin-top:28px">내 신청</h2>
+ <ul class="plain mine" id="mine"></ul>
+</div>
+</div></section>
+
+<section><div class="wrap"><h2>회원 정보는 이렇게 다룹니다</h2><ul class="plain"><li>회원 정보는 모임 관리자만 봅니다. 외부에 제공하지 않습니다.</li><li>비밀번호는 암호화해서 저장하므로 관리자도 알 수 없습니다. 잊으면 임시 비밀번호를 받아 새로 정하세요.</li><li>탈퇴하면 회원 정보를 바로 지웁니다. 탐조 신청 기록은 프로그램이 끝나고 3개월 뒤 파기합니다.</li><li>회원 철새 모니터링 기록장과 사진 올리기는 지금처럼 <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a>에서 합니다.</li><li>문의 010-4705-7623 · brentkim7@gmail.com</li></ul></div></section>
+<script>
+(function(){
+var API="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec", PHONE="010-4705-7623", KEY='wlgi_member';
+var $=function(id){return document.getElementById(id)};
+var WD=['일','월','화','수','목','금','토'];
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function dlabel(d){var x=new Date(d+'T00:00:00+09:00');return isNaN(x)?d:(x.getMonth()+1)+'월 '+x.getDate()+'일 ('+WD[x.getDay()]+')'}
+function getTok(){try{return localStorage.getItem(KEY)||sessionStorage.getItem(KEY)||''}catch(e){return ''}}
+function setTok(t,keep){try{localStorage.removeItem(KEY);sessionStorage.removeItem(KEY);if(t)(keep?localStorage:sessionStorage).setItem(KEY,t)}catch(e){}}
+var TOK=getTok(), ME=null, MINE=[], PROGS=[], busy=false;
+function say(el,t,ok){el.className='mmsg '+(ok?'ok':'err');el.textContent=t||''}
+function post(d){d.website='';return fetch(API,{method:'POST',body:JSON.stringify(d)}).then(function(r){return r.json()})}
+function offline(el){say(el,'연결이 원활하지 않습니다. 잠시 뒤 다시 시도하거나 전화('+PHONE+')로 알려 주세요.')}
+function tab(j){$('tJoin').setAttribute('aria-selected',j);$('tLogin').setAttribute('aria-selected',!j);$('pJoin').hidden=!j;$('pLogin').hidden=j;}
+$('tJoin').onclick=function(){tab(true)};$('tLogin').onclick=function(){tab(false)};
+$('agAll').onchange=function(){document.querySelectorAll('.ag').forEach(function(x){x.checked=$('agAll').checked})};
+document.querySelectorAll('.ag').forEach(function(x){x.onchange=function(){$('agAll').checked=[].every.call(document.querySelectorAll('.ag'),function(y){return y.checked})}});
+function okPhone(p){return /^01[016789][0-9]{7,8}$/.test(p.replace(/[^0-9]/g,''))}
+function lock(f,on){[].forEach.call(f.querySelectorAll('button'),function(b){b.disabled=on});busy=on}
+
+if(!API){$('guest').insertAdjacentHTML('afterbegin','<p class="mnote">회원 접수를 준비하고 있습니다. 탐조 신청은 <a href="/program/">탐조 프로그램</a> 페이지나 전화('+esc(PHONE)+')로 해 주세요.</p>');}
+
+$('pJoin').onsubmit=function(e){e.preventDefault();if(busy)return;var f=this,m=$('jMsg');
+ if(!f.name.value.trim())return say(m,'이름을 적어 주세요.');
+ if(!okPhone(f.phone.value))return say(m,'휴대폰 번호를 확인해 주세요.');
+ if(f.pw.value.length<8)return say(m,'비밀번호는 8자 이상으로 정해 주세요.');
+ if(f.pw.value!==f.pw2.value)return say(m,'비밀번호 확인이 다릅니다.');
+ if(!f.ag1.checked||!f.ag2.checked)return say(m,'필수 동의 두 가지에 체크해 주세요.');
+ if(!API)return say(m,'회원 접수를 준비하고 있습니다.');
+ var ints=[].filter.call(f.querySelectorAll('[name=int]'),function(x){return x.checked}).map(function(x){return x.value});
+ lock(f,true);say(m,'가입하는 중…',true);
+ post({act:'join',name:f.name.value.trim(),phone:f.phone.value,pw:f.pw.value,email:f.email.value.trim(),area:f.area.value,exp:(f.querySelector('[name=exp]:checked')||{}).value,interests:ints,news:f.ag3.checked,agree1:f.ag1.checked,agree2:f.ag2.checked,keep:true})
+ .then(function(j){lock(f,false);if(!j.ok)return say(m,j.message);setTok(j.token,true);TOK=j.token;f.reset();say(m,'');enter(j,j.message);})
+ .catch(function(){lock(f,false);offline(m)});};
+
+$('pLogin').onsubmit=function(e){e.preventDefault();if(busy)return;var f=this,m=$('lMsg');
+ if(!okPhone(f.phone.value)||!f.pw.value)return say(m,'휴대폰 번호와 비밀번호를 확인해 주세요.');
+ if(!API)return say(m,'회원 접수를 준비하고 있습니다.');
+ lock(f,true);say(m,'로그인하는 중…',true);
+ post({act:'login',phone:f.phone.value,pw:f.pw.value,keep:f.keep.checked})
+ .then(function(j){lock(f,false);if(!j.ok)return say(m,j.message);setTok(j.token,f.keep.checked);TOK=j.token;f.pw.value='';say(m,'');enter(j);})
+ .catch(function(){lock(f,false);offline(m)});};
+
+$('bForgot').onclick=function(){$('fForgot').hidden=!$('fForgot').hidden};
+$('fForgot').onsubmit=function(e){e.preventDefault();var f=this,m=$('fMsg');
+ if(!okPhone(f.phone.value)||!f.email.value.trim())return say(m,'휴대폰 번호와 가입할 때 적은 이메일을 적어 주세요.');
+ lock(f,true);post({act:'forgot',phone:f.phone.value,email:f.email.value.trim()}).then(function(j){lock(f,false);say(m,j.message,j.ok)}).catch(function(){lock(f,false);offline(m)})};
+
+function enter(j,msg){ME=j.member;MINE=j.mine||[];PROGS=j.programs||[];
+ $('guest').hidden=true;$('member').hidden=false;
+ $('cName').textContent=ME.name+' 님';$('cNo').textContent=ME.no+' · '+ME.phone;$('cSince').textContent=(ME.since?ME.since.replace('-','년 ')+'월 가입':'');
+ say($('mMsg'),msg||'',true);draw();}
+function leaveMember(msg){ME=null;setTok('');TOK='';$('member').hidden=true;$('guest').hidden=false;$('edit').hidden=true;tab(false);if(msg)say($('lMsg'),msg,true)}
+function handle(j,el){if(j.auth===false){leaveMember(j.message);return false}if(!j.ok){say(el,j.message);return false}return true}
+
+function draw(){
+ var today=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
+ var mineIds={};MINE.forEach(function(x){if(x.status!=='취소')mineIds[x.program]=1});
+ var list=PROGS.filter(function(p){return p.date>=today});
+ $('plist').innerHTML=list.length?list.map(function(p){
+  var done=mineIds[p.id],open=p.status==='모집중'&&p.left>0,o='';for(var i=1;i<=Math.min(4,p.left);i++)o+='<option>'+i+'</option>';
+  var tag=p.member?'<span class="tag mem">회원 전용</span>':(!p.guestOpen?'<span class="tag mem">회원 먼저</span>':'<span class="tag">'+esc(open?'모집중':(p.status==='모집중'?'마감':p.status))+'</span>');
+  return '<div class="pitem" id="p-'+esc(p.id)+'"><div>'+tag+'<b>'+esc(dlabel(p.date))+' '+esc(p.start)+'~'+esc(p.end)+'</b><div>'+esc(p.title)+'</div><div class="meta">'+esc(p.place)+' · 참가비 '+esc(p.fee)+' · 남은 자리 '+p.left+'/'+p.cap+'명'+(!p.member&&!p.guestOpen?' · 일반 접수 '+esc(p.openAt)+'부터':'')+'</div>'+(p.desc?'<div class="desc">'+esc(p.desc)+'</div>':'')+'</div>'
+  +'<div class="act">'+(done?'<span class="mmsg ok">신청 완료</span>':open?'<label class="small">인원 <select data-n="'+esc(p.id)+'">'+o+'</select></label><button class="btn" type="button" data-a="'+esc(p.id)+'">신청</button>':'<span class="small">'+esc(p.status==='모집중'?'정원이 찼습니다':'신청을 받지 않습니다')+'</span>')+'</div></div>'}).join(''):'<p class="lead">지금 모집 중인 프로그램이 없습니다. 새 일정이 열리면 알려 드립니다.</p>';
+ [].forEach.call($('plist').querySelectorAll('[data-a]'),function(b){b.onclick=function(){if(busy)return;var id=b.dataset.a,n=+document.querySelector('[data-n="'+id+'"]').value,m=$('mMsg');
+  busy=true;b.disabled=true;say(m,'신청하는 중…',true);
+  post({act:'apply',token:TOK,program:id,people:n}).then(function(j){busy=false;b.disabled=false;if(!handle(j,m))return;enter(j,j.message)}).catch(function(){busy=false;b.disabled=false;offline(m)})}});
+ var mine=MINE.filter(function(x){return x.date>=today||x.status!=='취소'});
+ $('mine').innerHTML=mine.length?mine.map(function(x){var can=x.status!=='취소'&&x.date>today;
+  return '<li><span><b>'+esc(dlabel(x.date))+'</b> '+esc(x.title.replace(/^\d{4}-\d{2}-\d{2} /,''))+' · '+x.people+'명<span class="st">'+esc(x.status)+'</span></span>'+(can?'<button class="linkbtn" type="button" data-c="'+esc(x.program)+'">취소</button>':'')+'</li>'}).join(''):'<li><span class="small">아직 신청한 일정이 없습니다.</span></li>';
+ [].forEach.call($('mine').querySelectorAll('[data-c]'),function(b){b.onclick=function(){
+  if(b.dataset.sure!=='1'){b.dataset.sure='1';b.textContent='정말 취소할까요? 한 번 더 누르세요';b.classList.add('danger');return}
+  var m=$('mMsg');b.disabled=true;post({act:'cancel',token:TOK,program:b.dataset.c}).then(function(j){if(!handle(j,m)){b.disabled=false;return}enter(j,j.message)}).catch(function(){b.disabled=false;offline(m)})}});
+}
+
+$('bOut').onclick=function(){post({act:'logout',token:TOK}).catch(function(){});leaveMember('로그아웃했습니다.')};
+$('bEdit').onclick=function(){var f=$('edit');f.hidden=!f.hidden;if(f.hidden)return;
+ f.email.value=ME.email||'';f.area.value=ME.area||'강화군';f.news.checked=!!ME.news;
+ [].forEach.call(f.querySelectorAll('[name=int]'),function(x){x.checked=(ME.interests||'').indexOf(x.value)>=0});f.pw.value='';f.newPw.value='';say($('eMsg'),'')};
+$('edit').onsubmit=function(e){e.preventDefault();var f=this,m=$('eMsg');
+ if(f.newPw.value&&f.newPw.value.length<8)return say(m,'새 비밀번호는 8자 이상으로 정해 주세요.');
+ if(f.newPw.value&&!f.pw.value)return say(m,'비밀번호를 바꾸려면 지금 비밀번호도 적어 주세요.');
+ var ints=[].filter.call(f.querySelectorAll('[name=int]'),function(x){return x.checked}).map(function(x){return x.value});
+ lock(f,true);post({act:'update',token:TOK,email:f.email.value.trim(),area:f.area.value,interests:ints,news:f.news.checked,pw:f.pw.value,newPw:f.newPw.value})
+ .then(function(j){lock(f,false);if(!handle(j,m))return;if(j.token){TOK=j.token;setTok(j.token,true)}f.hidden=true;enter(j,j.message)}).catch(function(){lock(f,false);offline(m)})};
+$('bLeave').onclick=function(){var f=$('edit'),m=$('eMsg');
+ if(!f.pw.value)return say(m,'탈퇴하려면 위 \'지금 비밀번호\' 칸에 비밀번호를 적고 다시 눌러 주세요.');
+ if(this.dataset.sure!=='1'){this.dataset.sure='1';this.textContent='정말 탈퇴합니다 (회원 정보 바로 삭제)';return}
+ lock(f,true);post({act:'leave',token:TOK,pw:f.pw.value}).then(function(j){lock(f,false);if(!handle(j,m))return;leaveMember(j.message)}).catch(function(){lock(f,false);offline(m)})};
+
+if(TOK&&API){say($('lMsg'),'회원 정보를 불러오는 중…',true);tab(false);
+ post({act:'me',token:TOK}).then(function(j){if(j.ok)enter(j);else leaveMember(j.auth===false?'':j.message)}).catch(function(){offline($('lMsg'))});}
+else if(location.hash==='#login')tab(false);
+})();
+</script>
+
+<footer><div class="wrap">
+<p>강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.</p>
+<p>© 강화도습지연대 WLGI · 인천광역시 강화군 · 문의 010-4705-7623 · brentkim7@gmail.com</p>
+<p class="visits" id="visits" hidden>오늘 방문 <b id="vToday">-</b> · 전체 방문 <b id="vTotal">-</b></p>
+<p><a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
+</div></footer>
+<script>(function(){var A="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec",k='wlgi_v_'+new Date(Date.now()+9*3600e3).toISOString().slice(0,10),c=false;
+try{c=localStorage.getItem(k)==='1'}catch(e){}
+fetch(A+'?v='+(c?0:1)).then(function(r){return r.json()}).then(function(j){if(!j||!j.ok)return;try{localStorage.setItem(k,'1')}catch(e){}
+var f=function(n){return Number(n).toLocaleString('ko-KR')};document.getElementById('vToday').textContent=f(j.today);document.getElementById('vTotal').textContent=f(j.total);
+['visits','heroVisits'].forEach(function(id){var el=document.getElementById(id);if(el)el.hidden=false});var h=document.getElementById('hvToday');if(h){h.textContent=f(j.today);document.getElementById('hvTotal').textContent=f(j.total);}}).catch(function(){});})();</script>
+</body></html>

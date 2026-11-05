@@ -97,6 +97,15 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 .hcard.wide .hsvg.n{display:none}@media (max-width:640px){.hcard.wide .hsvg.w{display:none}.hcard.wide .hsvg.n{display:block}}
 .hdata{font-size:13px;margin-top:6px}.hdata table{width:auto;font-size:13px}.hdata td,.hdata th{padding:2px 10px}
 
+/* 강화 데이터 조각 */
+.arthud{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:14px;z-index:0;display:flex;flex-direction:column;text-shadow:0 1px 6px #000;pointer-events:none;color:#fff}
+.arthud b{font-size:12.5px;font-weight:600;color:#cfd6dd;letter-spacing:.04em}
+.arthud span{font-size:clamp(26px,4.4vw,48px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.arthud em{font-style:normal;font-size:clamp(14px,2vw,20px);font-variant-numeric:tabular-nums;color:#9fe3dd}
+.arthud small{font-size:10.5px;color:#9aa1a8;margin-top:3px}
+.arttide{position:absolute;right:max(14px,env(safe-area-inset-right,0px));top:12px;z-index:0;text-align:right;font-size:12px;color:#cfd6dd;line-height:1.5;text-shadow:0 1px 6px #000;font-variant-numeric:tabular-nums;pointer-events:none}
+.arttide b{display:block;font-size:19px;color:#fff}
+
 .capgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:20px 40px;align-items:start}
 @media (max-width:860px){.capgrid{grid-template-columns:minmax(0,1fr)}}
 .sbox{display:flex;flex-direction:column;gap:8px;min-width:0}
@@ -330,7 +339,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <p>강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.</p>
 <p>© 강화도습지연대 WLGI · 인천광역시 강화군 · 문의 010-4705-7623 · brentkim7@gmail.com</p>
 <p class="visits" id="visits" hidden>오늘 방문 <b id="vToday">-</b> · 전체 방문 <b id="vTotal">-</b></p>
-<p><a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">회원 전용 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
+<p><a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
 </div></footer>
 <script>(function(){var A="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec",k='wlgi_v_'+new Date(Date.now()+9*3600e3).toISOString().slice(0,10),c=false;
 try{c=localStorage.getItem(k)==='1'}catch(e){}
