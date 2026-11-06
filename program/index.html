@@ -64,7 +64,7 @@ th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-alig
 td.m{text-align:center;width:2.2em;padding:6px 2px}
 td.m.l1{background:var(--crest-soft)} td.m.l2{background:#8fd6d1;color:#111} td.m.l3{background:var(--crest);color:#111}
 ul.plain{padding-left:1.1em}
-.live{background:var(--crest-soft)}
+.live{background:linear-gradient(180deg,#141e46 0%,#2a1b4f 50%,#3d2b63 100%);color:#f3f1ee;border-bottom:0}.live h2{color:#f3f1ee}.live .lead{color:#d9d1e8}.live .btns{display:flex;flex-wrap:wrap;gap:10px}.live .btn.vir{background:#23977c;border-color:#23977c;color:#f4fffa;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}.live .btn.car{background:#ff0038;border-color:#ff0038;color:#fff6f8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 footer{padding-block:30px;font-size:14px;color:var(--muted)}
 .crumb{font-size:14px;margin:0 0 10px}
 .boards{columns:2 220px;padding-left:1.1em}
@@ -141,7 +141,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 </head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
-<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#dash">지금 탐조</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
 </div></header>
 
 <style>
@@ -252,7 +252,7 @@ function openForm(id, btn){
     + '<label>휴대폰 번호<input name="phone" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>'
     + '<label>남길 말 (선택)<textarea name="memo" rows="2" maxlength="200" placeholder="어린이 동반, 망원경 대여 필요 등"></textarea></label>'
     + '<label class="hp" aria-hidden="true">웹사이트<input name="website" tabindex="-1" autocomplete="off"></label>'
-    + '<label class="agree"><input type="checkbox" name="agree"> <span>개인정보 수집·이용에 동의합니다. 수집 항목: 이름, 휴대폰 번호 · 목적: 탐조 프로그램 안내 연락 · 보유 기간: 프로그램 종료 후 3개월 뒤 파기. 동의하지 않으실 수 있으나 그 경우 신청이 어렵습니다.</span></label>'
+    + '<label class="agree"><input type="checkbox" name="agree"> <span>개인정보 수집·이용에 동의합니다. 수집 항목: 이름, 휴대폰 번호 · 목적: 탐조 프로그램 안내 연락 · 보유 기간: 프로그램 종료 후 3개월 뒤 파기. 동의하지 않으실 수 있으나 그 경우 신청이 어렵습니다. <a href="/privacy/" target="_blank" rel="noopener">개인정보 처리방침</a></span></label>'
     + '<button class="btn" type="submit">신청 보내기</button><p class="pmsg" role="status"></p></form>';
   var f = slot.querySelector('form'), msg = f.querySelector('.pmsg');
   f.onsubmit = function(ev){
@@ -286,7 +286,7 @@ di.onchange = showTide; showTide();
 <p>강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.</p>
 <p>© 강화도습지연대 WLGI · 인천광역시 강화군 · 문의 010-4705-7623 · brentkim7@gmail.com</p>
 <p class="visits" id="visits" hidden>오늘 방문 <b id="vToday">-</b> · 전체 방문 <b id="vTotal">-</b></p>
-<p><a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
+<p><a href="/privacy/"><b>개인정보 처리방침</b></a> · <a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
 </div></footer>
 <script>(function(){var A="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec",k='wlgi_v_'+new Date(Date.now()+9*3600e3).toISOString().slice(0,10),c=false;
 try{c=localStorage.getItem(k)==='1'}catch(e){}

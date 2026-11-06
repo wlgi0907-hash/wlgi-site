@@ -141,7 +141,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 </head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
-<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#dash">지금 탐조</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
 </div></header>
 
 <div class="hero"><div class="hslides" id="hslides"><img class="hs on" src="/img/hero.jpg?v=765f074c" data-src="/img/hero.jpg?v=765f074c" data-still="/img/hero.jpg?v=765f074c" data-dur="30000" data-credit="" data-best="" data-sp="" data-art="1" alt="강화 데이터 조각: 저어새와 두루미의 세계 개체수 기록과 강화 외포리 물때에 따라 빛 입자가 모여 새의 모습이 되는 3D 작품" fetchpriority="high"><img class="hs" src="" data-src="/img/hero-2.jpg?v=ac1efb79" data-still="/img/hero-2.jpg?v=ac1efb79" data-dur="8000" data-credit="두루미 Grus japonensis · 강화 갯벌 · 사진 김정원" data-best="" data-sp="" data-art="" alt="잔잔한 갯벌 물가에 두루미 무리가 서 있고, 몇 마리는 고개를 들어 울고 있다. 뒤로 안개 낀 산이 보인다." loading="lazy"><img class="hs" src="" data-src="/img/hero.jpg?v=765f074c" data-still="/img/hero.jpg?v=765f074c" data-dur="8000" data-credit="저어새 Platalea minor" data-best="" data-sp="" data-art="" alt="얕은 물에 모여 쉬는 저어새 무리. 한 마리가 날개를 펴고 내려앉고 있다." loading="lazy"></div><span class="hcredit" id="hcredit"></span>
@@ -264,6 +264,262 @@ var t=document.getElementById('mtab'),b=document.getElementById('mbox');if(t&&b)
 <h2>물때 맞춰 강화 탐조</h2>
 <p class="lead">물때에 맞춘 탐조 프로그램을 신청하고, 날짜별 물때를 확인할 수 있습니다. 회원으로 가입하면 이름·번호를 적지 않고 바로 신청하고, 회원 전용 일정도 신청할 수 있습니다. 가입비는 없습니다.</p>
 <div class="btns"><a class="btn vir" href="/member/">회원 로그인 · 가입</a><a class="btn car" href="/program/">탐조 프로그램 신청</a></div></div></section>
+<style>
+:root{--g-sp:#b9831f;--g-cr:#a8322a;--g-sh:#3f6f8a;--g-sp-soft:#f4e8cd;--g-cr-soft:#f3dcd9;--g-sh-soft:#dbe8ef;--twater:#4f6f6d;--tflat:#ddd6d1;--tnight:#dedbd8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--g-sp:#e2b45f;--g-cr:#ef8b80;--g-sh:#86bcd8;--g-sp-soft:#3a3020;--g-cr-soft:#3b2220;--g-sh-soft:#1c3240;--twater:#8fb3b0;--tflat:#2b2826;--tnight:#1f1f20}}
+:root[data-theme="dark"]{--g-sp:#e2b45f;--g-cr:#ef8b80;--g-sh:#86bcd8;--g-sp-soft:#3a3020;--g-cr-soft:#3b2220;--g-sh-soft:#1c3240;--twater:#8fb3b0;--tflat:#2b2826;--tnight:#1f1f20}
+.g-sp{--gc:var(--g-sp)}.g-cr{--gc:var(--g-cr)}.g-sh{--gc:var(--g-sh)}
+.dcard{border-radius:12px}.pst{border-radius:999px}
+#dash .dnote{font-size:12.5px;color:var(--muted);margin-top:10px}
+.dshead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:18px}
+.dshead .eyebrow{display:block;font-size:12px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
+.dotlive{width:9px;height:9px;border-radius:50%;background:var(--leaf);box-shadow:0 0 0 3px color-mix(in srgb,var(--leaf) 25%,transparent);display:inline-block}
+.dnews{margin-top:12px;background:var(--surface);border:1px solid var(--line);padding:14px 18px;border-radius:12px}
+.dnewsh{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:4px}
+.dnewsh h3{display:flex;gap:8px;align-items:center;font-size:15px;margin:0}
+.dnewsh a{font-size:13.5px;font-weight:600;color:var(--leaf);text-decoration:none}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl li{position:relative;padding:10px 0 10px 22px;border-left:2px solid var(--line);margin-left:5px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.tl .tdot{position:absolute;left:-7px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:3px solid var(--g-sh)}
+.tl li.korea .tdot{border-color:var(--g-sp)}
+.tl a{font-weight:600;text-decoration:none;color:var(--ink);overflow-wrap:anywhere}.tl a:hover{text-decoration:underline}
+.tl p{font-size:13.5px;color:var(--muted);margin:0}
+.lmeta{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted);align-items:center}
+.lsrc{font-family:ui-monospace,Menlo,monospace;font-size:11px;padding:1px 7px;background:#222;color:#f3f1ee}
+.ltag{font-size:11px;padding:1px 7px;border:1px solid var(--crest);color:var(--ink)}
+/* dashboard */
+.dashsec { padding-top: 40px; }
+.dgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr); gap: 12px; }
+@media (max-width: 980px) { .dgrid { grid-template-columns: 1fr 1fr; } .dgrid .pts { grid-column: 1 / -1; } }
+@media (max-width: 620px) { .dgrid { grid-template-columns: 1fr; } }
+.dcard { background: var(--surface); border: 1px solid var(--line); padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.dlab { font-family: ui-monospace,Menlo,monospace; font-size: 11.5px; letter-spacing: .08em; color: var(--muted); }
+.dbig { font-family: 'Gothic A1',sans-serif; font-size: clamp(34px, 5vw, 44px); line-height: 1.05; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dbig small { font-family: 'Noto Sans KR',sans-serif; font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 6px; }
+.dsub { font-size: 14px; color: var(--muted); }
+.dsub b { color: var(--ink); }
+.dfoot { font-size: 12px; color: var(--muted); margin-top: auto; }
+.dlink { font-size: 13.5px; font-weight: 600; color: var(--leaf); text-decoration: none; }
+.dlink:hover { text-decoration: underline; }
+.tgauge { display: flex; gap: 16px; align-items: stretch; }
+.tbar { width: 26px; min-height: 110px; background: var(--tflat); border: 1px solid var(--line); position: relative; flex-shrink: 0; }
+.tbar i { position: absolute; left: 0; right: 0; bottom: 0; background: var(--twater); opacity: .85; transition: height .6s; }
+.arrow { font-family: 'Noto Sans KR',sans-serif; font-size: 14px; font-weight: 700; padding: 2px 8px; vertical-align: middle; }
+.arrow.up { background: var(--g-sh-soft); color: var(--g-sh); } .arrow.down { background: var(--g-sp-soft); color: var(--g-sp); }
+.dstage { font-size: 13.5px; font-weight: 600; margin-top: 4px; }
+.wwarn { display: flex; flex-wrap: wrap; gap: 6px; }
+.wwarn span { font-size: 12.5px; font-weight: 600; padding: 3px 9px; background: var(--g-cr-soft); color: var(--g-cr); }
+.wwarn.ok span { background: var(--ok-soft, #e1efe1); color: var(--leaf); }
+.whours { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(46px, 1fr); gap: 4px; overflow-x: auto; padding-bottom: 2px; }
+.whours div { display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 12px; padding: 6px 2px; background: var(--bg); }
+.whours span { color: var(--muted); font-family: ui-monospace,Menlo,monospace; font-size: 11px; }
+.whours b { font-size: 14px; }
+.whours small { color: var(--muted); font-size: 11px; }
+.plist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.plist li { padding: 10px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; position: relative; }
+.plist li:last-child { border-bottom: none; }
+.ptop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.ptop b { font-size: 15.5px; }
+.pst { font-size: 12px; font-weight: 700; padding: 2px 8px; white-space: nowrap; }
+.pst.ok { background: var(--leaf); color: var(--surface); } .pst.mid { background: var(--g-sp-soft); color: var(--ink); } .pst.off { background: var(--bg); color: var(--muted); border: 1px solid var(--line); } .pst.warn { border: 1px solid var(--g-cr); color: var(--g-cr); }
+.pgs { display: flex; flex-direction: column; gap: 3px; }
+.pg { font-size: 13px; color: var(--muted); display: flex; gap: 6px; align-items: baseline; }
+.pg i { width: 8px; height: 8px; border-radius: 50%; background: var(--gc); flex-shrink: 0; transform: translateY(-1px); }
+.plist .nav { align-self: flex-start; font-size: 12.5px; font-weight: 600; padding: 4px 10px; border: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.p-off { opacity: .7; }
+.strip { margin-top: 12px; }
+.strip svg { width: 100%; height: auto; display: block; }</style>
+<section id="dash" class="dashsec"><div class="wrap">
+<div class="dshead"><div><span class="eyebrow">Live · 지금 강화</span><h2 style="margin:0">지금 탐조 상황판</h2>
+<p class="lead" style="margin:6px 0 0">외포리 물때, 강화 남단 날씨, 지금 가기 좋은 탐조 포인트를 한눈에 봅니다. 실시간 홈페이지와 같은 날씨·소식을 씁니다.</p></div>
+<a class="btn" href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu#now" target="_blank" rel="noopener">전체 화면 탐조 모드</a></div>
+<div id="dashTop"><p class="small">불러오는 중…</p></div>
+<p class="dnote">물때: 국립해양조사원 예보(바다타임, 강화외포 기준) · 날씨·소식: 실시간 홈페이지와 같은 자료(날씨 매시간, 소식 하루 4번 갱신. 날씨가 3시간 넘게 멈추면 Open-Meteo 예보로 대신) · 장소별 적기는 물때로 계산한 참고값입니다. 번식지 무인도는 어떤 경우에도 다가가지 않습니다.</p>
+</div></section>
+<script>(function(){
+var box=document.getElementById('dashTop');if(!box)return;
+const OEPO={"2026-11-02":["조금",[["04:47",251,0],["10:24",610,1],["16:44",191,0],["23:16",689,1]]],"2026-11-03":["무시",[["06:12",262,0],["11:55",590,1],["18:15",224,0]]],"2026-11-04":["1물",[["00:47",671,1],["07:37",232,0],["13:27",620,1],["19:49",212,0]]],"2026-11-05":["2물",[["02:04",687,1],["08:43",179,0],["14:37",682,1],["21:01",174,0]]],"2026-11-06":["3물",[["03:01",715,1],["09:34",127,0],["15:30",746,1],["21:57",136,0]]],"2026-11-07":["4물",[["03:46",740,1],["10:16",87,0],["16:12",796,1],["22:43",112,0]]],"2026-11-08":["5물",[["04:24",757,1],["10:53",62,0],["16:50",828,1],["23:23",104,0]]],"2026-11-09":["7물",[["04:59",763,1],["11:27",52,0],["17:24",842,1]]],"2026-11-10":["8물",[["00:00",109,0],["05:33",760,1],["11:58",53,0],["17:57",842,1]]],"2026-11-11":["9물",[["00:35",123,0],["06:06",749,1],["12:28",60,0],["18:30",831,1]]],"2026-11-12":["10물",[["01:07",144,0],["06:38",731,1],["12:58",72,0],["19:01",812,1]]],"2026-11-13":["11물",[["01:38",169,0],["07:11",706,1],["13:27",89,0],["19:32",788,1]]],"2026-11-14":["12물",[["02:09",197,0],["07:44",676,1],["13:57",111,0],["20:05",758,1]]],"2026-11-15":["13물",[["02:41",226,0],["08:18",643,1],["14:29",140,0],["20:40",722,1]]],"2026-11-16":["조금",[["03:16",254,0],["08:58",607,1],["15:07",177,0],["21:22",683,1]]],"2026-11-17":["무시",[["04:02",278,0],["09:50",573,1],["15:57",220,0],["22:18",643,1]]],"2026-11-18":["1물",[["05:07",291,0],["11:04",554,1],["17:06",257,0],["23:33",617,1]]],"2026-11-19":["2물",[["06:30",277,0],["12:32",572,1],["18:37",266,0]]],"2026-11-20":["3물",[["00:56",621,1],["07:44",234,0],["13:47",627,1],["20:02",238,0]]],"2026-11-21":["4물",[["02:04",651,1],["08:42",178,0],["14:44",699,1],["21:09",195,0]]],"2026-11-22":["5물",[["02:58",690,1],["09:31",124,0],["15:32",769,1],["22:05",154,0]]],"2026-11-23":["6물",[["03:46",724,1],["10:17",79,0],["16:17",826,1],["22:56",124,0]]],"2026-11-24":["7물",[["04:30",748,1],["11:01",45,0],["17:01",865,1],["23:44",108,0]]],"2026-11-25":["8물",[["05:15",760,1],["11:46",24,0],["17:45",885,1]]],"2026-11-26":["9물",[["00:32",104,0],["06:00",760,1],["12:31",13,0],["18:31",888,1]]],"2026-11-27":["10물",[["01:19",110,0],["06:46",751,1],["13:16",13,0],["19:18",875,1]]],"2026-11-28":["11물",[["02:06",123,0],["07:34",734,1],["14:01",28,0],["20:06",848,1]]],"2026-11-29":["12물",[["02:53",142,0],["08:23",709,1],["14:48",58,0],["20:55",807,1]]],"2026-11-30":["13물",[["03:43",165,0],["09:16",677,1],["15:38",104,0],["21:48",756,1]]],"2026-12-01":["조금",[["04:38",187,0],["10:16",644,1],["16:35",157,0],["22:47",702,1]]],"2026-12-02":["무시",[["05:39",202,0],["11:27",623,1],["17:44",205,0],["23:56",658,1]]],"2026-12-03":["1물",[["06:46",201,0],["12:45",626,1],["19:03",231,0]]],"2026-12-04":["2물",[["01:08",637,1],["07:51",182,0],["13:57",657,1],["20:21",227,0]]],"2026-12-05":["3물",[["02:14",639,1],["08:48",154,0],["14:57",701,1],["21:25",207,0]]],"2026-12-06":["4물",[["03:09",655,1],["09:36",125,0],["15:46",743,1],["22:18",184,0]]],"2026-12-07":["5물",[["03:55",674,1],["10:19",102,0],["16:29",776,1],["23:02",169,0]]],"2026-12-08":["6물",[["04:37",690,1],["10:58",88,0],["17:07",795,1],["23:43",162,0]]],"2026-12-09":["7물",[["05:16",700,1],["11:34",82,0],["17:43",802,1]]],"2026-12-10":["8물",[["00:21",163,0],["05:53",702,1],["12:09",80,0],["18:17",800,1]]],"2026-12-11":["9물",[["00:57",169,0],["06:28",699,1],["12:43",82,0],["18:50",793,1]]],"2026-12-12":["10물",[["01:30",178,0],["07:02",691,1],["13:16",87,0],["19:21",784,1]]],"2026-12-13":["11물",[["02:01",187,0],["07:34",679,1],["13:47",96,0],["19:51",771,1]]],"2026-12-14":["12물",[["02:31",194,0],["08:07",666,1],["14:20",112,0],["20:23",754,1]]],"2026-12-15":["13물",[["03:03",202,0],["08:43",650,1],["14:56",136,0],["20:59",731,1]]],"2026-12-16":["조금",[["03:39",209,0],["09:26",632,1],["15:37",169,0],["21:41",699,1]]],"2026-12-17":["무시",[["04:22",218,0],["10:18",616,1],["16:28",209,0],["22:32",663,1]]],"2026-12-18":["1물",[["05:17",223,0],["11:24",611,1],["17:33",245,0],["23:37",632,1]]],"2026-12-19":["2물",[["06:23",216,0],["12:41",631,1],["18:55",262,0]]],"2026-12-20":["3물",[["00:53",620,1],["07:35",193,0],["13:53",676,1],["20:19",250,0]]],"2026-12-21":["4물",[["02:07",632,1],["08:41",155,0],["14:57",734,1],["21:32",219,0]]],"2026-12-22":["5물",[["03:11",659,1],["09:41",112,0],["15:54",791,1],["22:36",185,0]]],"2026-12-23":["6물",[["04:09",690,1],["10:37",71,0],["16:47",838,1],["23:33",154,0]]],"2026-12-24":["7물",[["05:03",719,1],["11:31",37,0],["17:38",870,1]]],"2026-12-25":["8물",[["00:26",128,0],["05:54",742,1],["12:23",11,0],["18:27",886,1]]],"2026-12-26":["9물",[["01:16",109,0],["06:44",756,1],["13:13",-2,0],["19:14",886,1]]],"2026-12-27":["10물",[["02:03",98,0],["07:31",760,1],["14:00",1,0],["19:59",868,1]]],"2026-12-28":["11물",[["02:47",96,0],["08:18",753,1],["14:44",25,0],["20:41",834,1]]],"2026-12-29":["12물",[["03:28",107,0],["09:03",732,1],["15:27",70,0],["21:23",785,1]]],"2026-12-30":["13물",[["04:09",129,0],["09:51",701,1],["16:11",130,0],["22:05",727,1]]],"2026-12-31":["조금",[["04:51",157,0],["10:44",667,1],["17:00",197,0],["22:54",665,1]]],"2027-01-01":["무시",[["05:39",185,0],["11:46",638,1],["18:01",257,0],["23:53",612,1]]],"2027-01-02":["1물",[["06:39",205,0],["13:02",631,1],["19:22",292,0]]],"2027-01-03":["2물",[["01:10",581,1],["07:49",207,0],["14:18",650,1],["20:47",289,0]]],"2027-01-04":["3물",[["02:28",583,1],["08:54",190,0],["15:22",687,1],["21:56",262,0]]],"2027-01-05":["4물",[["03:32",609,1],["09:50",164,0],["16:14",726,1],["22:49",231,0]]],"2027-01-06":["5물",[["04:23",641,1],["10:38",137,0],["16:57",757,1],["23:33",206,0]]],"2027-01-07":["6물",[["05:07",670,1],["11:20",114,0],["17:34",779,1]]],"2027-01-08":["7물",[["00:12",187,0],["05:44",693,1],["11:59",96,0],["18:08",792,1]]],"2027-01-09":["8물",[["00:48",174,0],["06:19",709,1],["12:34",83,0],["18:38",801,1]]],"2027-01-10":["9물",[["01:20",164,0],["06:51",719,1],["13:08",74,0],["19:07",806,1]]],"2027-01-11":["10물",[["01:49",155,0],["07:22",724,1],["13:40",73,0],["19:35",807,1]]],"2027-01-12":["11물",[["02:17",147,0],["07:52",725,1],["14:12",80,0],["20:04",802,1]]],"2027-01-13":["12물",[["02:44",143,0],["08:24",720,1],["14:44",100,0],["20:34",786,1]]],"2027-01-14":["13물",[["03:13",145,0],["08:59",710,1],["15:18",132,0],["21:08",757,1]]],"2027-01-15":["조금",[["03:45",154,0],["09:40",694,1],["15:57",177,0],["21:48",716,1]]],"2027-01-16":["무시",[["04:24",170,0],["10:32",675,1],["16:46",230,0],["22:38",665,1]]],"2027-01-17":["1물",[["05:15",191,0],["11:39",660,1],["17:54",279,0],["23:45",617,1]]],"2027-01-18":["2물",[["06:27",204,0],["13:03",667,1],["19:30",302,0]]],"2027-01-19":["3물",[["01:16",594,1],["07:54",193,0],["14:29",707,1],["21:09",280,0]]],"2027-01-20":["4물",[["02:47",614,1],["09:15",154,0],["15:40",767,1],["22:26",230,0]]],"2027-01-21":["5물",[["03:59",663,1],["10:25",99,0],["16:40",827,1],["23:29",173,0]]],"2027-01-22":["6물",[["04:58",719,1],["11:25",46,0],["17:33",874,1]]],"2027-01-23":["7물",[["00:21",122,0],["05:49",767,1],["12:19",3,0],["18:20",901,1]]],"2027-01-24":["8물",[["01:07",83,0],["06:36",802,1],["13:07",-20,0],["19:02",907,1]]],"2027-01-25":["9물",[["01:49",59,0],["07:20",818,1],["13:51",-18,0],["19:41",891,1]]],"2027-01-26":["10물",[["02:26",53,0],["08:00",815,1],["14:29",10,0],["20:16",859,1]]],"2027-01-27":["11물",[["02:59",64,0],["08:38",796,1],["15:05",59,0],["20:49",812,1]]],"2027-01-28":["12물",[["03:30",89,0],["09:16",762,1],["15:39",124,0],["21:22",755,1]]],"2027-01-29":["13물",[["04:00",124,0],["09:57",718,1],["16:16",198,0],["21:58",690,1]]],"2027-01-30":["조금",[["04:34",168,0],["10:46",669,1],["17:00",273,0],["22:43",621,1]]],"2027-01-31":["무시",[["05:20",215,0],["11:55",626,1],["18:10",337,0],["23:54",559,1]]],"2027-02-01":["1물",[["06:32",254,0],["13:31",614,1],["20:04",357,0]]],"2027-02-02":["2물",[["01:43",537,1],["08:08",258,0],["15:00",645,1],["21:40",321,0]]],"2027-02-03":["3물",[["03:13",569,1],["09:26",225,0],["16:00",693,1],["22:38",271,0]]],"2027-02-04":["4물",[["04:10",621,1],["10:22",181,0],["16:43",739,1],["23:21",226,0]]],"2027-02-05":["5물",[["04:53",672,1],["11:07",138,0],["17:19",776,1],["23:56",189,0]]],"2027-02-06":["6물",[["05:29",716,1],["11:46",102,0],["17:49",804,1]]],"2027-02-07":["7물",[["00:28",158,0],["06:01",749,1],["12:22",75,0],["18:17",825,1]]],"2027-02-08":["8물",[["00:59",132,0],["06:32",773,1],["12:56",58,0],["18:45",839,1]]],"2027-02-09":["9물",[["01:27",111,0],["07:01",788,1],["13:28",53,0],["19:13",845,1]]],"2027-02-10":["10물",[["01:54",98,0],["07:31",796,1],["13:59",62,0],["19:40",841,1]]],"2027-02-11":["11물",[["02:20",93,0],["08:01",795,1],["14:29",84,0],["20:09",825,1]]],"2027-02-12":["12물",[["02:46",96,0],["08:33",787,1],["15:00",121,0],["20:40",794,1]]],"2027-02-13":["13물",[["03:14",109,0],["09:09",768,1],["15:33",170,0],["21:15",747,1]]],"2027-02-14":["조금",[["03:47",134,0],["09:55",736,1],["16:15",232,0],["21:59",686,1]]],"2027-02-15":["무시",[["04:31",171,0],["10:56",697,1],["17:17",298,0],["23:02",618,1]]],"2027-02-16":["1물",[["05:39",212,0],["12:28",672,1],["19:00",338,0]]],"2027-02-17":["2물",[["00:46",574,1],["07:22",225,0],["14:14",698,1],["21:02",307,0]]],"2027-02-18":["3물",[["02:38",602,1],["09:04",183,0],["15:34",764,1],["22:22",234,0]]],"2027-02-19":["4물",[["03:54",675,1],["10:20",113,0],["16:32",832,1],["23:18",158,0]]],"2027-02-20":["5물",[["04:50",752,1],["11:19",47,0],["17:20",883,1]]],"2027-02-21":["6물",[["00:05",96,0],["05:38",815,1],["12:10",2,0],["18:02",909,1]]],"2027-02-22":["7물",[["00:46",53,0],["06:20",854,1],["12:53",-16,0],["18:40",911,1]]],"2027-02-23":["8물",[["01:23",31,0],["06:59",870,1],["13:32",-7,0],["19:14",894,1]]],"2027-02-24":["9물",[["01:56",28,0],["07:35",866,1],["14:07",26,0],["19:45",864,1]]],"2027-02-25":["10물",[["02:24",41,0],["08:08",845,1],["14:38",76,0],["20:14",822,1]]],"2027-02-26":["11물",[["02:50",66,0],["08:41",811,1],["15:08",137,0],["20:44",771,1]]],"2027-02-27":["12물",[["03:14",102,0],["09:16",764,1],["15:38",207,0],["21:15",708,1]]],"2027-02-28":["13물",[["03:42",151,0],["09:56",706,1],["16:14",281,0],["21:52",636,1]]],"2027-03-01":["조금",[["04:19",210,0],["10:52",644,1],["17:09",353,0],["22:49",561,1]]],"2027-03-02":["무시",[["05:18",272,0],["12:32",602,1],["19:11",392,0]]],"2027-03-03":["1물",[["00:52",517,1],["07:08",304,0],["14:27",620,1],["21:17",352,0]]],"2027-03-04":["2물",[["02:45",552,1],["08:55",272,0],["15:34",673,1],["22:14",289,0]]],"2027-03-05":["3물",[["03:46",619,1],["09:58",213,0],["16:17",727,1],["22:52",229,0]]],"2027-03-06":["4물",[["04:28",687,1],["10:44",156,0],["16:50",774,1],["23:25",177,0]]],"2027-03-07":["5물",[["05:03",746,1],["11:24",108,0],["17:20",812,1],["23:57",133,0]]],"2027-03-08":["7물",[["05:35",793,1],["12:01",75,0],["17:49",840,1]]],"2027-03-09":["8물",[["00:28",99,0],["06:06",825,1],["12:36",56,0],["18:18",856,1]]],"2027-03-10":["9물",[["00:58",75,0],["06:37",845,1],["13:09",54,0],["18:46",859,1]]],"2027-03-11":["10물",[["01:27",62,0],["07:07",854,1],["13:41",67,0],["19:15",851,1]]],"2027-03-12":["11물",[["01:54",60,0],["07:37",853,1],["14:13",93,0],["19:45",831,1]]],"2027-03-13":["12물",[["02:21",68,0],["08:10",842,1],["14:44",133,0],["20:17",796,1]]],"2027-03-14":["13물",[["02:49",86,0],["08:48",816,1],["15:18",185,0],["20:54",746,1]]],"2027-03-15":["조금",[["03:23",118,0],["09:34",774,1],["16:01",248,0],["21:39",680,1]]],"2027-03-16":["무시",[["04:09",166,0],["10:37",720,1],["17:07",312,0],["22:48",609,1]]],"2027-03-17":["1물",[["05:19",220,0],["12:14",682,1],["19:01",340,0]]],"2027-03-18":["2물",[["00:44",575,1],["07:12",238,0],["14:03",706,1],["20:55",289,0]]],"2027-03-19":["3물",[["02:32",624,1],["08:57",190,0],["15:19",768,1],["22:04",206,0]]],"2027-03-20":["4물",[["03:42",709,1],["10:09",119,0],["16:13",829,1],["22:55",130,0]]],"2027-03-21":["5물",[["04:34",790,1],["11:04",60,0],["16:58",869,1],["23:38",74,0]]],"2027-03-22":["6물",[["05:17",850,1],["11:51",27,0],["17:36",886,1]]],"2027-03-23":["7물",[["00:16",40,0],["05:57",883,1],["12:32",20,0],["18:11",883,1]]],"2027-03-24":["8물",[["00:50",26,0],["06:33",894,1],["13:09",37,0],["18:43",866,1]]],"2027-03-25":["9물",[["01:20",29,0],["07:07",886,1],["13:41",70,0],["19:14",840,1]]],"2027-03-26":["10물",[["01:47",42,0],["07:39",865,1],["14:11",114,0],["19:43",804,1]]],"2027-03-27":["11물",[["02:12",66,0],["08:10",832,1],["14:40",165,0],["20:14",759,1]]],"2027-03-28":["12물",[["02:38",99,0],["08:43",788,1],["15:10",222,0],["20:45",703,1]]],"2027-03-29":["13물",[["03:05",145,0],["09:20",733,1],["15:43",285,0],["21:22",638,1]]],"2027-03-30":["조금",[["03:40",202,0],["10:09",670,1],["16:32",346,0],["22:15",571,1]]],"2027-03-31":["무시",[["04:31",265,0],["11:28",617,1],["18:11",385,0],["23:59",526,1]]]};const ODATES=Object.keys(OEPO).sort();
+const S={tides:[{"name": "간조 (물이 가장 많이 빠진 때)"}, {"name": "밀물 초반"}, {"name": "만조 2~3시간 전 · 관찰 적기"}, {"name": "만조 (물이 가장 높은 때)"}, {"name": "썰물 초반"}, {"name": "썰물 후반"}]};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let WX=null, dashFilter='all', NEWS=null;
+const API="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec", LIVEURL="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu";
+  const TG = {
+    sp: { name: "저어새", c: "--g-sp", rule: "물이 얕게 든 수로에서 먹이활동. 밀물 중반·썰물 중반이 좋습니다." },
+    cr: { name: "두루미", c: "--g-cr", rule: "갯벌이 드러난 간조 전후에 나옵니다. 만조에는 논으로 옮기기도 합니다." },
+    sh: { name: "도요·물떼새", c: "--g-sh", rule: "밀물에 밀려 만조 2~3시간 전 해안 가까이 옵니다. 만조에는 쉼터에 모입니다." },
+  };
+  const TWIN = {
+    sh: [{ a: -3, b: -1, l: "접근 최적 (밀물에 밀려옴)", v: 2 }, { a: -1, b: 1, l: "만조 쉼터 (멀리서 조용히)", v: 1 }, { a: 1, b: 3, l: "썰물 따라 먹이활동", v: 1 }],
+    sp: [{ a: -4, b: -1.5, l: "밀물 중반 수로", v: 2 }, { a: 1.5, b: 4, l: "썰물 중반 수로", v: 2 }],
+    cr: [{ a: 4.2, b: 8.2, l: "간조 전후 갯벌", v: 2 }],
+  };
+
+  const hfmt = h => { h = ((h % 24) + 24) % 24; const m = Math.round(h * 60); return String(Math.floor(m / 60) % 24).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
+  const SUN = [[7.75, 17.6], [7.35, 18.1], [6.75, 18.6], [6.1, 19.1], [5.5, 19.5], [5.25, 19.9], [5.4, 19.9], [5.85, 19.4], [6.25, 18.75], [6.65, 18.0], [7.15, 17.4], [7.65, 17.25]];
+  const hh = s => { const [a, b] = s.split(":").map(Number); return a + b / 60; };
+
+  function tideAt(ev, t) {
+    for (let k = 0; k < ev.length - 1; k++) if (t >= ev[k].t && t <= ev[k + 1].t) { const a = ev[k], b = ev[k + 1], f = (1 - Math.cos(Math.PI * (t - a.t) / (b.t - a.t))) / 2; return a.h + (b.h - a.h) * f; }
+    return null;
+  }
+
+  function winList(ev, g) {
+    const out = [];
+    ev.forEach(e => {
+      if (g === "cr") { if (!e.hi) out.push({ a: e.t - 2, b: e.t + 2, l: "간조 전후 갯벌", v: 2 }); return; }
+      if (e.hi) TWIN[g].forEach(w => out.push({ a: e.t + w.a, b: e.t + w.b, l: w.l, v: w.v }));
+    });
+    return out;
+  }
+
+  const TMON = {
+    sh: { m: [2, 2, 2, 1, 1, 2, 2, 1, 1, 1, 2, 2], notes: [[4, "봄 이동 최성기"], [8, "가을 이동"], [12, "일부 월동"]] },
+    sp: { m: [0, 0, 2, 2, 3, 3, 3, 3, 1, 1, 2, 0], notes: [[3, "도래"], [5, "번식 · 무인도"], [9, "이동 전 집결"]] },
+    cr: { m: [1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1], notes: [[11, "도래 · 월동"], [3, "북상"]] },
+  };
+
+  const TSITES = [
+    { id: "yeocha", name: "여차리 · 강화갯벌센터 앞", lat: 37.5893, lng: 126.4335, uses: { sh: "만조 2~3시간 전 해안으로 밀려오는 무리 (4~5월, 8~10월)", sp: "수로가 얕게 찰 때 먹이활동", cr: "겨울 간조 전후 드러난 갯벌" } },
+    { id: "dongmak", name: "동막해변", lat: 37.5927, lng: 126.4583, uses: { sh: "밀물 때 해변 가까이 오는 도요 무리", sp: "썰물 중반 갯골" } },
+    { id: "seondu", name: "선두리 해안", lat: 37.6050, lng: 126.5050, uses: { sp: "밀물·썰물 중반 수로 (9~10월 무리)", sh: "만조 전 해안 접근", cr: "겨울 간조 갯벌" } },
+    { id: "donggeom", name: "동검도", lat: 37.6013, lng: 126.5250, uses: { sp: "동검도 앞 갯골과 수로", cr: "겨울 간조 갯벌" } },
+    { id: "janghwa", name: "장화리 해안", lat: 37.6160, lng: 126.3850, uses: { sh: "만조 전후 해안 갯벌" } },
+    { id: "choji", name: "초지리 논습지", lat: 37.6450, lng: 126.5300, uses: { cr: "만조 때 옮겨 오는 겨울 논 먹이터", sh: "만조 쉼터가 되는 논 (이동기)" } },
+    { id: "seokmo", name: "석모도 해안", lat: 37.6800, lng: 126.3500, uses: { sh: "해안 갯벌 (이동기)" } },
+    { id: "gyodong", name: "교동도 들녘", lat: 37.7750, lng: 126.2700, uses: { cr: "겨울 논 먹이터 (물때보다 시간대)" } },
+    { id: "boreum", name: "볼음도 일대 무인도", lat: 37.6700, lng: 126.1900, warn: true, uses: { sp: "번식지 (5~8월) · 접근 금지 · 배로도 다가가지 않습니다" } },
+  ];
+
+  const kst = () => { const d = new Date(Date.now() + 9 * 3600e3); return { date: d.toISOString().slice(0, 10), h: d.getUTCHours() + d.getUTCMinutes() / 60, m: d.getUTCMonth() }; };
+  function tideNow() {
+    const k = kst();
+    if (!ODATES.includes(k.date)) return { ok: false, k };
+    const i = ODATES.indexOf(k.date), ev = [];
+    [-1, 0, 1].forEach(off => { const d = ODATES[i + off]; if (!d) return; OEPO[d][1].forEach(([t, h, hi]) => ev.push({ t: hh(t) + 24 * off, h, hi })); });
+    ev.sort((a, b) => a.t - b.t);
+    const lvl = tideAt(ev, k.h);
+    const next = ev.find(e => e.t > k.h), prev = [...ev].reverse().find(e => e.t <= k.h);
+    const rising = next ? !!next.hi : false;
+    const hws = ev.filter(e => e.hi);
+    const nearHW = hws.reduce((b, e) => Math.abs(e.t - k.h) < Math.abs(b.t - k.h) ? e : b, hws[0]);
+    const dHW = k.h - nearHW.t; // negative: before HW
+    let stage;
+    if (dHW >= -1 && dHW <= 1) stage = 3; else if (dHW < -1 && dHW >= -3) stage = 2; else if (dHW < -3 && dHW >= -5) stage = 1; else if (dHW > 1 && dHW <= 3) stage = 4; else if (dHW > 3 && dHW <= 5) stage = 5; else stage = 0;
+    return { ok: true, k, ev, lvl, next, prev, rising, stage, mul: OEPO[k.date][0] };
+  }
+  const durTxt = h => { const m = Math.max(0, Math.round(h * 60)); return (m >= 60 ? Math.floor(m / 60) + "시간 " : "") + (m % 60) + "분"; };
+  // status per group now: 2 = window open now, 1 = opens within 2h, 0 = no
+  // 상황판에서 숨기는 기간 (MM-DD, 양 끝 포함). 목록 이름은 남기고 추천·적기에서만 뺍니다.
+  const DASH_OFF = {
+    cr: [{ from: "11-01", to: "11-04", label: "11월 5일부터" }],
+    sp: [{ from: "11-15", to: "12-31", label: "3월 11일부터" }, { from: "01-01", to: "03-10", label: "3월 11일부터" }],
+  };
+  const dashOff = (g, k) => { const md = k.date.slice(5); return (DASH_OFF[g] || []).find(r => md >= r.from && md <= r.to) || null; };
+  const dashOn = (g, k) => !dashOff(g, k) && !!TMON[g].m[k.m];
+  function groupStatus(T, g) {
+    const off = dashOff(g, T.k);
+    if (off) return { s: -1, why: off.label };
+    if (!TMON[g].m[T.k.m]) return { s: -1, why: "이달은 오지 않음" };
+    const code = TMON[g].m[T.k.m];
+    const [sr, ss] = SUN[T.k.m];
+    const wins = winList(T.ev, g).map(w => ({ a: Math.max(w.a, sr), b: Math.min(w.b, ss), l: w.l, v: w.v })).filter(w => w.b - w.a > 0.1);
+    const cur = wins.find(w => w.a <= T.k.h && T.k.h <= w.b);
+    if (cur) return { s: cur.v === 2 ? 2 : 1, why: cur.l + ` · ${hfmt(cur.b)}까지`, breed: code === 3 };
+    const nx = wins.filter(w => w.a > T.k.h).sort((a, b) => a.a - b.a)[0];
+    if (nx && nx.a - T.k.h <= 2) return { s: 1, why: `${hfmt(nx.a)}부터 ${nx.l}`, breed: code === 3 };
+    return { s: 0, why: nx ? `다음 적기 ${hfmt(nx.a)}` : "오늘 낮 적기 지남", breed: code === 3 };
+  }
+  function pointsNow(T) {
+    const st = { sh: groupStatus(T, "sh"), sp: groupStatus(T, "sp"), cr: groupStatus(T, "cr") };
+    return TSITES.map(site => {
+      if (site.warn) return { site, s: -2, groups: [] };
+      let groups = Object.keys(site.uses).filter(g => st[g].s >= 0).map(g => ({ g, ...st[g] })).sort((a, b) => b.s - a.s);
+      if (groups.some(x => x.s >= 1)) groups = groups.filter(x => x.s >= 1); else groups = groups.slice(0, 1);
+      const s = groups.reduce((m, x) => Math.max(m, x.s), -1);
+      return { site, s, groups };
+    }).filter(p => p.s >= 0 || p.s === -2).sort((a, b) => b.s - a.s);
+  }
+  const ST = { 2: ["지금 적기", "ok"], 1: ["곧 / 가능", "mid"], 0: ["지금은 어려움", "off"], "-2": ["번식지 · 접근 금지", "warn"] };
+  function tideCard(T) {
+    if (!T.ok) return `<div class="dcard"><span class="dlab">지금 물때 · 외포리</span><p class="dbig">자료 없음</p><p class="dsub">이 날짜의 물때 자료가 아직 없습니다. 조석예보에서 확인하세요.</p><a class="dlink" href="https://www.khoa.go.kr/" target="_blank" rel="noopener">국립해양조사원 조석예보</a></div>`;
+    const pct = Math.max(0, Math.min(100, T.lvl / 900 * 100));
+    const kind = /^(6|7|8|9)물$/.test(T.mul) ? "사리" : (T.mul === "조금" || T.mul === "무시") ? "조금" : "중간 물";
+    return `<div class="dcard tide"><span class="dlab">지금 물때 · 외포리 · ${kind === T.mul ? T.mul : `${T.mul} (${kind})`}</span>
+      <div class="tgauge"><div class="tbar"><i style="height:${pct.toFixed(0)}%"></i></div>
+        <div><p class="dbig">${(T.lvl / 100).toFixed(1)}<small>m</small> <span class="arrow ${T.rising ? "up" : "down"}">${T.rising ? "↑ 밀물" : "↓ 썰물"}</span></p>
+        <p class="dsub">${T.next ? `${T.next.hi ? "만조" : "간조"}까지 <b>${durTxt(T.next.t - T.k.h)}</b> (${hfmt(T.next.t)}, ${(T.next.h / 100).toFixed(1)}m)` : ""}</p>
+        <p class="dstage">${S.tides[T.stage].name}</p></div></div></div>`;
+  }
+  const WDIR = d => d || "";
+  function wxCard(compact) {
+    const link = `<a class="dlink" href="https://www.weather.go.kr/w/index.do" target="_blank" rel="noopener">기상청 날씨누리</a>`;
+    if (WX === null) return `<div class="dcard"><span class="dlab">날씨 · 강화 남단(화도면)</span><p class="dsub">불러오는 중…</p></div>`;
+    if (WX === "off" || !WX || !WX.now) return `<div class="dcard"><span class="dlab">날씨 · 강화 남단(화도면)</span><p class="dsub">출발 전 최신 예보를 확인하세요.</p>${link}</div>`;
+    const n = WX.now, warn = [];
+    if (n.wms >= 8) warn.push("바람 강함");
+    if (/안개|박무/.test(n.cond || "") || (n.vis != null && n.vis < 1)) warn.push("안개 · 시야 나쁨");
+    if (n.pop >= 60) warn.push("비 가능성 높음");
+    if (/서/.test(n.wdir || "") && n.wms >= 7) warn.push("서풍 강함 · 예보보다 물이 높을 수 있음");
+    const hours = (WX.hourly || []).slice(0, compact ? 6 : 12);
+    return `<div class="dcard wx"><span class="dlab">날씨 · ${esc(WX.place || "강화 남단(화도면)")}</span>
+      <p class="dbig">${Math.round(n.t)}°<small>체감 ${Math.round(n.feels ?? n.t)}°</small></p>
+      <p class="dsub">${esc(n.cond || "")} · ${esc(WDIR(n.wdir))}풍 ${(+n.wms).toFixed(1)}m/s · 강수 ${n.pop ?? 0}%</p>
+      ${warn.length ? `<div class="wwarn">${warn.map(w => `<span>${w}</span>`).join("")}</div>` : `<div class="wwarn ok"><span>탐조하기 무난한 날씨</span></div>`}
+      ${hours.length ? `<div class="whours">${hours.map(x => `<div><span>${esc(x.h)}시</span><b>${Math.round(x.t)}°</b><small>${esc(x.wdir || "")} ${(+x.wms).toFixed(0)}</small><small>${x.pop ?? 0}%</small></div>`).join("")}</div>` : ""}
+      <p class="dfoot">${esc(WX.source || "")} · ${esc((WX.updatedAt || "").replace("T", " ").slice(5, 16))} 갱신 · 매시간 ${link}</p></div>`;
+  }
+  function pointsCard(T, limit) {
+    if (!T.ok) return `<div class="dcard"><span class="dlab">지금 갈 곳</span><p class="dsub">물때 자료가 있는 날짜에만 추천합니다.</p></div>`;
+    const list = pointsNow(T).filter(p => dashFilter === "all" || p.groups.some(g => g.g === dashFilter)).slice(0, limit);
+    return `<div class="dcard pts"><span class="dlab">지금 갈 곳 · ${hfmt(T.k.h)} 기준</span>
+      <ul class="plist">${list.map(p => {
+        const [lab, cls] = ST[p.s];
+        const maps = p.s !== -2 ? `<a class="nav" href="https://map.naver.com/p/search/${encodeURIComponent("강화 " + p.site.name.split(" ·")[0].replace(" (강화갯벌센터 앞)", ""))}" target="_blank" rel="noopener">길찾기</a>` : "";
+        return `<li class="p-${cls}"><div class="ptop"><b>${esc(p.site.name)}</b><span class="pst ${cls}">${lab}</span></div>
+          ${p.groups.length ? `<div class="pgs">${p.groups.map(x => `<span class="pg g-${x.g}"><i></i>${TG[x.g].name} · ${esc(x.why)}${x.breed ? " · 번식기" : ""}</span>`).join("")}</div>` : `<p class="dsub">5~8월 저어새 번식지입니다. 배로도 다가가지 않습니다.</p>`}${maps}</li>`;
+      }).join("")}</ul></div>`;
+  }
+  function stripCard(T) {
+    if (!T.ok) return "";
+    const [sr, ss] = SUN[T.k.m], X0 = 70, X1 = 690, x = h => X0 + (h / 24) * (X1 - X0);
+    let s = `<rect x="${x(0)}" y="0" width="${x(sr) - x(0)}" height="96" fill="var(--tnight)"/><rect x="${x(ss)}" y="0" width="${x(24) - x(ss)}" height="96" fill="var(--tnight)"/>`;
+    ["sh", "sp", "cr"].forEach((g, gi) => {
+      const y = 6 + gi * 28; const on = dashOn(g, T.k);
+      s += `<text x="${X0 - 6}" y="${y + 14}" text-anchor="end" font-size="11.5" font-weight="600" fill="var(${TG[g].c})" opacity="${on ? 1 : .35}">${TG[g].name}</text>`;
+      if (on) winList(T.ev, g).forEach(w => { const a = Math.max(0, w.a), b = Math.min(24, w.b); if (b > a) s += `<rect x="${x(a)}" y="${y + 2}" width="${x(b) - x(a)}" height="18" rx="2" fill="var(${TG[g].c})" opacity="${w.v === 2 ? .9 : .4}"/>`; });
+    });
+    for (let h = 0; h <= 24; h += 6) s += `<text x="${x(h)}" y="110" text-anchor="middle" font-size="11" fill="var(--muted)">${String(h).padStart(2, "0")}시</text>`;
+    s += `<line x1="${x(T.k.h)}" x2="${x(T.k.h)}" y1="0" y2="96" stroke="var(--ink)" stroke-width="2"/><text x="${x(T.k.h)}" y="124" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">지금 ${hfmt(T.k.h)}</text>`;
+    return `<div class="dcard strip"><span class="dlab">오늘 관찰 적기 · 외포리 물때 기준</span><svg viewBox="0 0 700 128" role="img" aria-label="오늘 세 무리의 관찰 적기와 현재 시각">${s}</svg></div>`;
+  }
+
+const WD16=['북','북북동','북동','동북동','동','동남동','남동','남남동','남','남남서','남서','서남서','서','서북서','북서','북북서'];
+const wdir=d=>WD16[Math.round(((d%360)+360)%360/22.5)%16];
+const WC=c=>c===0?'맑음':c<=2?'구름 조금':c===3?'흐림':c<=48?'안개':c<=57?'이슬비':c<=67?'비':c<=77?'눈':c<=82?'소나기':c<=86?'눈 소나기':'뇌우';
+function openMeteo(){
+ fetch('https://api.open-meteo.com/v1/forecast?latitude=37.59&longitude=126.43&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,precipitation_probability,visibility&hourly=temperature_2m,precipitation_probability,wind_speed_10m,wind_direction_10m&wind_speed_unit=ms&timezone=Asia%2FSeoul&forecast_days=2')
+ .then(r=>r.json()).then(j=>{const c=j.current,H=j.hourly,now=c.time.slice(0,13);let i=H.time.findIndex(t=>t.slice(0,13)>now);if(i<0)i=0;
+  WX={place:'강화 남단(화도면)',source:'Open-Meteo 예보',updatedAt:c.time,now:{t:c.temperature_2m,feels:c.apparent_temperature,cond:WC(c.weather_code),wdir:wdir(c.wind_direction_10m),wms:c.wind_speed_10m,pop:c.precipitation_probability??0,vis:c.visibility!=null?c.visibility/1000:null},
+   hourly:H.time.slice(i,i+12).map((t,k)=>({h:t.slice(11,13),t:H.temperature_2m[i+k],wdir:wdir(H.wind_direction_10m[i+k]),wms:H.wind_speed_10m[i+k],pop:H.precipitation_probability[i+k]}))};draw();})
+ .catch(()=>{if(!WX)WX='off';draw();});}
+function loadFeed(){
+ if(!API){openMeteo();return}
+ fetch(API+'?feed=1&t='+Date.now()).then(r=>r.json()).then(j=>{
+  NEWS=j.news&&Array.isArray(j.news.items)?j.news.items:'off';
+  const w=j.weather;let fresh=false;
+  if(w&&w.now&&w.updatedAt){const age=(Date.now()+9*3600e3-Date.parse(w.updatedAt+':00Z'))/3600e3;fresh=age>=-1&&age<3;}
+  if(fresh){WX=w;draw();}else openMeteo();
+  draw();
+ }).catch(()=>{NEWS='off';openMeteo();});}
+function newsHTML(n){
+ if(NEWS===null)return '<p class="dsub">불러오는 중…</p>';
+ if(NEWS==='off'||!NEWS.length)return '<p class="dsub">소식은 <a href="'+LIVEURL+'#live" target="_blank" rel="noopener">실시간 홈페이지</a>에서 볼 수 있습니다.</p>';
+ const safe=u=>/^https:\/\//.test(u||'')?u:'#';
+ return '<ul class="tl">'+NEWS.slice().sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))).slice(0,n).map(x=>'<li class="'+esc(x.group)+'"><span class="tdot"></span><div class="lmeta"><span class="lsrc">'+esc(x.source)+'</span><span>'+esc(x.date||'날짜 미표기')+'</span>'+(x.tag?'<span class="ltag">'+esc(x.tag)+'</span>':'')+'</div><a href="'+esc(safe(x.url))+'" target="_blank" rel="noopener">'+esc(x.title)+'</a>'+(x.summary?'<p>'+esc(x.summary)+'</p>':'')+'</li>').join('')+'</ul>';}
+function draw(){const T=tideNow();box.innerHTML='<div class="dgrid">'+tideCard(T)+wxCard(true)+pointsCard(T,3)+'</div>'+stripCard(T)+'<div class="dnews"><div class="dnewsh"><h3><span class="dotlive"></span>최신 소식</h3><a href="'+LIVEURL+'#live" target="_blank" rel="noopener">전체 소식</a></div>'+newsHTML(3)+'</div>';}
+draw();loadFeed();setInterval(draw,60000);setInterval(loadFeed,20*60000);
+})();</script>
+
 
 <section id="census"><div class="wrap">
 <h2>세계 개체수 현황판</h2><p class="lead">강화를 찾는 멸종위기 철새의 전 세계 개체수입니다. 저어새는 매년 1월 국제 동시센서스 결과, 두루미류는 국제두루미재단(ICF)의 최신 추정치입니다. 새 집계가 나오면 관리자가 숫자를 더합니다.</p>
@@ -368,7 +624,7 @@ document.getElementById('shareBtn').onclick=function(){
 <p>강화를 찾는 희귀 조류의 생태 관찰과 교육, 탐조 관광 활성화를 위해 활동하는 시민 모임입니다.</p>
 <p>© 강화도습지연대 WLGI · 인천광역시 강화군 · 문의 010-4705-7623 · brentkim7@gmail.com</p>
 <p class="visits" id="visits" hidden>오늘 방문 <b id="vToday">-</b> · 전체 방문 <b id="vTotal">-</b></p>
-<p><a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
+<p><a href="/privacy/"><b>개인정보 처리방침</b></a> · <a href="/member/">회원 로그인 · 가입</a> · <a href="https://claude.ai/artifact/Qf4CpnHunpFszaC1jAB4gu" rel="noopener">운영진 페이지 (Claude 로그인)</a> · <a href="https://cafe.daum.net/gipb" rel="noopener">다음 카페</a> · <a href="https://www.instagram.com/wlgikorea/" rel="noopener">인스타그램 @wlgikorea</a></p>
 </div></footer>
 <script>(function(){var A="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec",k='wlgi_v_'+new Date(Date.now()+9*3600e3).toISOString().slice(0,10),c=false;
 try{c=localStorage.getItem(k)==='1'}catch(e){}
