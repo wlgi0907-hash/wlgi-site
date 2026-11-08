@@ -446,6 +446,8 @@ const API="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOS
     sp: { m: [0, 0, 2, 2, 3, 3, 3, 3, 1, 1, 2, 0], notes: [[3, "도래"], [5, "번식 · 무인도"], [9, "이동 전 집결"]] },
     cr: { m: [1, 1, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1], notes: [[11, "도래 · 월동"], [3, "북상"]] },
   };
+  // 이달 제철 무리부터 (주로 관찰 > 번식기 > 드물게, 상황판에서 쉬는 기간은 뒤로)
+  function gOrder(k) { return ["sh", "sp", "cr"].map((g, i) => ({ g, i, w: dashOn(g, k) ? ({ 1: 3, 3: 2, 2: 1 })[TMON[g].m[k.m]] || 0 : 0 })).sort((a, b) => (b.w - a.w) || (a.i - b.i)).map(x => x.g); }
 
   const TSITES = [
     { id: "yeocha", name: "여차리 · 강화갯벌센터 앞", lat: 37.5893, lng: 126.4335, uses: { sh: "만조 2~3시간 전 해안으로 밀려오는 무리 (4~5월, 8~10월)", sp: "수로가 얕게 찰 때 먹이활동", cr: "겨울 간조 전후 드러난 갯벌" } },
@@ -592,14 +594,14 @@ function yWxCard(){
     if (!T.ok) return "";
     const [sr, ss] = SUN[T.k.m], X0 = 70, X1 = 690, x = h => X0 + (h / 24) * (X1 - X0);
     let s = `<rect x="${x(0)}" y="0" width="${x(sr) - x(0)}" height="96" fill="var(--tnight)"/><rect x="${x(ss)}" y="0" width="${x(24) - x(ss)}" height="96" fill="var(--tnight)"/>`;
-    ["sh", "sp", "cr"].forEach((g, gi) => {
+    ["sh", "sp", "cr"].map((g, k) => ({ g, k, w: dashOn(g, T.k) ? ({ 1: 3, 3: 2, 2: 1 })[TMON[g].m[T.k.m]] || 0 : 0 })).sort((a, b) => (b.w - a.w) || (a.k - b.k)).map(x => x.g).forEach((g, gi) => {   // 이달 제철 무리부터
       const y = 6 + gi * 28; const on = dashOn(g, T.k);
       s += `<text x="${X0 - 6}" y="${y + 14}" text-anchor="end" font-size="11.5" font-weight="600" fill="var(${TG[g].c})" opacity="${on ? 1 : .35}">${TG[g].name}</text>`;
       if (on) winList(T.ev, g).forEach(w => { const a = Math.max(0, w.a), b = Math.min(24, w.b); if (b > a) s += `<rect x="${x(a)}" y="${y + 2}" width="${x(b) - x(a)}" height="18" rx="2" fill="var(${TG[g].c})" opacity="${w.v === 2 ? .9 : .4}"/>`; });
     });
     for (let h = 0; h <= 24; h += 6) s += `<text x="${x(h)}" y="110" text-anchor="middle" font-size="11" fill="var(--muted)">${String(h).padStart(2, "0")}시</text>`;
     s += `<line x1="${x(T.k.h)}" x2="${x(T.k.h)}" y1="0" y2="96" stroke="var(--ink)" stroke-width="2"/><text x="${x(T.k.h)}" y="124" text-anchor="middle" font-size="11" font-weight="700" fill="var(--ink)">지금 ${hfmt(T.k.h)}</text>`;
-    return `<div class="dcard strip"><span class="dlab">오늘 관찰 적기 · 외포리 물때 기준</span><svg viewBox="0 0 700 128" role="img" aria-label="오늘 세 무리의 관찰 적기와 현재 시각">${s}</svg></div>`;
+    return `<div class="dcard strip"><span class="dlab">오늘 관찰 적기 · 외포리 물때 기준 · 제철 무리부터</span><svg viewBox="0 0 700 128" role="img" aria-label="오늘 세 무리의 관찰 적기와 현재 시각">${s}</svg></div>`;
   }
 
 function wIcon(c,sz){c=String(c||'');sz=sz||28;const s='width="'+sz+'" height="'+sz+'" viewBox="0 0 32 32" aria-hidden="true"';
@@ -663,12 +665,52 @@ draw();loadFeed();setInterval(draw,60000);setInterval(loadFeed,20*60000);
 <script>(function(){function t(){var d=new Date(Date.now()+9*3600e3),e=document.getElementById("yclock");if(e)e.textContent=d.toISOString().slice(11,19);}t();setInterval(t,1000);})();</script>
 
 
-<section id="season"><div class="wrap">
+<section id="season" class="yglass"><div class="wrap">
 <h2>물때로 보는 강화 철새 달력</h2><p class="lead">저어새·두루미·도요물떼새를 중심으로 외포리 물때 기준 탐조 시간표, 월별 관찰 시기, 관찰 장소를 볼 수 있습니다. 인천·강화 연안은 조수 간만의 차가 커서 사리 때 8~9m에 이릅니다. 같은 날이라도 물때에 따라 새가 보이는 거리와 장소가 크게 달라집니다.</p>
 <div class="tbl"><table><caption class="small" style="text-align:left;padding:6px 0">월별 관찰 시기 · 숫자는 월 (● 주로 관찰 · · 드물게 관찰 · 번식 = 번식기, 번식지 접근 자제) · 라이브 홈페이지와 같은 기준</caption>
 <thead><tr><th>종</th><th class="m" scope="col">1</th><th class="m" scope="col">2</th><th class="m" scope="col">3</th><th class="m" scope="col">4</th><th class="m" scope="col">5</th><th class="m" scope="col">6</th><th class="m" scope="col">7</th><th class="m" scope="col">8</th><th class="m" scope="col">9</th><th class="m" scope="col">10</th><th class="m" scope="col">11</th><th class="m" scope="col">12</th><th>관찰 장소와 요령</th></tr></thead><tbody><tr><th scope='row'>저어새<br><span class='small'>EN · 멸종위기 Ⅰ급</span></th><td class='m l0' title='1월' data-m='1월'></td><td class='m l0' title='2월' data-m='2월'></td><td class='m l2' title='3월' data-m='3월'>·</td><td class='m l2' title='4월' data-m='4월'>·</td><td class='m l3' title='5월' data-m='5월'>번식</td><td class='m l3' title='6월' data-m='6월'>번식</td><td class='m l3' title='7월' data-m='7월'>번식</td><td class='m l3' title='8월' data-m='8월'>번식</td><td class='m l1' title='9월' data-m='9월'>●</td><td class='m l1' title='10월' data-m='10월'>●</td><td class='m l2' title='11월' data-m='11월'>·</td><td class='m l0' title='12월' data-m='12월'></td><td>강화 남단 갯벌의 수로와 갯골, 동검도·선두리 앞 갯벌. 번식은 볼음도·석도 일대 서해 무인도(접근 금지).<br><span class='small'>물이 얕게 든 수로에서 부리를 저으며 먹이를 찾습니다. 밀물과 썰물 때가 좋고, 만조에는 쉼터에서 쉽니다.</span></td></tr><tr><th scope='row'>노랑부리백로<br><span class='small'>VU · 멸종위기 Ⅰ급</span></th><td class='m l0' title='1월' data-m='1월'></td><td class='m l0' title='2월' data-m='2월'></td><td class='m l0' title='3월' data-m='3월'></td><td class='m l2' title='4월' data-m='4월'>·</td><td class='m l1' title='5월' data-m='5월'>●</td><td class='m l1' title='6월' data-m='6월'>●</td><td class='m l1' title='7월' data-m='7월'>●</td><td class='m l1' title='8월' data-m='8월'>●</td><td class='m l2' title='9월' data-m='9월'>·</td><td class='m l0' title='10월' data-m='10월'></td><td class='m l0' title='11월' data-m='11월'></td><td class='m l0' title='12월' data-m='12월'></td><td>강화 남단 갯벌의 물가와 갯골. 번식은 서해 무인도.<br><span class='small'>물가를 빠르게 뛰어다니며 먹이를 잡습니다. 물이 들고 나는 가장자리를 따라가며 보세요.</span></td></tr><tr><th scope='row'>도요·물떼새<br><span class='small'>봄·가을 이동</span></th><td class='m l0' title='1월' data-m='1월'></td><td class='m l0' title='2월' data-m='2월'></td><td class='m l0' title='3월' data-m='3월'></td><td class='m l1' title='4월' data-m='4월'>●</td><td class='m l1' title='5월' data-m='5월'>●</td><td class='m l2' title='6월' data-m='6월'>·</td><td class='m l2' title='7월' data-m='7월'>·</td><td class='m l1' title='8월' data-m='8월'>●</td><td class='m l1' title='9월' data-m='9월'>●</td><td class='m l1' title='10월' data-m='10월'>●</td><td class='m l0' title='11월' data-m='11월'></td><td class='m l0' title='12월' data-m='12월'></td><td>강화 남단 갯벌(여차리·동막·선두리), 석모도 해안 갯벌, 만조 쉼터가 되는 둑과 논.<br><span class='small'>간조에는 너무 멀어 보기 어렵습니다. 만조 2~3시간 전에 도착해 물에 밀려오는 무리를 기다리세요.</span></td></tr><tr><th scope='row'>검은머리물떼새<br><span class='small'>NT · 갯벌 텃새</span></th><td class='m l1' title='1월' data-m='1월'>●</td><td class='m l1' title='2월' data-m='2월'>●</td><td class='m l1' title='3월' data-m='3월'>●</td><td class='m l1' title='4월' data-m='4월'>●</td><td class='m l1' title='5월' data-m='5월'>●</td><td class='m l1' title='6월' data-m='6월'>●</td><td class='m l1' title='7월' data-m='7월'>●</td><td class='m l1' title='8월' data-m='8월'>●</td><td class='m l1' title='9월' data-m='9월'>●</td><td class='m l1' title='10월' data-m='10월'>●</td><td class='m l1' title='11월' data-m='11월'>●</td><td class='m l1' title='12월' data-m='12월'>●</td><td>강화 남단 해안과 인근 섬의 갯벌, 바위 해안.<br><span class='small'>만조에는 해안 바위나 둑에 모여 쉬어 가까이에서 보기 좋습니다.</span></td></tr><tr><th scope='row'>혹부리오리<br><span class='small'>겨울 갯벌</span></th><td class='m l1' title='1월' data-m='1월'>●</td><td class='m l1' title='2월' data-m='2월'>●</td><td class='m l1' title='3월' data-m='3월'>●</td><td class='m l0' title='4월' data-m='4월'></td><td class='m l0' title='5월' data-m='5월'></td><td class='m l0' title='6월' data-m='6월'></td><td class='m l0' title='7월' data-m='7월'></td><td class='m l0' title='8월' data-m='8월'></td><td class='m l0' title='9월' data-m='9월'></td><td class='m l1' title='10월' data-m='10월'>●</td><td class='m l1' title='11월' data-m='11월'>●</td><td class='m l1' title='12월' data-m='12월'>●</td><td>강화 남단 갯벌과 수로.<br><span class='small'>물이 얕게 든 갯벌에서 무리 지어 먹이를 먹습니다. 밀물과 썰물 때 해안 가까이 옵니다.</span></td></tr><tr><th scope='row'>두루미 · 재두루미<br><span class='small'>VU · 겨울 진객</span></th><td class='m l1' title='1월' data-m='1월'>●</td><td class='m l1' title='2월' data-m='2월'>●</td><td class='m l2' title='3월' data-m='3월'>·</td><td class='m l0' title='4월' data-m='4월'></td><td class='m l0' title='5월' data-m='5월'></td><td class='m l0' title='6월' data-m='6월'></td><td class='m l0' title='7월' data-m='7월'></td><td class='m l0' title='8월' data-m='8월'></td><td class='m l0' title='9월' data-m='9월'></td><td class='m l0' title='10월' data-m='10월'></td><td class='m l1' title='11월' data-m='11월'>●</td><td class='m l1' title='12월' data-m='12월'>●</td><td>강화 남단 갯벌과 주변 논.<br><span class='small'>물이 빠져 갯벌이 드러난 간조 전후에 먹이를 찾습니다. 만조에는 논으로 옮겨 가기도 합니다. 경계심이 강하니 차 안이나 멀리서 보세요.</span></td></tr><tr><th scope='row'>기러기 · 고니<br><span class='small'>겨울 무리</span></th><td class='m l1' title='1월' data-m='1월'>●</td><td class='m l1' title='2월' data-m='2월'>●</td><td class='m l2' title='3월' data-m='3월'>·</td><td class='m l0' title='4월' data-m='4월'></td><td class='m l0' title='5월' data-m='5월'></td><td class='m l0' title='6월' data-m='6월'></td><td class='m l0' title='7월' data-m='7월'></td><td class='m l0' title='8월' data-m='8월'></td><td class='m l0' title='9월' data-m='9월'></td><td class='m l1' title='10월' data-m='10월'>●</td><td class='m l1' title='11월' data-m='11월'>●</td><td class='m l1' title='12월' data-m='12월'>●</td><td>교동도·강화 들녘의 논, 한강 하구.<br><span class='small'>물때보다 시간대가 중요합니다. 이른 아침과 해 질 녘 잠자리와 먹이터를 오가는 무리를 노리세요.</span></td></tr><tr><th scope='row'>흰꼬리수리<br><span class='small'>겨울 맹금</span></th><td class='m l1' title='1월' data-m='1월'>●</td><td class='m l1' title='2월' data-m='2월'>●</td><td class='m l0' title='3월' data-m='3월'></td><td class='m l0' title='4월' data-m='4월'></td><td class='m l0' title='5월' data-m='5월'></td><td class='m l0' title='6월' data-m='6월'></td><td class='m l0' title='7월' data-m='7월'></td><td class='m l0' title='8월' data-m='8월'></td><td class='m l0' title='9월' data-m='9월'></td><td class='m l0' title='10월' data-m='10월'></td><td class='m l1' title='11월' data-m='11월'>●</td><td class='m l1' title='12월' data-m='12월'>●</td><td>한강 하구와 강화 남단 갯벌.<br><span class='small'>드러난 갯벌이나 하구의 얼음 위에 앉아 쉬는 모습을 볼 수 있습니다. 하늘을 넓게 살펴보세요.</span></td></tr></tbody></table></div>
 <p class="small">날짜별 물때는 <a href="/program/">물때 탐조</a> 페이지에서 볼 수 있습니다.</p>
-<script>(function(){var m=new Date(Date.now()+9*3600e3).getUTCMonth()+1;document.querySelectorAll('#season td.m[data-m="'+m+'월"]').forEach(function(t){t.classList.add('now')});})();</script>
+<style>/* season-glass: 철새 달력 유리 스타일 */
+#season.yglass{position:relative;isolation:isolate;color:#fff;background:linear-gradient(180deg,#141e46 0%,#2a1b4f 52%,#3d2b63 100%);
+ --ink:#fff;--muted:rgba(255,255,255,.72);--line:rgba(255,255,255,.16);--surface:rgba(255,255,255,.10);--bg:rgba(255,255,255,.07);--crest-soft:rgba(255,255,255,.24);--tnight:rgba(255,255,255,.07);--tland:rgba(255,255,255,.14);--twater-soft:rgba(127,233,225,.12);--tflat:rgba(255,255,255,.12);
+ --g-sh:#8fd3ff;--g-sp:#ffc35c;--g-cr:#ff8a80;--leaf:#7fe9e1;--bar1:#ffc35c;--bar2:rgba(255,255,255,.32);--bar3:#ff8a80}
+#season.yglass::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 50% at 85% 0%,rgba(255,0,56,.16),transparent 70%),radial-gradient(50% 40% at 10% 100%,rgba(35,151,124,.18),transparent 70%)}
+#season.yglass h2,#season.yglass h3{color:#fff}#season.yglass .lead,#season.yglass .sub,#season.yglass .small,#season.yglass .hint{color:rgba(255,255,255,.78)}
+#season.yglass .eyebrow{color:rgba(255,255,255,.85)}
+#season.yglass a{color:#7fe9e1}
+#season.yglass .season,#season.yglass .tbl{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border-radius:20px;box-shadow:0 14px 40px rgba(10,5,40,.25),inset 0 1px 0 rgba(255,255,255,.2);color:#fff}
+#season.yglass .tbl{padding:10px}
+#season.yglass table{background:transparent;color:#fff}
+#season.yglass th,#season.yglass td{border-color:rgba(255,255,255,.14)}
+#season.yglass td.m.l1{background:#ffc35c;color:#2a1b4f;font-weight:700}#season.yglass td.m.l2{background:rgba(255,255,255,.24);color:#fff}
+#season.yglass td.m.l3{background:repeating-linear-gradient(45deg,rgba(255,138,128,.55) 0 4px,transparent 4px 8px);color:#ffd6d1}
+#season.yglass td.m.now{box-shadow:inset 0 0 0 2px #fff}
+#season.yglass tr.soff{opacity:.55}
+#season.yglass .sbadge{display:inline-block;font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-right:6px;vertical-align:2px}
+#season.yglass .sbadge.s1{background:#ff0038;color:#fff6f8}#season.yglass .sbadge.s3{background:rgba(255,138,128,.25);color:#ffd6d1;border:1px solid rgba(255,138,128,.6)}#season.yglass .sbadge.s2{background:rgba(255,255,255,.18);color:#fff}
+#season.yglass .viewtabs button,#season.yglass .seg button,#season.yglass .months button{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.25)}
+#season.yglass .viewtabs button[aria-pressed=true],#season.yglass .seg button[aria-pressed=true],#season.yglass .months button[aria-pressed=true]{background:#fff;color:#2a1b4f;border-color:#fff}
+#season.yglass select,#season.yglass input{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+#season.yglass select option{color:#111}
+#season.yglass .obs,#season.yglass .tkey,#season.yglass .sitecard,#season.yglass .windows>*,#season.yglass .tidebox{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);color:#fff}
+#season.yglass .planrow{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.16)}
+@media (max-width:640px){
+ #season.yglass .tbl{background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;padding:0}
+ #season.yglass .tbl tr{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);border-radius:16px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+ #season.yglass .tbl td.m{background:rgba(255,255,255,.07)}
+ #season.yglass .tbl td.m.l1{background:#ffc35c;color:#2a1b4f}#season.yglass .tbl td.m.l2{background:rgba(255,255,255,.24)}
+ #season.yglass .tbl td.m.l3{background:repeating-linear-gradient(45deg,rgba(255,138,128,.55) 0 4px,transparent 4px 8px)}
+ #season.yglass .tbl td.m.l1::before{color:#2a1b4f}
+ #season.yglass .tbl td.m.now{outline:2px solid #fff}
+}
+#season.yglass{--g-sp-soft:rgba(255,195,92,.16);--g-cr-soft:rgba(255,138,128,.16);--g-sh-soft:rgba(143,211,255,.16)}
+</style>
+<script>(function(){var m=new Date(Date.now()+9*3600e3).getUTCMonth()+1;document.querySelectorAll('#season td.m[data-m="'+m+'월"]').forEach(function(t){t.classList.add('now')});
+/* 제철 순서: 이달 주로 관찰 > 번식기 > 드물게 > 없음 */
+var tb=document.querySelector('#season tbody');if(!tb)return;var W={l1:3,l3:2,l2:1},B={l1:['제철','s1'],l3:['번식기','s3'],l2:['드물게','s2']};
+var rs=[].slice.call(tb.rows).map(function(r,i){var c=r.querySelector('td.m.now'),k=c?((c.className.match(/l[123]/)||[''])[0]):'';return {r:r,i:i,k:k,w:W[k]||0}});
+rs.sort(function(a,b){return (b.w-a.w)||(a.i-b.i)}).forEach(function(o){if(B[o.k]){var th=o.r.querySelector('th');var em=document.createElement('em');em.className='sbadge '+B[o.k][1];em.textContent=B[o.k][0];th.insertBefore(em,th.firstChild);}else o.r.classList.add('soff');tb.appendChild(o.r);});
+var cap=document.querySelector('#season caption');if(cap)cap.insertAdjacentHTML('beforeend',' · 이번 달 제철인 종부터 차례로 보여 줍니다');})();</script>
 </div></section>
 
 <section id="census"><div class="wrap">
