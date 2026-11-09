@@ -62,7 +62,23 @@ section{padding-block:44px;border-bottom:1px solid var(--line)}
 table{border-collapse:collapse;width:100%;font-size:14px;background:var(--surface)}
 th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 td.m{text-align:center;width:2.2em;padding:6px 2px}
-td.m.l1{background:var(--crest-soft)} td.m.l2{background:#8fd6d1;color:#111} td.m.l3{background:var(--crest);color:#111}
+td.m.now{box-shadow:inset 0 0 0 2px var(--ink)}
+td.m.l1{background:var(--crest);color:#111} td.m.l2{background:var(--crest-soft)} td.m.l3{background:repeating-linear-gradient(45deg,#e9c6c1 0 4px,transparent 4px 8px);color:#8a2b22;font-size:10.5px;font-weight:700}
+@media (max-width:640px){
+#season .tbl{overflow:visible}
+#season .tbl table,#season .tbl tbody{display:block;width:100%}
+#season .tbl thead{display:none}
+#season .tbl caption{display:block}
+#season .tbl tr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}
+#season .tbl tr>th,#season .tbl tr>td{border:0;padding:0}
+#season .tbl tr>th[scope=row]{grid-column:1/-1;font-size:16px;margin-bottom:6px;text-align:left}
+#season .tbl td.m{width:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:38px;border-radius:4px;font-size:11px;line-height:1.1;padding:3px 0;background:var(--bg)}
+#season .tbl td.m.l1{background:var(--crest);color:#111}#season .tbl td.m.l2{background:var(--crest-soft)}#season .tbl td.m.l3{background:repeating-linear-gradient(45deg,#e9c6c1 0 4px,transparent 4px 8px);color:#8a2b22;font-weight:700}
+#season .tbl td.m::before{content:attr(data-m);font-size:10.5px;color:var(--muted);margin-bottom:2px}
+#season .tbl td.m.l1::before{color:#111}
+#season .tbl td.m.now{outline:2px solid var(--ink);outline-offset:-2px}
+#season .tbl tr>td:last-child{grid-column:1/-1;margin-top:8px;font-size:14px;line-height:1.6}
+}
 ul.plain{padding-left:1.1em}
 .live{background:linear-gradient(180deg,#141e46 0%,#2a1b4f 50%,#3d2b63 100%);color:#f3f1ee;border-bottom:0}.live h2{color:#f3f1ee}.live .lead{color:#d9d1e8}.live .btns{display:flex;flex-wrap:wrap;gap:10px}.live .btn.vir{background:#23977c;border-color:#23977c;color:#f4fffa;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}.live .btn.car{background:#ff0038;border-color:#ff0038;color:#fff6f8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 footer{padding-block:30px;font-size:14px;color:var(--muted)}
@@ -141,7 +157,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 </head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
-<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#dash">지금 탐조</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#dash">지금 탐조</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a><a href="/en/" lang="en" hreflang="en">English</a></nav>
 </div></header>
 <section><div class="wrap"><p class="crumb"><a href="/">대문</a> › <a href="/archive/">기록 보관소</a> › 자유게시판</p><h1 style="font-size:28px">자유게시판</h1><p class="lead">강화도습지연대 카페 「자유게시판」 게시판 글 124건 · 최신순</p><details class="post" id="p146"><summary><span class="d">2017.06.13</span>물길 따라 한강 사랑! 생태 체험 참가자를 모집합니다!</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 1장 · <a href="https://cafe.daum.net/gipb/IHB6/146" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p145"><summary><span class="d">2017.03.10</span>생태모니터링 양성교육 모집 안내</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small"><a href="https://cafe.daum.net/gipb/IHB6/145" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p144"><summary><span class="d">2017.03.10</span>인천광역시 탐조가이드 양성교육에 따른 교육생 모집 안내</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small"><a href="https://cafe.daum.net/gipb/IHB6/144" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p143"><summary><span class="d">2017.03.04</span>덕포진교육박물관 2017년박물관길위의인문학 교육프로그램 신청</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small"><a href="https://cafe.daum.net/gipb/IHB6/143" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p142"><summary><span class="d">2015.03.12</span>3월 교보교육재단 홈페이지 이벤트에 참여하고 선물도 받아가세요~</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 5장 · <a href="https://cafe.daum.net/gipb/IHB6/142" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p141"><summary><span class="d">2014.10.20</span>2014.10.16 가을 낙조</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 25장 · <a href="https://cafe.daum.net/gipb/IHB6/141" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p140"><summary><span class="d">2014.09.23</span>10월 교보다솜이 가족자원봉사 프로그램에 참가할 가족을 모집합니다.</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 9장 · <a href="https://cafe.daum.net/gipb/IHB6/140" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p139"><summary><span class="d">2014.09.18</span>[임(林)자 사랑해 캠페인] &quot;나만의 임(林)자가 되어주시겠소♡?&quot;</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 11장 · <a href="https://cafe.daum.net/gipb/IHB6/139" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p138"><summary><span class="d">2014.07.15</span>2013년가을-2014년 마니산 풍광...!</summary><p class="small">회원이 쓴 글이라 작성자 동의 후 본문을 공개합니다.</p><p class="small">사진 14장 · <a href="https://cafe.daum.net/gipb/IHB6/138" rel="noopener">다음 카페 원문</a></p></details><details class="post" id="p137"><summary><span class="d">2014.01.16</span>철새 V자 비행 비밀 풀었다</summary><div class="body">철새 V자 비행 비밀 풀었다
 철새들이 V자 대형을 이루며 나는 것은 에너지 소모를 최소화하기 위해서인 것으로 영국 연구진의 실험 결과 확인됐다. 사진은 한국의 철원 평야를 찾은 겨울철새들. [중앙포토]

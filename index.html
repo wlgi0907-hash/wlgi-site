@@ -157,7 +157,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 </head><body>
 <header class="top"><div class="wrap">
 <a class="brand" href="/"><img src="/img/logo.png" alt="" width="38" height="38"><span>강화도습지연대 <small>WLGI</small></span></a>
-<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#dash">지금 탐조</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a></nav>
+<nav class="main" aria-label="주요 메뉴"><a href="/program/" class="navprog">탐조 신청</a><a href="/#dash">지금 탐조</a><a href="/#census">개체수</a><a href="/#maps">이동경로</a><a href="/#sites">서식지</a><a href="/#season">철새 달력</a><a href="/#rules">탐조 수칙</a><a href="/archive/">기록 보관소</a><a href="/#donate">후원</a><a href="/#contact">문의</a><a href="/en/" lang="en" hreflang="en">English</a></nav>
 </div></header>
 
 <div class="hero"><div class="hslides" id="hslides"><img class="hs on" src="/img/hero.jpg?v=765f074c" data-src="/img/hero.jpg?v=765f074c" data-still="/img/hero.jpg?v=765f074c" data-dur="30000" data-credit="" data-best="" data-sp="" data-art="1" alt="강화 데이터 조각: 저어새와 두루미의 세계 개체수 기록과 강화 외포리 물때에 따라 빛 입자가 모여 새의 모습이 되는 3D 작품" fetchpriority="high"><img class="hs" src="" data-src="/img/hero-2.jpg?v=ac1efb79" data-still="/img/hero-2.jpg?v=ac1efb79" data-dur="8000" data-credit="두루미 Grus japonensis · 강화 갯벌 · 사진 김정원" data-best="" data-sp="" data-art="" alt="잔잔한 갯벌 물가에 두루미 무리가 서 있고, 몇 마리는 고개를 들어 울고 있다. 뒤로 안개 낀 산이 보인다." loading="lazy"><img class="hs" src="" data-src="/img/hero.jpg?v=765f074c" data-still="/img/hero.jpg?v=765f074c" data-dur="8000" data-credit="저어새 Platalea minor" data-best="" data-sp="" data-art="" alt="얕은 물에 모여 쉬는 저어새 무리. 한 마리가 날개를 펴고 내려앉고 있다." loading="lazy"></div><span class="hcredit" id="hcredit"></span>
@@ -391,6 +391,15 @@ function NP_card(list, OEPO, opt) {
 /* WLGI 탐조 배너 (QR 포스터 디자인을 가로 배너로) — wlgi.co.kr·실시간 홈페이지 공용 (wlgibanner.js)
    WB_banner(programs, OEPO, opt) → HTML (다음 일정이 없으면 '')
    opt: { img: 흑백 갯벌 사진 주소, base: 신청 페이지 앞부분, target, asOf, pick: 특정 일정 id(시안용) } */
+function WB_en(v) { // 시트의 한국어 문구 → 영어 (모르는 문구는 그대로)
+  var D = { '만조 물새와 두루미': 'High-tide waterbirds & cranes', '두루미와 기러기': 'Cranes & geese', '무료': 'Free', '무료 (시범)': 'Free (trial)', '강화 남단 갯벌': 'South Ganghwa tidal flats', '회원 탐조': 'Members\' walk', '두루미 세기': 'Crane count', '떠날 채비하는 겨울 철새': 'Winter birds getting ready to leave' };
+  v = String(v == null ? '' : v).trim();
+  if (D[v]) return D[v];
+  var m = v.match(/^겨울 철새 시범 탐조\s*(\d+)회\s*(?::\s*(.*))?$/);
+  if (m) return 'Winter Bird Walk (trial) #' + m[1] + (m[2] ? ': ' + WB_en(m[2]) : '');
+  var c = v.indexOf(':'); if (c > 0) return WB_en(v.slice(0, c)) + ': ' + WB_en(v.slice(c + 1));
+  return v;
+}
 function WB_banner(list, OEPO, opt) {
   opt = opt || {};
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
@@ -400,34 +409,48 @@ function WB_banner(list, OEPO, opt) {
   if (!p) return '';
   var hh = function (t) { var a = String(t || '').split(':'); return (+a[0] || 0) + (+a[1] || 0) / 60; };
   var hf = function (h) { var m = Math.round(h * 60); return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); };
+  var EN = opt.lang === 'en';
   var tide = '';
   if (OEPO && OEPO[p.date]) {
     var a0 = hh(p.start), a1 = hh(p.end) || a0 + 3;
     var his = OEPO[p.date][1].filter(function (e) { return e[2]; }).map(function (e) { return { t: hh(e[0]), h: e[1] }; });
     var w = his.filter(function (e) { return e.t >= a0 - 1 && e.t <= a1 + 1; })[0] || his[0];
-    if (w) tide = '만조 ' + hf(w.t) + ' (' + (w.h / 100).toFixed(1) + 'm · ' + esc(OEPO[p.date][0]) + ')';
+    if (w) tide = EN ? 'High tide ' + hf(w.t) + ' (' + (w.h / 100).toFixed(1) + ' m)' : '만조 ' + hf(w.t) + ' (' + (w.h / 100).toFixed(1) + 'm · ' + esc(OEPO[p.date][0]) + ')';
   }
   var d = p.date.split('-'), mdy = (+d[1]) + '/' + (+d[2]) + '/' + d[0].slice(2);
   var full = p.status === '마감' || p.left <= 0;
   var tgt = opt.target ? ' target="' + opt.target + '" rel="noopener"' : '';
-  var href = (opt.base || '') + '/program/';
-  var title = String(p.title || ''), sub = title.indexOf(':') > 0 ? title.slice(title.indexOf(':') + 1).trim() : '';
+  var href = opt.href || ((opt.base || '') + '/program/');
+  var title = EN ? WB_en(p.title) : String(p.title || ''), sub = title.indexOf(':') > 0 ? title.slice(title.indexOf(':') + 1).trim() : '';
   var head = title.indexOf(':') > 0 ? title.slice(0, title.indexOf(':')).trim() : title;
-  return '<a class="wb" href="' + href + '"' + tgt + ' aria-label="' + esc(mdy + ' ' + title + ' 신청하기') + '">'
+  var T = EN ? {
+      apply: ' apply', h: 'When the tide rises,<br>the birds come close',
+      s: esc(WB_en(p.fee || '무료')) + ' · ' + p.cap + ' people · Scopes provided' + (p.member ? ' · Members only' : ''),
+      en: '강화 갯벌 겨울 철새 탐조 · WLGI', cta: full ? 'Full · See dates' : 'Apply →',
+      d: 'Date', w: 'Where', wv: 'South Ganghwa tidal flats', t: 'Time', x: 'Tide (Oepo) · Seats left', notide: 'See tide on the apply page',
+      seat: full ? 'Full' : 'Seats left <b>' + p.left + '<\/b> / ' + p.cap, asof: opt.asOf ? ' <small>(as of ' + esc(opt.asOf) + ')<\/small>' : ''
+    } : {
+      apply: ' 신청하기', h: '물이 차오르면,<br>새가 가까이 옵니다',
+      s: '참가비 ' + esc(p.fee || '무료') + ' · 정원 ' + p.cap + '명 · 망원경 제공' + (p.member ? ' · 회원 전용' : ''),
+      en: 'Winter Bird Walk · Ganghwa Tidal Flat', cta: full ? '마감 · 일정 보기' : '신청하기 →',
+      d: '날짜', w: '위치', wv: '강화도 남단 갯벌', t: '시간', x: '외포리 물때 · 남은 자리', notide: '물때는 신청 페이지에서',
+      seat: full ? '마감' : '남은 자리 <b>' + p.left + '<\/b> / ' + p.cap + '명', asof: opt.asOf ? ' <small>(' + esc(opt.asOf) + ' 기준)<\/small>' : ''
+    };
+  return '<a class="wb" href="' + href + '"' + tgt + ' aria-label="' + esc(mdy + ' ' + title) + T.apply + '">'
     + '<div class="wb-main">'
     + '<div class="wb-photo"><img src="' + esc(opt.img || '') + '" alt="" loading="lazy"><span class="wb-logo" aria-hidden="true">WLGI<\/span><\/div>'
     + '<div class="wb-red">'
-    + '<div class="wb-copy"><b class="wb-h">물이 차오르면,<br>새가 가까이 옵니다<\/b>'
+    + '<div class="wb-copy"><b class="wb-h">' + T.h + '<\/b>'
     + '<span class="wb-t">' + esc(head) + (sub ? ' — ' + esc(sub) : '') + '<\/span>'
-    + '<span class="wb-s">참가비 ' + esc(p.fee || '무료') + ' · 정원 ' + p.cap + '명 · 망원경 제공' + (p.member ? ' · 회원 전용' : '') + '<\/span>'
-    + '<span class="wb-en">Winter Bird Walk · Ganghwa Tidal Flat<\/span><\/div>'
-    + '<span class="wb-cta">' + (full ? '마감 · 일정 보기' : '신청하기 →') + '<\/span>'
+    + '<span class="wb-s">' + T.s + '<\/span>'
+    + '<span class="wb-en">' + T.en + '<\/span><\/div>'
+    + '<span class="wb-cta">' + T.cta + '<\/span>'
     + '<\/div><\/div>'
     + '<div class="wb-strip">'
-    + '<div><span>날짜<\/span><b class="wb-date">' + esc(mdy) + '<\/b><\/div>'
-    + '<div><span>위치<\/span><em>강화도 남단 갯벌<\/em><\/div>'
-    + '<div><span>시간<\/span><em class="wb-num">' + esc(p.start) + '–' + esc(p.end) + '<\/em><\/div>'
-    + '<div><span>외포리 물때 · 남은 자리<\/span><em class="wb-sm">' + (tide || '물때는 신청 페이지에서') + '<br>' + (full ? '마감' : '남은 자리 <b>' + p.left + '<\/b> / ' + p.cap + '명') + (opt.asOf ? ' <small>(' + esc(opt.asOf) + ' 기준)<\/small>' : '') + '<\/em><\/div>'
+    + '<div><span>' + T.d + '<\/span><b class="wb-date">' + esc(mdy) + '<\/b><\/div>'
+    + '<div><span>' + T.w + '<\/span><em>' + T.wv + '<\/em><\/div>'
+    + '<div><span>' + T.t + '<\/span><em class="wb-num">' + esc(p.start) + '–' + esc(p.end) + '<\/em><\/div>'
+    + '<div><span>' + T.x + '<\/span><em class="wb-sm">' + (tide || T.notide) + '<br>' + T.seat + T.asof + '<\/em><\/div>'
     + '<\/div><\/a>';
 }
 
