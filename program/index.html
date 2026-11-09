@@ -6,7 +6,7 @@
 <link rel="canonical" href="https://wlgi.co.kr/program/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="강화도습지연대 WLGI">
 <meta property="og:title" content="탐조 프로그램 신청 · 강화도습지연대 WLGI"><meta property="og:description" content="물때에 맞춰 강화 남단 갯벌에서 겨울 철새를 만나는 강화도습지연대 탐조 프로그램. 날짜별 만조 시각, 남은 자리, 온라인 신청.">
-<meta property="og:url" content="https://wlgi.co.kr/program/"><meta property="og:image" content="https://wlgi.co.kr/img/hero.jpg"><meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="https://wlgi.co.kr/program/"><meta property="og:image" content="https://wlgi.co.kr/img/og-tamjo.jpg"><meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <!--SITE-VERIFY-->
 <link rel="icon" href="/img/logo.png">
@@ -62,7 +62,23 @@ section{padding-block:44px;border-bottom:1px solid var(--line)}
 table{border-collapse:collapse;width:100%;font-size:14px;background:var(--surface)}
 th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 td.m{text-align:center;width:2.2em;padding:6px 2px}
-td.m.l1{background:var(--crest-soft)} td.m.l2{background:#8fd6d1;color:#111} td.m.l3{background:var(--crest);color:#111}
+td.m.now{box-shadow:inset 0 0 0 2px var(--ink)}
+td.m.l1{background:var(--crest);color:#111} td.m.l2{background:var(--crest-soft)} td.m.l3{background:repeating-linear-gradient(45deg,#e9c6c1 0 4px,transparent 4px 8px);color:#8a2b22;font-size:10.5px;font-weight:700}
+@media (max-width:640px){
+#season .tbl{overflow:visible}
+#season .tbl table,#season .tbl tbody{display:block;width:100%}
+#season .tbl thead{display:none}
+#season .tbl caption{display:block}
+#season .tbl tr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}
+#season .tbl tr>th,#season .tbl tr>td{border:0;padding:0}
+#season .tbl tr>th[scope=row]{grid-column:1/-1;font-size:16px;margin-bottom:6px;text-align:left}
+#season .tbl td.m{width:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:38px;border-radius:4px;font-size:11px;line-height:1.1;padding:3px 0;background:var(--bg)}
+#season .tbl td.m.l1{background:var(--crest);color:#111}#season .tbl td.m.l2{background:var(--crest-soft)}#season .tbl td.m.l3{background:repeating-linear-gradient(45deg,#e9c6c1 0 4px,transparent 4px 8px);color:#8a2b22;font-weight:700}
+#season .tbl td.m::before{content:attr(data-m);font-size:10.5px;color:var(--muted);margin-bottom:2px}
+#season .tbl td.m.l1::before{color:#111}
+#season .tbl td.m.now{outline:2px solid var(--ink);outline-offset:-2px}
+#season .tbl tr>td:last-child{grid-column:1/-1;margin-top:8px;font-size:14px;line-height:1.6}
+}
 ul.plain{padding-left:1.1em}
 .live{background:linear-gradient(180deg,#141e46 0%,#2a1b4f 50%,#3d2b63 100%);color:#f3f1ee;border-bottom:0}.live h2{color:#f3f1ee}.live .lead{color:#d9d1e8}.live .btns{display:flex;flex-wrap:wrap;gap:10px}.live .btn.vir{background:#23977c;border-color:#23977c;color:#f4fffa;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}.live .btn.car{background:#ff0038;border-color:#ff0038;color:#fff6f8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 footer{padding-block:30px;font-size:14px;color:var(--muted)}
