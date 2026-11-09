@@ -62,7 +62,23 @@ section{padding-block:44px;border-bottom:1px solid var(--line)}
 table{border-collapse:collapse;width:100%;font-size:14px;background:var(--surface)}
 th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 td.m{text-align:center;width:2.2em;padding:6px 2px}
-td.m.l1{background:var(--crest-soft)} td.m.l2{background:#8fd6d1;color:#111} td.m.l3{background:var(--crest);color:#111}
+td.m.now{box-shadow:inset 0 0 0 2px var(--ink)}
+td.m.l1{background:var(--crest);color:#111} td.m.l2{background:var(--crest-soft)} td.m.l3{background:repeating-linear-gradient(45deg,#e9c6c1 0 4px,transparent 4px 8px);color:#8a2b22;font-size:10.5px;font-weight:700}
+@media (max-width:640px){
+#season .tbl{overflow:visible}
+#season .tbl table,#season .tbl tbody{display:block;width:100%}
+#season .tbl thead{display:none}
+#season .tbl caption{display:block}
+#season .tbl tr{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:2px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}
+#season .tbl tr>th,#season .tbl tr>td{border:0;padding:0}
+#season .tbl tr>th[scope=row]{grid-column:1/-1;font-size:16px;margin-bottom:6px;text-align:left}
+#season .tbl td.m{width:auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:38px;border-radius:4px;font-size:11px;line-height:1.1;padding:3px 0;background:var(--bg)}
+#season .tbl td.m.l1{background:var(--crest);color:#111}#season .tbl td.m.l2{background:var(--crest-soft)}#season .tbl td.m.l3{background:repeating-linear-gradient(45deg,#e9c6c1 0 4px,transparent 4px 8px);color:#8a2b22;font-weight:700}
+#season .tbl td.m::before{content:attr(data-m);font-size:10.5px;color:var(--muted);margin-bottom:2px}
+#season .tbl td.m.l1::before{color:#111}
+#season .tbl td.m.now{outline:2px solid var(--ink);outline-offset:-2px}
+#season .tbl tr>td:last-child{grid-column:1/-1;margin-top:8px;font-size:14px;line-height:1.6}
+}
 ul.plain{padding-left:1.1em}
 .live{background:linear-gradient(180deg,#141e46 0%,#2a1b4f 50%,#3d2b63 100%);color:#f3f1ee;border-bottom:0}.live h2{color:#f3f1ee}.live .lead{color:#d9d1e8}.live .btns{display:flex;flex-wrap:wrap;gap:10px}.live .btn.vir{background:#23977c;border-color:#23977c;color:#f4fffa;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}.live .btn.car{background:#ff0038;border-color:#ff0038;color:#fff6f8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 footer{padding-block:30px;font-size:14px;color:var(--muted)}
@@ -164,6 +180,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <ul>
 <li>회원 가입·로그인, 회원 확인, 회원 전용 일정 운영</li>
 <li>탐조 프로그램 신청 접수, 집결 장소·준비물·취소 안내 연락</li>
+<li>회원 철새 모니터링 기록장 운영 (조사 기록의 기록자 확인, 운영진 검토)</li>
 <li>새 탐조 일정과 철새 소식 안내 (받기로 동의한 회원에게만)</li>
 <li>방문자 수 집계 (개인을 알아볼 수 없는 숫자만)</li>
 </ul>
@@ -174,6 +191,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <tr><td>회원 가입</td><td>이름, 휴대폰 번호, 비밀번호(암호화 저장), 만 14세 이상 확인</td><td>이메일, 사는 곳(시·도 단위), 탐조 경험, 관심 활동, 소식 받기 여부</td></tr>
 <tr><td>비회원 프로그램 신청</td><td>이름, 휴대폰 번호, 인원</td><td>남길 말</td></tr>
 <tr><td>회원 프로그램 신청</td><td>회원번호, 인원 (이름·번호는 회원 정보 사용)</td><td>남길 말</td></tr>
+<tr><td>회원 철새 모니터링 기록</td><td>회원번호, 이름(기록자), 조사 날짜·시각·지점·좌표, 관찰한 종과 개체수</td><td>위협 요인, 메모</td></tr>
 <tr><td>자동으로 생기는 정보</td><td colspan="2">신청·가입 시각, 마지막 로그인 시각. 브라우저에는 로그인 유지 열쇠와 '오늘 방문함' 표시만 저장합니다 (쿠키·광고 추적 도구는 쓰지 않습니다).</td></tr>
 </table></div>
 
@@ -182,6 +200,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <tr><th>정보</th><th>보유 기간</th></tr>
 <tr><td>회원 정보</td><td>탈퇴할 때까지. 탈퇴하면 즉시 지우고, 회원번호 중복을 막기 위한 회원번호·탈퇴 표시만 남깁니다.</td></tr>
 <tr><td>프로그램 신청 정보</td><td>프로그램이 끝난 날로부터 3개월</td></tr>
+<tr><td>모니터링 기록</td><td>모임의 조사 자료로 계속 보관합니다. 탈퇴하면 기록자 이름을 지우고 조사 내용만 남깁니다. 다른 회원에게는 이름 첫 글자만 보이고, eBird 등 공개 자료에는 이름 없이 올립니다.</td></tr>
 <tr><td>알림 메일 (운영진 메일함)</td><td>신청 정보와 같은 기간이 지나면 지웁니다.</td></tr>
 </table></div>
 <p>보유 기간이 끝나거나 목적을 다한 정보는 지체 없이 파기합니다. 전자 파일은 복구할 수 없는 방법으로 지우고, 종이에 적은 명단은 분쇄합니다. 다른 법령에서 보존을 요구하는 경우에만 따로 분리해 보관합니다.</p>
@@ -231,6 +250,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 
 <h2>11. 처리방침의 변경</h2>
 <p>이 처리방침은 2026년 11월 6일부터 적용합니다. 내용이 바뀌면 바뀌는 날 7일 전부터 홈페이지에 알립니다.</p>
+<p class="small">바뀐 내용: 2026년 11월 9일 — 회원 철새 모니터링 기록장의 처리 목적·항목·보유 기간을 추가했습니다 (기록장을 쓰는 회원에게만 해당).</p>
 </div></section>
 
 <footer><div class="wrap">
