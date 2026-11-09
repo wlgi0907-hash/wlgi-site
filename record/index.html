@@ -161,6 +161,17 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 </div></header>
 <style>
 .rec [hidden],.rec[hidden]{display:none!important}
+.fkit{background:#1f2a1f;color:#f3f1ee;border-radius:14px;padding:14px;display:grid;gap:10px}
+.fk-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.fk-top b{font-size:15px}
+.fk-clock{font-family:Inter,ui-monospace,monospace;font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.fk-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.fk-btns button{font:inherit;font-weight:800;font-size:16px;min-height:52px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+.fk-btns .fk-go{background:#bc1d2b;border-color:#bc1d2b}.fk-btns .fk-go.on{background:#fff;color:#bc1d2b}
+.rec .fk-chk{display:flex!important;flex-direction:row!important;align-items:center;gap:8px;font-size:13.5px;color:#d9e3d6}.rec .fk-chk input{width:20px!important;height:20px;flex:none;margin:0;padding:0}
+.fkit .rmsg{color:#d9e3d6;margin:0}.fkit .rmsg.err{color:#ffb4b4}.fkit .rmsg.ok{color:#bfe8b0}
+.fk-out{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:rgba(255,200,0,.15);border-radius:10px;padding:8px 12px;font-size:14px}.fk-out .linkbtn{color:#ffe08a}
+.rchips button .q{display:inline-block;min-width:1.6em;margin-left:4px;padding:0 6px;border-radius:9px;background:#2a1b4f;color:#fff;font-size:12px}
+
 .rec{display:grid;gap:18px}
 .rec .rnote{font-size:13.5px;color:var(--muted);margin:0}
 .rgate{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:22px;display:grid;gap:10px;justify-items:start}
@@ -228,6 +239,13 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 
 <section id="v-new" style="display:grid;gap:14px">
 <div class="redit" id="editBar" hidden><span>기록을 고치고 있습니다</span><button type="button" class="rbtn ghost sm" id="cancelEdit">고치기 취소</button></div>
+<div class="fkit" id="fkit">
+<div class="fk-top"><b>현장 기록</b><span class="fk-clock" id="fkClock" aria-live="off">00:00</span></div>
+<div class="fk-btns"><button type="button" class="fk-go" id="fkStart">▶ 조사 시작</button><button type="button" id="fkGps">📍 현재 위치</button></div>
+<label class="fk-chk"><input type="checkbox" id="fkTrack"> 걸으며 조사 — 이동 거리 자동 재기 (화면을 켜 두세요)</label>
+<p class="rmsg" id="fkMsg" role="status"></p>
+<div class="fk-out" id="fkOut" hidden><span id="fkOutTxt"></span><button type="button" class="linkbtn" id="fkSend">지금 보내기</button></div>
+</div>
 <form id="obsForm" novalidate style="display:grid;gap:14px">
 <fieldset><legend>조사 개요</legend>
 <div class="rgrid"><label class="f">날짜<input id="fDate" type="date" required></label><label class="f">시작 시각<input id="fTime" type="time" required></label>
@@ -336,7 +354,12 @@ if(!TOK){gate();return}
 /* 종 이름 자동완성 */
 var dl=document.createElement('datalist');dl.id='spList';dl.innerHTML=SP.map(function(s){return '<option value="'+esc(s[0])+'">'+esc(s[1])+'<\/option>'}).join('');document.body.appendChild(dl);
 $('quick').innerHTML=QUICK.filter(function(k){return BYKO[k]}).map(function(k){return '<button type="button" data-q="'+esc(k)+'">+ '+esc(k)+'<\/button>'}).join('');
-[].forEach.call($('quick').querySelectorAll('[data-q]'),function(b){b.onclick=function(){var empty=[].filter.call($('spRows').querySelectorAll('.sprow'),function(r){return !r.querySelector('.sp').value})[0];var row=empty||addRow();row.querySelector('.sp').value=b.dataset.q;check(row);row.querySelector('.cnt').focus()}});
+[].forEach.call($('quick').querySelectorAll('[data-q]'),function(b){b.onclick=function(){var k=b.dataset.q,rows=[].slice.call($('spRows').querySelectorAll('.sprow'));
+ var row=rows.filter(function(r){return r.querySelector('.sp').value.trim()===k})[0];
+ if(!row){row=rows.filter(function(r){return !r.querySelector('.sp').value})[0]||addRow();row.querySelector('.sp').value=k;row.querySelector('.cnt').value=0;check(row)}
+ var c=row.querySelector('.cnt');c.value=(+c.value||0)+1;chipCounts();saveNow();if(navigator.vibrate)try{navigator.vibrate(15)}catch(x){}}});
+function chipCounts(){var cnt={};[].forEach.call($('spRows').querySelectorAll('.sprow'),function(r){var k=r.querySelector('.sp').value.trim();if(k)cnt[k]=(cnt[k]||0)+(+r.querySelector('.cnt').value||0)});
+ [].forEach.call($('quick').querySelectorAll('[data-q]'),function(b){var n=cnt[b.dataset.q];b.innerHTML='+ '+esc(b.dataset.q)+(n?'<span class="q">'+n+'<\/span>':'')})}
 $('thr').innerHTML=THR.map(function(t,i){return '<label><input type="checkbox" value="'+esc(t)+'"> '+esc(t)+'<\/label>'}).join('');
 function check(row){var v=row.querySelector('.sp').value.trim(),s=BYKO[v],info=row.querySelector('.spinfo');
  info.innerHTML=!v?'':s?esc(s[1])+' · <i>'+esc(s[2])+'<\/i>'+(s[3]?'<span class="rtag'+(s[3]==='2'?' t2':'')+'">멸종위기 '+(s[3]==='1'?'I':'II')+'급<\/span>':'')+(s[4]&&/CR|EN|VU/.test(s[4])?'<span class="rtag">'+esc(s[4])+'<\/span>':''):'목록에 없는 이름입니다. 정확한 국명으로 적어 주세요(운영진이 확인합니다).'}
@@ -353,7 +376,55 @@ $('fSite').onchange=function(){var v=this.value;$('siteNameWrap').hidden=v!=='ne
 function resetForm(){EDIT=null;$('editBar').hidden=true;$('saveBtn').textContent='기록 저장';var n=kst();$('fDate').value=n.slice(0,10);$('fDate').max=n.slice(0,10);$('fTime').value=n.slice(11,16);
  $('fDur').value=60;$('fObs').value=1;$('fProto').value='Stationary';$('distWrap').hidden=true;$('fDist').value=1;$('fTide').value='모름';$('fSite').value='';$('siteNameWrap').hidden=true;$('fSiteName').value='';
  $('fLat').value='';$('fLng').value='';$('fSens').checked=false;$('fAll').checked=true;$('fNote').value='';[].forEach.call($('thr').querySelectorAll('input'),function(x){x.checked=false});$('spRows').innerHTML='';addRow();say($('fMsg'),'')}
-$('resetBtn').onclick=resetForm;$('cancelEdit').onclick=resetForm;
+$('resetBtn').onclick=function(){ls(DK,null);resetForm();chipCounts()};$('cancelEdit').onclick=resetForm;
+/* ---------- 현장 기록: 타이머 · GPS · 이동 거리 · 임시 저장 · 보내지 못한 기록 ---------- */
+var FK='wlgi_field',DK='wlgi_draft',OK_='wlgi_outbox',fkT=null,fkW=null,fkLock=null;
+function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v))}catch(x){return null}}
+function fkSay(t,ok){say($('fkMsg'),t,ok)}
+function hav(a,b){var R=6371,r=Math.PI/180,dl=(b[0]-a[0])*r,dn=(b[1]-a[1])*r,x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dn/2)*Math.sin(dn/2);return 2*R*Math.asin(Math.sqrt(x))}
+function fkTick(){var f=ls(FK);if(!f){$('fkClock').textContent='00:00';return}var s=Math.floor((Date.now()-f.t0)/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;
+ $('fkClock').textContent=(h?h+':'+('0'+m).slice(-2):('0'+m).slice(-2))+':'+('0'+sec).slice(-2)+(f.km?' · '+f.km.toFixed(2)+'km':'')}
+function fkUI(){var f=ls(FK),b=$('fkStart');b.textContent=f?'■ 조사 끝':'▶ 조사 시작';b.classList.toggle('on',!!f);$('fkTrack').disabled=!!f;if(f)$('fkTrack').checked=!!f.track;
+ clearInterval(fkT);if(f){fkT=setInterval(fkTick,1000);if(f.track&&!fkW)fkWatch()}fkTick()}
+function wake(){try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(function(l){fkLock=l}).catch(function(){})}catch(x){}}
+function fkWatch(){if(!navigator.geolocation)return;fkW=navigator.geolocation.watchPosition(function(p){var f=ls(FK);if(!f)return;var c=p.coords;if(c.accuracy>40)return;var pt=[c.latitude,c.longitude];
+ if(f.last){var d=hav(f.last,pt);if(d<0.008)return;if(d>0.5){f.last=pt;ls(FK,f);return}f.km=(f.km||0)+d}f.last=pt;ls(FK,f)},function(){},{enableHighAccuracy:true,maximumAge:5000,timeout:20000})}
+$('fkStart').onclick=function(){var f=ls(FK);
+ if(!f){var n=kst();$('fDate').value=n.slice(0,10);$('fTime').value=n.slice(11,16);f={t0:Date.now(),track:$('fkTrack').checked,km:0};ls(FK,f);
+  if(f.track){$('fProto').value='Traveling';$('distWrap').hidden=false;fkWatch();wake()}
+  fkSay('조사를 시작했습니다. 날짜와 시작 시각을 넣었습니다.',true);if(!$('fLat').value)fkGps();saveDraft()}
+ else{var min=Math.max(1,Math.round((Date.now()-f.t0)/60000));$('fDur').value=min;
+  if(f.track){$('fProto').value='Traveling';$('distWrap').hidden=false;$('fDist').value=(Math.round((f.km||0)*100)/100)||0}
+  if(fkW!=null){navigator.geolocation.clearWatch(fkW);fkW=null}if(fkLock){try{fkLock.release()}catch(x){}fkLock=null}
+  ls(FK,null);fkSay('조사를 마쳤습니다: '+min+'분'+(f.track?', '+(f.km||0).toFixed(2)+'km':'')+'. 종과 개체수를 확인하고 저장해 주세요.',true);saveDraft()}
+ fkUI()};
+function fkGps(){if(!navigator.geolocation){fkSay('이 기기에서는 위치를 쓸 수 없습니다. 지점을 골라 주세요.');return}fkSay('위치를 찾는 중…',true);
+ navigator.geolocation.getCurrentPosition(function(p){var c=p.coords,lat=Math.round(c.latitude*1e5)/1e5,lng=Math.round(c.longitude*1e5)/1e5;$('fLat').value=lat;$('fLng').value=lng;
+  var best=-1,bd=9;SITES.forEach(function(x,i){if(x.lat&&x.lng){var d=hav([lat,lng],[x.lat,x.lng]);if(d<bd){bd=d;best=i}}});
+  if(best>=0&&bd<=1.5){$('fSite').value=best;$('siteNameWrap').hidden=true;$('fSens').checked=!!SITES[best].sens;$('fLat').value=lat;$('fLng').value=lng;fkSay('현재 위치: '+SITES[best].name+' 근처 ('+Math.round(bd*1000)+'m, 오차 약 '+Math.round(c.accuracy)+'m)',true)}
+  else{$('fSite').value='new';$('siteNameWrap').hidden=false;fkSay('현재 위치를 넣었습니다 (오차 약 '+Math.round(c.accuracy)+'m). 등록된 지점과 멀어 ‘지점 이름’을 적어 주세요.',true)}saveDraft()},
+  function(e){fkSay(e.code===1?'위치 권한이 꺼져 있습니다. 브라우저 설정에서 이 사이트의 위치를 허용해 주세요.':'위치를 찾지 못했습니다. 하늘이 트인 곳에서 다시 눌러 주세요.')},{enableHighAccuracy:true,timeout:20000,maximumAge:10000})}
+$('fkGps').onclick=fkGps;
+/* 임시 저장: 적는 내용을 이 기기에 계속 보관 (전파가 끊기거나 창을 닫아도 남음) */
+function formState(){return {date:$('fDate').value,time:$('fTime').value,dur:$('fDur').value,obs:$('fObs').value,proto:$('fProto').value,dist:$('fDist').value,tide:$('fTide').value,siteSel:$('fSite').value,siteName:$('fSiteName').value,
+ lat:$('fLat').value,lng:$('fLng').value,sens:$('fSens').checked,all:$('fAll').checked,note:$('fNote').value,thr:[].filter.call($('thr').querySelectorAll('input'),function(x){return x.checked}).map(function(x){return x.value}),
+ sp:[].map.call($('spRows').querySelectorAll('.sprow'),function(r){return {ko:r.querySelector('.sp').value,n:r.querySelector('.cnt').value,beh:r.querySelector('.bh').value}})}}
+var dT=null;function saveNow(){clearTimeout(dT);if(EDIT)return;var st=formState();if(st.sp.some(function(x){return x.ko})||st.note||ls(FK))ls(DK,st)}function saveDraft(){clearTimeout(dT);dT=setTimeout(saveNow,250)}
+document.addEventListener('visibilitychange',function(){if(document.hidden)saveNow()});window.addEventListener('pagehide',saveNow);
+function loadDraft(){var st=ls(DK);if(!st)return false;$('fDate').value=st.date||$('fDate').value;$('fTime').value=st.time||$('fTime').value;$('fDur').value=st.dur;$('fObs').value=st.obs;$('fProto').value=st.proto;$('distWrap').hidden=st.proto!=='Traveling';$('fDist').value=st.dist;$('fTide').value=st.tide;
+ $('fSiteName').value=st.siteName||'';$('fLat').value=st.lat;$('fLng').value=st.lng;$('fSens').checked=st.sens;$('fAll').checked=st.all;$('fNote').value=st.note||'';
+ [].forEach.call($('thr').querySelectorAll('input'),function(x){x.checked=(st.thr||[]).indexOf(x.value)>=0});$('spRows').innerHTML='';(st.sp||[]).forEach(function(x){addRow(x)});if(!$('spRows').children.length)addRow();
+ window.__siteSel=st.siteSel;chipCounts();return true}
+$('obsForm').addEventListener('input',saveDraft);$('obsForm').addEventListener('change',function(){saveDraft();chipCounts()});
+/* 보내지 못한 기록: 전파가 없을 때 기기에 보관했다가 연결되면 보냄 */
+function outbox(){return ls(OK_)||[]}
+function outUI(){var o=outbox();$('fkOut').hidden=!o.length;$('fkOutTxt').textContent='보내지 못한 기록 '+o.length+'건이 이 기기에 있습니다.'}
+var sending=false;function flush(){var o=outbox();if(!o.length||sending||!navigator.onLine)return;sending=true;$('fkSend').disabled=true;
+ post({act:'obsAdd',rec:o[0]}).then(function(j){sending=false;$('fkSend').disabled=false;if(j.auth===false){drop();gate(j.message);return}
+  var rest=outbox().slice(1);ls(OK_,rest.length?rest:null);if(j.ok){load(j);fkSay('보관해 둔 기록을 보냈습니다.',true)}else fkSay('보관 기록 하나를 보내지 못했습니다: '+(j.message||''));outUI();if(rest.length)flush()})
+ .catch(function(){sending=false;$('fkSend').disabled=false;outUI()})}
+$('fkSend').onclick=flush;window.addEventListener('online',flush);
+
 function view(v){['new','log','mine'].forEach(function(k){$('v-'+k).hidden=k!==v;$('t-'+k).setAttribute('aria-selected',k===v)});if(v!=='new')drawLog()}
 ['new','log','mine'].forEach(function(k){$('t-'+k).onclick=function(){view(k)}});
 function handle(j,el){if(j.auth===false){drop();gate(j.message);return false}if(!j.ok){say(el,j.message||'처리하지 못했습니다.');return false}return true}
@@ -390,10 +461,10 @@ $('obsForm').onsubmit=function(e){e.preventDefault();if(busy)return;var m=$('fMs
  var rec={id:EDIT||undefined,date:$('fDate').value,time:$('fTime').value,dur:$('fDur').value,obs:$('fObs').value,proto:$('fProto').value,dist:$('fDist').value,tide:$('fTide').value,site:site,lat:$('fLat').value,lng:$('fLng').value,sens:$('fSens').checked,
   species:sp,all:$('fAll').checked,threats:[].filter.call($('thr').querySelectorAll('input'),function(x){return x.checked}).map(function(x){return x.value}),note:$('fNote').value};
  busy=true;$('saveBtn').disabled=true;say(m,'저장하는 중…',true);
- post({act:'obsAdd',rec:rec}).then(function(j){busy=false;$('saveBtn').disabled=false;if(!handle(j,m))return;var was=EDIT;load(j);resetForm();say($('fMsg'),was?'고친 내용을 저장했습니다. 운영진이 다시 확인합니다.':'저장했습니다. 운영진이 확인하면 공식 기록이 됩니다. 고맙습니다!',true)})
-  .catch(function(){busy=false;$('saveBtn').disabled=false;say(m,'연결이 원활하지 않습니다. 잠시 뒤 다시 저장해 주세요. 적은 내용은 그대로 있습니다.')})};
+ post({act:'obsAdd',rec:rec}).then(function(j){busy=false;$('saveBtn').disabled=false;if(!handle(j,m))return;var was=EDIT;load(j);ls(DK,null);resetForm();chipCounts();say($('fMsg'),was?'고친 내용을 저장했습니다. 운영진이 다시 확인합니다.':'저장했습니다. 운영진이 확인하면 공식 기록이 됩니다. 고맙습니다!',true)})
+  .catch(function(){busy=false;$('saveBtn').disabled=false;if(EDIT){say(m,'연결이 원활하지 않습니다. 잠시 뒤 다시 저장해 주세요. 적은 내용은 그대로 있습니다.');return}var o=outbox();o.push(rec);ls(OK_,o);ls(DK,null);resetForm();outUI();say(m,'전파가 약해 이 기기에 보관했습니다. 인터넷이 연결되면 자동으로 보냅니다.',true)})};
 $('logout').onclick=function(){post({act:'logout'}).catch(function(){});drop();gate('로그아웃했습니다.')};
-resetForm();$('rApp').hidden=false;$('rGate').hidden=true;$('rLoad').hidden=false;
+resetForm();if(loadDraft())say($('fMsg'),'적던 기록을 불러왔습니다. 다 적었으면 저장해 주세요.',true);fkUI();outUI();$('rApp').hidden=false;$('rGate').hidden=true;$('rLoad').hidden=false;
 var EBK='wlgi_ebird_sent';function ebSent(){try{return JSON.parse(localStorage.getItem(EBK)||'[]')}catch(x){return []}}
 $('ebMake').onclick=function(){var m=$('ebMsg');if(!DATA){say(m,'기록을 불러온 뒤 다시 눌러 주세요.');return}
  var sent=ebSent(),mine=DATA.list.filter(function(l){return l.mine&&l.status!=='반려'&&(!$('ebNew').checked||sent.indexOf(l.id)<0)});
@@ -405,7 +476,7 @@ $('ebMake').onclick=function(){var m=$('ebMsg');if(!DATA){say(m,'기록을 불�
  var ids=mine.filter(function(l){return r.skipped.every(function(x){return x.id!==l.id})}).map(function(l){return l.id});
  try{localStorage.setItem(EBK,JSON.stringify(sent.concat(ids).filter(function(v,i,A){return A.indexOf(v)===i}).slice(-2000)))}catch(x){}
  say(m,'기록 '+ids.length+'건('+r.lines.length+'종 줄)을 파일로 받았습니다.'+(sens?' 민감 위치 '+sens+'건은 뺐습니다.':'')+(noc?' 좌표 없는 '+noc+'건은 뺐습니다.':'')+' 이제 eBird 가져오기 페이지에서 올려 주세요.',true)};
-post({act:'obsList'}).then(function(j){$('rLoad').hidden=true;if(!handle(j,$('fMsg')))return;load(j)}).catch(function(){$('rLoad').textContent='기록장을 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요.'});
+post({act:'obsList'}).then(function(j){$('rLoad').hidden=true;if(!handle(j,$('fMsg')))return;load(j);if(window.__siteSel!=null){$('fSite').value=window.__siteSel;$('siteNameWrap').hidden=window.__siteSel!=='new';window.__siteSel=null}flush()}).catch(function(){$('rLoad').textContent='지금은 인터넷이 약해 기록 목록을 못 불러왔습니다. 기록하기는 그대로 쓸 수 있고, 저장하면 이 기기에 보관했다가 연결되면 보냅니다.'});
 })();
 </script>
 
