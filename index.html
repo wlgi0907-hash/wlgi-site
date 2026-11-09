@@ -192,8 +192,14 @@ const LOOP=30;
 const SP=[[1990,294],[1994,351],[1995,430],[1996,551],[1997,535],[1998,613],[1999,586],[2000,660],[2001,828],[2002,969],[2003,1069],[2004,1206],[2005,1475],[2006,1679],[2007,1695],[2008,2065],[2009,2041],[2010,2347],[2011,1839],[2012,2693],[2013,2725],[2014,2726],[2015,3272],[2016,3356],[2017,3941],[2018,3941],[2019,4463],[2020,4864],[2021,5222],[2022,6162],[2023,6603],[2024,6988],[2025,7081],[2026,7746]];
 const CR=[[1996,1850],[2013,2800],[2015,3050],[2018,3431],[2021,3800],[2025,4600]];
 function at(tab,y){if(y<=tab[0][0])return tab[0][1];for(let i=1;i<tab.length;i++){if(y<=tab[i][0]){const a=tab[i-1],b=tab[i];return a[1]+(b[1]-a[1])*(y-a[0])/(b[0]-a[0])}}return tab[tab.length-1][1]}
-// 오늘(2026-11-05) 강화 외포리 물때: 만조 02:04 687cm, 간조 08:43 179cm, 만조 14:37 682cm, 간조 21:01 174cm
-const TD=[[-3.98,178],[2.07,687],[8.72,179],[14.62,682],[21.02,174],[26.6,690]];
+// 강화 외포리 물때: 접속한 날(한국 시간)과 앞뒤 날의 만조·간조로 곡선을 만듦. 자료(window.WLGI_OEPO)가 없는 날은 가장 가까운 날 값을 '참고값'으로 씀
+let TD=[[-3.98,178],[2.07,687],[8.72,179],[14.62,682],[21.02,174],[26.6,690]],TDI={md:'11월 5일',ref:true,hi:687,lo:174},TDday='';
+function buildTD(){const k=new Date(Date.now()+9*3600e3),today=k.toISOString().slice(0,10);if(TDday===today)return;const O=window.WLGI_OEPO;if(!O)return;
+ const ds=Object.keys(O).sort();if(!ds.length)return;let d=today,ref=false;
+ if(!O[d]){ref=true;const t0=Date.parse(today);d=ds.reduce((b,x)=>Math.abs(Date.parse(x)-t0)<Math.abs(Date.parse(b)-t0)?x:b,ds[0]);}
+ const i=ds.indexOf(d),ev=[];[-1,0,1].forEach(o=>{const dt=ds[i+o];if(dt&&O[dt])O[dt][1].forEach(e=>{const p=String(e[0]).split(':');ev.push([(+p[0])+(+p[1])/60+24*o,+e[1]])})});
+ ev.sort((a,b)=>a[0]-b[0]);if(ev.length<2)return;const day=ev.filter(e=>e[0]>=-1&&e[0]<=25);
+ TD=ev;TDI={md:(+d.slice(5,7))+'월 '+(+d.slice(8))+'일',ref,hi:Math.max(...day.map(e=>e[1])),lo:Math.min(...day.map(e=>e[1]))};TDday=today;}
 function tideAt(hr){for(let i=1;i<TD.length;i++){if(hr<=TD[i][0]){const a=TD[i-1],b=TD[i],u=(hr-a[0])/(b[0]-a[0]);return a[1]+(b[1]-a[1])*(.5-.5*Math.cos(Math.PI*u))}}return TD[TD.length-1][1]}
 let HUD={};
 function timeline(T){T=T%LOOP;let M=0,C=0,F=1,sp=0,yr=2026,ct=7746;
@@ -227,9 +233,9 @@ window.WLGIart=function(box,srcA,srcB,opt){opt=opt||{};let ended=false;
  function draw(T){const {M,C,F,sp,yr,ct}=timeline(T);
   hud.children[0].textContent=sp?'두루미 · 세계 개체수':'저어새 · 세계 개체수';hud.children[1].textContent=yr;hud.children[2].textContent=ct.toLocaleString('ko-KR')+'마리';
   hud.children[3].textContent=sp?'자료: ICF·국제두루미네트워크·IUCN·Lee(2025) 추정':'자료: 홍콩조류협회 국제 저어새 동시센서스';
-  const hr=(T%LOOP)/LOOP*24,th=tideAt(hr),TH=Math.min(1,Math.max(0,(th-174)/(687-174)));
+  buildTD();const hr=(T%LOOP)/LOOP*24,th=tideAt(hr),TH=Math.min(1,Math.max(0,(th-TDI.lo)/Math.max(1,TDI.hi-TDI.lo)));
   const hh=String(Math.floor(hr)).padStart(2,'0')+':'+String(Math.floor(hr%1*60)).padStart(2,'0');
-  tide.innerHTML='강화 외포리 물때 '+hh+'<b>'+Math.round(th)+' cm</b>'+(TH>.75?'만조 무렵':TH<.25?'간조 무렵':th>tideAt(hr-.1)?'밀물':'썰물');
+  tide.innerHTML='강화 외포리 물때 · '+TDI.md+(TDI.ref?' (참고값)':'')+' · '+hh+'<b>'+Math.round(th)+' cm</b>'+(TH>.75?'만조 무렵':TH<.25?'간조 무렵':th>tideAt(hr-.1)?'밀물':'썰물');
   const asp=W/H,tf=Math.tan(.31),hy=GH/GW,d=Math.min(hy/tf,1/(tf*asp))*1.02,pa=persp(.62,asp,.05,20);
   const v=mul(trans(0,0,-(d+C*.45)),mul(rotX(-.1+Math.sin(T*.17)*.05),rotY(Math.sin(T*.22)*.28)));
   gl.uniformMatrix4fv(U('mvp'),false,new Float32Array(mul(pa,v)));gl.uniform1f(U('t'),T);gl.uniform1f(U('M'),M);gl.uniform1f(U('C'),C);gl.uniform1f(U('asp'),1);gl.uniform1f(U('F'),F);gl.uniform1f(U('TH'),TH);
