@@ -282,7 +282,7 @@ document.getElementById('heroSearch').addEventListener('submit',function(e){e.pr
 q.addEventListener('input',function(){if(T==='sp')run()});
 var t=document.getElementById('mtab'),b=document.getElementById('mbox');if(t&&b)t.addEventListener('click',function(){b.hidden=!b.hidden;t.setAttribute('aria-expanded',String(!b.hidden));});})();</script>
 
-<section class="live"><div class="wrap"><div class="np-grid" id="npGrid"><div>
+<section class="live"><div class="wrap"><div class="wbbox" id="wbBox"></div><div class="np-grid" id="npGrid"><div>
 <h2>물때 맞춰 강화 탐조</h2>
 <p class="lead">물때에 맞춘 탐조 프로그램을 신청하고, 날짜별 물때를 확인할 수 있습니다. 회원으로 가입하면 이름·번호를 적지 않고 바로 신청하고, 회원 전용 일정도 신청할 수 있습니다. 가입비는 없습니다.</p>
 <div class="btns"><a class="btn vir" href="/member/">회원 로그인 · 가입</a><a class="btn car" href="/program/">탐조 프로그램 신청</a></div></div><div id="nextProg"></div></div></div></section>
@@ -306,7 +306,41 @@ var t=document.getElementById('mtab'),b=document.getElementById('mbox');if(t&&b)
 .np-btns{display:flex;flex-wrap:wrap;gap:10px}
 .np-card .btn.car{background:#ff0038;border-color:#ff0038;color:#fff6f8}
 .np-card .btn.np-glass{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35)}
-</style>
+/* wlgibanner: QR 포스터 디자인의 가로 배너 */
+.wb{display:block;container-type:inline-size;word-break:keep-all;text-decoration:none;color:#1a1a1a;background:#fff;box-shadow:0 6px 18px rgba(0,0,0,.22);font-family:'Noto Sans KR',sans-serif;overflow:hidden}
+.wb:hover .wb-cta{background:#1a1a1a;color:#fff}
+.wb-main{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:250px;position:relative}
+.wb-photo{position:relative;overflow:hidden;background:#a5a5a5}
+.wb-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 40%;display:block;position:absolute;inset:0}
+.wb-logo{position:absolute;left:-4px;bottom:-26px;font-family:Inter,'Helvetica Neue',Arial,sans-serif;font-weight:900;font-size:clamp(84px,15cqw,160px);line-height:1;letter-spacing:-.05em;color:#bc1d2b}
+.wb-red{background:#bc1d2b;color:#fff;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding:26px 28px}
+.wb-copy{display:flex;flex-direction:column;gap:8px;min-width:0}
+.wb-h{font-weight:900;font-size:clamp(24px,3.3cqw,36px);line-height:1.15;letter-spacing:-.02em}
+.wb-t{font-size:16px;font-weight:700}
+.wb-s{font-size:13.5px;color:#ffe1e3}
+.wb-en{font-family:Inter,Arial,sans-serif;font-weight:800;font-size:15px;color:#a5a5a5}
+.wb-cta{flex-shrink:0;background:#fff;color:#bc1d2b;font-weight:900;font-size:16px;padding:12px 18px;transition:background .15s,color .15s}
+.wb-strip{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr);border-top:2px solid #1a1a1a;border-bottom:2px solid #1a1a1a;margin-top:14px;background:#fff}
+.wb-strip>div{display:flex;flex-direction:column;gap:2px;padding:6px 12px 8px;border-left:1px solid #1a1a1a;min-width:0}
+.wb-strip>div:first-child{border-left:0;padding-left:14px}
+.wb-strip>div:nth-child(2){border-left:8px solid #1a1a1a}
+.wb-strip span{font-size:10.5px;color:#555}
+.wb-strip em{font-style:normal;font-size:16px;font-weight:500}
+.wb-date{font-family:Inter,Arial,sans-serif;font-weight:900;font-size:28px;color:#bc1d2b;letter-spacing:-.03em;line-height:1.1}
+.wb-num{font-family:Inter,Arial,sans-serif;font-weight:700!important}
+.wb-sm{font-size:13px!important;line-height:1.45}
+.wb-sm small{color:#555}
+@container (max-width:680px){
+ .wb-main{grid-template-columns:1fr}
+ .wb-photo{height:170px}
+ .wb-logo{font-size:96px;bottom:-18px}
+ .wb-red{flex-direction:column;align-items:flex-start;padding:30px 20px 20px}
+ .wb-strip{grid-template-columns:1fr 1fr}
+ .wb-strip>div:nth-child(2){border-left:1px solid #1a1a1a}
+ .wb-strip>div:nth-child(3){border-left:0;padding-left:14px;border-top:1px solid #1a1a1a}
+ .wb-strip>div:nth-child(4){border-top:1px solid #1a1a1a}
+}
+.wbbox.has{margin-bottom:30px}</style>
 <script>/* 「물때 맞춰 강화 탐조」 띠의 다음 탐조 카드 — wlgi.co.kr와 실시간 홈페이지가 같이 씀 (nextprog.js)
    NP_card(programs, OEPO, opt) → HTML 문자열 (다음 일정이 없으면 '')
    opt: { base: 신청 페이지 주소 앞부분('' 또는 'https://wlgi.co.kr'), asOf: 남은 자리 기준 시각 문자열, target: 링크 target } */
@@ -354,8 +388,50 @@ function NP_card(list, OEPO, opt) {
     + '<div class="np-btns"><a class="btn car" href="' + href + '"' + tgt + '>' + (full ? '일정 보기' : '회원으로 신청') + '<\/a><a class="btn np-glass" href="' + href + '"' + tgt + '>모든 일정<\/a><\/div>'
     + '<\/div>';
 }
+/* WLGI 탐조 배너 (QR 포스터 디자인을 가로 배너로) — wlgi.co.kr·실시간 홈페이지 공용 (wlgibanner.js)
+   WB_banner(programs, OEPO, opt) → HTML (다음 일정이 없으면 '')
+   opt: { img: 흑백 갯벌 사진 주소, base: 신청 페이지 앞부분, target, asOf, pick: 특정 일정 id(시안용) } */
+function WB_banner(list, OEPO, opt) {
+  opt = opt || {};
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+  var p = (list || []).filter(function (x) { return x && (opt.pick ? x.id === opt.pick : (x.date >= today && (x.status === '모집중' || x.status === '마감'))); })
+    .sort(function (a, b) { return (a.date + a.start) < (b.date + b.start) ? -1 : 1; })[0];
+  if (!p) return '';
+  var hh = function (t) { var a = String(t || '').split(':'); return (+a[0] || 0) + (+a[1] || 0) / 60; };
+  var hf = function (h) { var m = Math.round(h * 60); return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); };
+  var tide = '';
+  if (OEPO && OEPO[p.date]) {
+    var a0 = hh(p.start), a1 = hh(p.end) || a0 + 3;
+    var his = OEPO[p.date][1].filter(function (e) { return e[2]; }).map(function (e) { return { t: hh(e[0]), h: e[1] }; });
+    var w = his.filter(function (e) { return e.t >= a0 - 1 && e.t <= a1 + 1; })[0] || his[0];
+    if (w) tide = '만조 ' + hf(w.t) + ' (' + (w.h / 100).toFixed(1) + 'm · ' + esc(OEPO[p.date][0]) + ')';
+  }
+  var d = p.date.split('-'), mdy = (+d[1]) + '/' + (+d[2]) + '/' + d[0].slice(2);
+  var full = p.status === '마감' || p.left <= 0;
+  var tgt = opt.target ? ' target="' + opt.target + '" rel="noopener"' : '';
+  var href = (opt.base || '') + '/program/';
+  var title = String(p.title || ''), sub = title.indexOf(':') > 0 ? title.slice(title.indexOf(':') + 1).trim() : '';
+  var head = title.indexOf(':') > 0 ? title.slice(0, title.indexOf(':')).trim() : title;
+  return '<a class="wb" href="' + href + '"' + tgt + ' aria-label="' + esc(mdy + ' ' + title + ' 신청하기') + '">'
+    + '<div class="wb-main">'
+    + '<div class="wb-photo"><img src="' + esc(opt.img || '') + '" alt="" loading="lazy"><span class="wb-logo" aria-hidden="true">WLGI<\/span><\/div>'
+    + '<div class="wb-red">'
+    + '<div class="wb-copy"><b class="wb-h">물이 차오르면,<br>새가 가까이 옵니다<\/b>'
+    + '<span class="wb-t">' + esc(head) + (sub ? ' — ' + esc(sub) : '') + '<\/span>'
+    + '<span class="wb-s">참가비 ' + esc(p.fee || '무료') + ' · 정원 ' + p.cap + '명 · 망원경 제공' + (p.member ? ' · 회원 전용' : '') + '<\/span>'
+    + '<span class="wb-en">Winter Bird Walk · Ganghwa Tidal Flat<\/span><\/div>'
+    + '<span class="wb-cta">' + (full ? '마감 · 일정 보기' : '신청하기 →') + '<\/span>'
+    + '<\/div><\/div>'
+    + '<div class="wb-strip">'
+    + '<div><span>날짜<\/span><b class="wb-date">' + esc(mdy) + '<\/b><\/div>'
+    + '<div><span>위치<\/span><em>강화도 남단 갯벌<\/em><\/div>'
+    + '<div><span>시간<\/span><em class="wb-num">' + esc(p.start) + '–' + esc(p.end) + '<\/em><\/div>'
+    + '<div><span>외포리 물때 · 남은 자리<\/span><em class="wb-sm">' + (tide || '물때는 신청 페이지에서') + '<br>' + (full ? '마감' : '남은 자리 <b>' + p.left + '<\/b> / ' + p.cap + '명') + (opt.asOf ? ' <small>(' + esc(opt.asOf) + ' 기준)<\/small>' : '') + '<\/em><\/div>'
+    + '<\/div><\/a>';
+}
 
-(function(){var API="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec";if(!API)return;function go(){fetch(API).then(function(r){return r.json()}).then(function(j){var h=NP_card(j.programs,window.WLGI_OEPO,{});if(!h)return;document.getElementById('nextProg').innerHTML=h;document.getElementById('npGrid').classList.add('has');}).catch(function(){})}
+(function(){var API="https://script.google.com/macros/s/AKfycbx7UMERjqoyA4Ld2-mVA_rRhPdHOSOusEhNM_4i1REAb-IHcs56rsvg_80VwX9Oh1M-QA/exec";if(!API)return;function go(){fetch(API).then(function(r){return r.json()}).then(function(j){var h=WB_banner(j.programs,window.WLGI_OEPO,{img:'/img/banner-flat.jpg'});if(!h)return;var b=document.getElementById('wbBox');b.innerHTML=h;b.classList.add('has');}).catch(function(){})}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();</script>
 <style>
 :root{--g-sp:#b9831f;--g-cr:#a8322a;--g-sh:#3f6f8a;--g-sp-soft:#f4e8cd;--g-cr-soft:#f3dcd9;--g-sh-soft:#dbe8ef;--twater:#4f6f6d;--tflat:#ddd6d1;--tnight:#dedbd8}
