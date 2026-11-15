@@ -162,6 +162,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <style>
 .rec [hidden],.rec[hidden]{display:none!important}
 .rec .ferr{outline:3px solid #d0021b;outline-offset:3px;border-radius:10px;background:rgba(208,2,27,.06)}.rec .fbad{grid-column:1/-1;margin:6px 0 4px;color:#b00018;font-weight:700;font-size:14.5px;line-height:1.45}
+.gpsrow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}.gpsbtn{min-height:48px;font-weight:800}.coordfix{margin-top:6px;display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fff4d6;border-radius:10px;padding:8px 12px;font-size:14px}.coordfix button{font:inherit;font-weight:800;border:0;border-radius:8px;padding:6px 10px;background:#2a1b4f;color:#fff;cursor:pointer}
 .fkit{background:#1f2a1f;color:#f3f1ee;border-radius:14px;padding:14px;display:grid;gap:10px}
 .fk-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.fk-top b{font-size:15px}
 .fk-clock{font-family:Inter,ui-monospace,monospace;font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
@@ -258,7 +259,9 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 <fieldset><legend>조사 지점</legend>
 <label class="f">지점<select id="fSite"></select></label>
 <label class="f" id="siteNameWrap" hidden>지점 이름<input id="fSiteName" type="text" maxlength="60" placeholder="예: 길상면 장흥리 배수로"></label>
-<div class="rgrid"><label class="f">위도<input id="fLat" type="number" step="0.0001" inputmode="decimal"></label><label class="f">경도<input id="fLng" type="number" step="0.0001" inputmode="decimal"></label></div>
+<div class="gpsrow"><button type="button" class="btn gpsbtn" id="gpsBtn">📍 휴대폰 위치로 좌표 넣기</button><span class="rnote" id="gpsMsg">관찰한 자리에서 누르면 위도·경도가 자동으로 들어갑니다.</span></div>
+<div class="rgrid"><label class="f">위도<input id="fLat" type="text" inputmode="decimal" autocomplete="off" placeholder="예: 37.5962"></label><label class="f">경도<input id="fLng" type="text" inputmode="decimal" autocomplete="off" placeholder="예: 126.5153"></label></div>
+<p class="rnote" id="coordHint">구글어스 좌표(예: 37°35'46"N)를 붙여 넣어도 소수 좌표로 바뀝니다.</p>
 <p class="rnote">지점을 고르면 등록된 좌표가 들어갑니다. 실제 관찰 위치와 다르면 고쳐 주세요.</p>
 <label class="rtoggle"><input id="fSens" type="checkbox"><span><b>민감 위치</b> — 번식지 등 정확한 위치를 알리면 안 되는 기록입니다. 다른 회원에게는 지점 이름을 숨기고 좌표를 약 10km 단위로 흐려서 보여 줍니다. 정밀 좌표는 운영진만 봅니다.</span></label>
 </fieldset>
@@ -405,7 +408,28 @@ function fkGps(){if(!navigator.geolocation){fkSay('이 기기에서는 위치를
   if(best>=0&&bd<=1.5){$('fSite').value=best;$('siteNameWrap').hidden=true;$('fSens').checked=!!SITES[best].sens;$('fLat').value=lat;$('fLng').value=lng;fkSay('현재 위치: '+SITES[best].name+' 근처 ('+Math.round(bd*1000)+'m, 오차 약 '+Math.round(c.accuracy)+'m)',true)}
   else{$('fSite').value='new';$('siteNameWrap').hidden=false;fkSay('현재 위치를 넣었습니다 (오차 약 '+Math.round(c.accuracy)+'m). 등록된 지점과 멀어 ‘지점 이름’을 적어 주세요.',true)}saveDraft()},
   function(e){fkSay(e.code===1?'위치 권한이 꺼져 있습니다. 브라우저 설정에서 이 사이트의 위치를 허용해 주세요.':'위치를 찾지 못했습니다. 하늘이 트인 곳에서 다시 눌러 주세요.')},{enableHighAccuracy:true,timeout:20000,maximumAge:10000})}
-$('fkGps').onclick=fkGps;
+$('fkGps').onclick=fkGps;$('gpsBtn').onclick=function(){fkGps();var m=$('gpsMsg');m.textContent='위치를 찾는 중…';setTimeout(function(){m.textContent=$('fLat').value?'넣었습니다: '+$('fLat').value+', '+$('fLng').value+' (다시 누르면 새 위치)':'관찰한 자리에서 누르면 위도·경도가 자동으로 들어갑니다.'},6000)};
+/* 좌표 입력 도우미: 도분초 → 소수, '37.6, 126.5' 한 칸 붙여넣기, 도.분으로 잘못 적은 값 고치기 제안 */
+var GH={a:37.50,b:37.82,c:126.10,d:126.65};
+function dms(v){v=String(v||'').trim();if(!v)return '';var neg=/[SW]/i.test(v);var n=v.replace(/[NSEW]/ig,' ').match(/-?\d+(?:\.\d+)?/g);if(!n)return NaN;
+ if(!/[°'"′″\s]/.test(v.replace(/^\s+|\s+$/g,''))||n.length===1)return +n[0]*(neg?-1:1);var d=+n[0],mi=+(n[1]||0),se=+(n[2]||0);return Math.round((d+mi/60+se/3600)*1e5)/1e5*(neg?-1:1)}
+function dmFix(x){var d=Math.floor(x),m=Math.round((x-d)*100*1e6)/1e6;return m<60?Math.round((d+m/60)*1e5)/1e5:NaN}
+function inGH(a,b){return a>=GH.a&&a<=GH.b&&b>=GH.c&&b<=GH.d}
+function coordCheck(){var h=$('coordHint');var old=document.getElementById('coordFix');
+ var lv=$('fLat').value,gv=$('fLng').value;
+ if(/[,\/]/.test(lv)&&!gv){var pr=lv.split(/[,\/]/);$('fLat').value=pr[0].trim();$('fLng').value=(pr[1]||'').trim();lv=$('fLat').value;gv=$('fLng').value}
+ var a=dms(lv),b=dms(gv);if(lv&&!isNaN(a)&&String(a)!==lv)$('fLat').value=a;if(gv&&!isNaN(b)&&String(b)!==gv)$('fLng').value=b;
+ if(lv===''||gv===''||isNaN(a)||isNaN(b)){if(old)old.remove();return true}
+ if(inGH(a,b)){if(old)old.remove();return true}
+ if(old&&old.dataset.k===a+','+b)return false;if(old)old.remove();
+ var fa=dmFix(a),fb=dmFix(b),box=document.createElement('div');box.id='coordFix';box.className='coordfix';box.dataset.k=a+','+b;
+ if(!isNaN(fa)&&!isNaN(fb)&&inGH(fa,fb)){box.innerHTML='이 좌표는 강화 밖 바다예요. 구글어스의 <b>도·분<\/b>(예: 37°36′)을 소수처럼 적으신 것 같아요 → <b>'+fa+', '+fb+'<\/b>';var bt=document.createElement('button');bt.type='button';bt.textContent='이 좌표로 바꾸기';bt.onclick=function(){$('fLat').value=fa;$('fLng').value=fb;box.remove();saveDraft()};box.appendChild(bt)}
+ else box.textContent='이 좌표는 강화도 밖이에요. 맞는지 확인해 주세요. 📍 휴대폰 위치로 넣으면 정확합니다.';
+ h.insertAdjacentElement('afterend',box);return false}
+$('fLat').addEventListener('change',coordCheck);$('fLng').addEventListener('change',coordCheck);
+/* 기록하기를 열 때 이미 위치 권한이 있으면 좌표를 조용히 채움 */
+try{if(navigator.permissions&&navigator.geolocation)navigator.permissions.query({name:'geolocation'}).then(function(st){if(st.state==='granted'&&!$('fLat').value&&!EDIT)navigator.geolocation.getCurrentPosition(function(p){if($('fLat').value)return;$('fLat').value=Math.round(p.coords.latitude*1e5)/1e5;$('fLng').value=Math.round(p.coords.longitude*1e5)/1e5;$('gpsMsg').textContent='휴대폰 위치를 넣었습니다: '+$('fLat').value+', '+$('fLng').value},function(){},{enableHighAccuracy:true,timeout:15000,maximumAge:60000})}).catch(function(){})}catch(x){}
+
 /* 임시 저장: 적는 내용을 이 기기에 계속 보관 (전파가 끊기거나 창을 닫아도 남음) */
 function formState(){return {date:$('fDate').value,time:$('fTime').value,dur:$('fDur').value,obs:$('fObs').value,proto:$('fProto').value,dist:$('fDist').value,tide:$('fTide').value,siteSel:$('fSite').value,siteName:$('fSiteName').value,
  lat:$('fLat').value,lng:$('fLng').value,sens:$('fSens').checked,all:$('fAll').checked,note:$('fNote').value,thr:[].filter.call($('thr').querySelectorAll('input'),function(x){return x.checked}).map(function(x){return x.value}),
@@ -471,6 +495,7 @@ $('obsForm').onsubmit=function(e){e.preventDefault();if(busy)return;var m=$('fMs
  var noCnt=sp.filter(function(x){return x.n===''||+x.n<1})[0];
  if(noCnt){say(m,noCnt.ko+'의 개체수가 비었습니다.');return bad(noCnt.row.querySelector('.cnt'),noCnt.ko+' 개체수를 1 이상으로 적어 주세요. (셀 수 없으면 대략의 수)')}
  sp=sp.map(function(x){return {ko:x.ko,n:x.n,beh:x.beh,en:x.en,sci:x.sci}});
+ if(!coordCheck()&&!window.__coordOk){window.__coordOk=true;say(m,'좌표가 강화도 밖입니다. 노란 안내를 확인하고, 그대로 맞으면 저장을 한 번 더 누르세요.');return bad($('fLat'),'좌표를 확인해 주세요.')}window.__coordOk=false;
  var rec={id:EDIT||undefined,date:$('fDate').value,time:$('fTime').value,dur:$('fDur').value,obs:$('fObs').value,proto:$('fProto').value,dist:$('fDist').value,tide:$('fTide').value,site:site,lat:$('fLat').value,lng:$('fLng').value,sens:$('fSens').checked,
   species:sp,all:$('fAll').checked,threats:[].filter.call($('thr').querySelectorAll('input'),function(x){return x.checked}).map(function(x){return x.value}),note:$('fNote').value};
  busy=true;$('saveBtn').disabled=true;say(m,'저장하는 중…',true);
