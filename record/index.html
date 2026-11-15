@@ -161,6 +161,7 @@ details.post .body{white-space:pre-wrap;margin-top:10px;font-size:15px}
 </div></header>
 <style>
 .rec [hidden],.rec[hidden]{display:none!important}
+.rec .ferr{outline:3px solid #d0021b;outline-offset:3px;border-radius:10px;background:rgba(208,2,27,.06)}.rec .fbad{grid-column:1/-1;margin:6px 0 4px;color:#b00018;font-weight:700;font-size:14.5px;line-height:1.45}
 .fkit{background:#1f2a1f;color:#f3f1ee;border-radius:14px;padding:14px;display:grid;gap:10px}
 .fk-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.fk-top b{font-size:15px}
 .fk-clock{font-family:Inter,ui-monospace,monospace;font-size:30px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
@@ -451,17 +452,29 @@ function edit(id){var l=DATA.list.filter(function(x){return x.id===id})[0];if(!l
  var si=SITES.map(function(x){return x.name}).indexOf(l.site);if(si>=0){$('fSite').value=si;$('siteNameWrap').hidden=true}else{$('fSite').value='new';$('siteNameWrap').hidden=false;$('fSiteName').value=l.site}
  $('fLat').value=l.lat!=null?l.lat:'';$('fLng').value=l.lng!=null?l.lng:'';$('fSens').checked=l.sens;$('fAll').checked=l.all;$('fNote').value=l.note;
  [].forEach.call($('thr').querySelectorAll('input'),function(x){x.checked=l.threats.indexOf(x.value)>=0});$('spRows').innerHTML='';l.species.forEach(function(x){addRow(x)});if(!l.species.length)addRow();window.scrollTo(0,$('rApp').offsetTop)}
-$('obsForm').onsubmit=function(e){e.preventDefault();if(busy)return;var m=$('fMsg');
+/* 빠진 칸 바로 옆에 빨간 알림 */
+function clrBad(){[].forEach.call(document.querySelectorAll('.rec .ferr'),function(x){x.classList.remove('ferr')});[].forEach.call(document.querySelectorAll('.rec .fbad'),function(x){x.remove()})}
+function bad(el,msg,focusEl){var box=el.closest('label,.f')||el.closest('.rrow,fieldset,.sprow')||el;box.classList.add('ferr');var at=el.closest('.sprow')||box;var p=document.createElement('p');p.className='fbad';p.setAttribute('role','alert');p.textContent='⚠ '+msg;at.insertAdjacentElement('afterend',p);
+ try{box.scrollIntoView({behavior:'smooth',block:'center'})}catch(x){box.scrollIntoView()}setTimeout(function(){try{(focusEl||el).focus({preventScroll:true})}catch(x){}},350);if(navigator.vibrate)try{navigator.vibrate([60,40,60])}catch(x){}return false}
+$('obsForm').addEventListener('input',function(ev){var b=ev.target.closest('.ferr');if(b){b.classList.remove('ferr');var at=ev.target.closest('.sprow')||b;var n=at.nextElementSibling;if(n&&n.classList.contains('fbad'))n.remove()}});
+$('obsForm').onsubmit=function(e){e.preventDefault();if(busy)return;var m=$('fMsg');clrBad();
  var sv=$('fSite').value,site=sv==='new'?$('fSiteName').value.trim():sv!==''?SITES[+sv].name:'';
- if(!$('fDate').value||!$('fTime').value)return say(m,'날짜와 시작 시각을 적어 주세요.');
- if(!site)return say(m,'조사 지점을 고르거나 이름을 적어 주세요.');
- var sp=[].map.call($('spRows').querySelectorAll('.sprow'),function(r){var s=BYKO[r.querySelector('.sp').value.trim()];return {ko:r.querySelector('.sp').value.trim(),n:r.querySelector('.cnt').value,beh:r.querySelector('.bh').value,en:s?s[1]:'',sci:s?s[2]:''}}).filter(function(x){return x.ko});
- if(!sp.length)return say(m,'관찰한 종을 한 가지 이상 적어 주세요.');
- if(sp.some(function(x){return x.n===''||+x.n<1}))return say(m,'종마다 개체수를 1 이상으로 적어 주세요.');
+ if(!$('fDate').value){say(m,'날짜가 비었습니다. 빨간 칸을 채워 주세요.');return bad($('fDate'),'조사 날짜를 골라 주세요.')}
+ if(!$('fTime').value){say(m,'시작 시각이 비었습니다. 빨간 칸을 채워 주세요.');return bad($('fTime'),'시작 시각을 적어 주세요. ▶ 조사 시작을 누르면 자동으로 들어갑니다.')}
+ if(!site){say(m,'조사 지점이 비었습니다. 빨간 칸을 채워 주세요.');return sv==='new'?bad($('fSiteName'),'새 지점 이름을 적어 주세요.'):bad($('fSite'),'조사 지점을 고르거나 📍 현재 위치를 눌러 주세요.')}
+ var rows=[].slice.call($('spRows').querySelectorAll('.sprow'));
+ var sp=rows.map(function(r){var s=BYKO[r.querySelector('.sp').value.trim()];return {row:r,ko:r.querySelector('.sp').value.trim(),n:r.querySelector('.cnt').value,beh:r.querySelector('.bh').value,en:s?s[1]:'',sci:s?s[2]:''}});
+ var noName=sp.filter(function(x){return !x.ko&&x.n!==''&&+x.n>0})[0];
+ if(noName){say(m,'개체수만 있고 종 이름이 빠진 줄이 있습니다.');return bad(noName.row.querySelector('.sp'),'이 줄에 종 이름을 적거나 위 빠른 종 단추를 눌러 주세요.')}
+ sp=sp.filter(function(x){return x.ko});
+ if(!sp.length){say(m,'관찰한 종이 비었습니다. 빨간 칸에 종을 넣어 주세요.');return bad(rows[0]?rows[0].querySelector('.sp'):$('spRows'),'본 새를 한 가지 이상 적어 주세요. 위 빠른 종 단추를 누르면 바로 들어가고 1마리씩 늘어납니다.')}
+ var noCnt=sp.filter(function(x){return x.n===''||+x.n<1})[0];
+ if(noCnt){say(m,noCnt.ko+'의 개체수가 비었습니다.');return bad(noCnt.row.querySelector('.cnt'),noCnt.ko+' 개체수를 1 이상으로 적어 주세요. (셀 수 없으면 대략의 수)')}
+ sp=sp.map(function(x){return {ko:x.ko,n:x.n,beh:x.beh,en:x.en,sci:x.sci}});
  var rec={id:EDIT||undefined,date:$('fDate').value,time:$('fTime').value,dur:$('fDur').value,obs:$('fObs').value,proto:$('fProto').value,dist:$('fDist').value,tide:$('fTide').value,site:site,lat:$('fLat').value,lng:$('fLng').value,sens:$('fSens').checked,
   species:sp,all:$('fAll').checked,threats:[].filter.call($('thr').querySelectorAll('input'),function(x){return x.checked}).map(function(x){return x.value}),note:$('fNote').value};
  busy=true;$('saveBtn').disabled=true;say(m,'저장하는 중…',true);
- post({act:'obsAdd',rec:rec}).then(function(j){busy=false;$('saveBtn').disabled=false;if(!handle(j,m))return;var was=EDIT;load(j);ls(DK,null);resetForm();chipCounts();say($('fMsg'),was?'고친 내용을 저장했습니다. 운영진이 다시 확인합니다.':'저장했습니다. 운영진이 확인하면 공식 기록이 됩니다. 고맙습니다!',true)})
+ post({act:'obsAdd',rec:rec}).then(function(j){busy=false;$('saveBtn').disabled=false;if(j&&j.ok===false&&j.message){var mm=j.message;if(/종/.test(mm))bad($('spRows').querySelector('.sp')||$('spRows'),mm);else if(/지점/.test(mm))bad($('fSite'),mm);else if(/날짜/.test(mm))bad($('fDate'),mm);else if(/시각/.test(mm))bad($('fTime'),mm);else if(/좌표/.test(mm))bad($('fLat'),mm)}if(!handle(j,m))return;clrBad();var was=EDIT;load(j);ls(DK,null);resetForm();chipCounts();say($('fMsg'),was?'고친 내용을 저장했습니다. 운영진이 다시 확인합니다.':'저장했습니다. 운영진이 확인하면 공식 기록이 됩니다. 고맙습니다!',true)})
   .catch(function(){busy=false;$('saveBtn').disabled=false;if(EDIT){say(m,'연결이 원활하지 않습니다. 잠시 뒤 다시 저장해 주세요. 적은 내용은 그대로 있습니다.');return}var o=outbox();o.push(rec);ls(OK_,o);ls(DK,null);resetForm();outUI();say(m,'전파가 약해 이 기기에 보관했습니다. 인터넷이 연결되면 자동으로 보냅니다.',true)})};
 $('logout').onclick=function(){post({act:'logout'}).catch(function(){});drop();gate('로그아웃했습니다.')};
 resetForm();if(loadDraft())say($('fMsg'),'적던 기록을 불러왔습니다. 다 적었으면 저장해 주세요.',true);fkUI();outUI();$('rApp').hidden=false;$('rGate').hidden=true;$('rLoad').hidden=false;
